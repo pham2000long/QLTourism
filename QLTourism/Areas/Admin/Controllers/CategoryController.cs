@@ -13,6 +13,7 @@ namespace QLTourism.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private TourismDB db = new TourismDB();
+        private Category Categories;
 
         // GET: Admin/Category
         public ActionResult Index()
@@ -38,6 +39,8 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Category/Create
         public ActionResult Create()
         {
+            //ViewBag.parentId = new SelectList(db.Categories, "id", "name","parentId");
+            ViewBag.parentId = this.Categories;
             return View();
         }
 
@@ -48,14 +51,20 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,parentId")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Categories.Add(category);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
-
-            return View(category);
+            catch(Exception ex)
+            {
+                ViewBag.Error = "Lỗi nhập dữ liệu! " + ex.Message;
+                return View(category);
+            }
         }
 
         // GET: Admin/Category/Edit/5
@@ -80,13 +89,20 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,parentId")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(category).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
-            return View(category);
+            catch(Exception ex)
+            {
+                ViewBag.Error = "Lỗi sửa dữ liệu! " + ex.Message;
+                return View(category);
+            }
         }
 
         // GET: Admin/Category/Delete/5
@@ -122,6 +138,28 @@ namespace QLTourism.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public Category categoryRecusive(int parent_id,int id = 0,string text= " ")
+        {
+            var Categories = db.Categories.Select(p => p);
+            foreach (var item in Categories)
+            {
+                if (item.parentId == id)
+                {
+                    if(parent_id == 0 && parent_id == item.parentId)
+                    {
+                        item.name += text;
+                    }
+                    else
+                    {
+                        item.name += text;
+                    }
+                    categoryRecusive(parent_id, item.id, "-");
+                }
+                
+            }
+            return this.Categories;
         }
     }
 }
