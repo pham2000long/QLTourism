@@ -13,10 +13,15 @@ namespace QLTourism.Models
         {
             Bookings = new HashSet<Booking>();
             Customers_Rewards = new HashSet<Customers_Rewards>();
-            Users = new HashSet<User>();
         }
 
         public int id { get; set; }
+
+        [StringLength(100)]
+        public string username { get; set; }
+
+        [StringLength(255)]
+        public string password { get; set; }
 
         [StringLength(255)]
         public string name { get; set; }
@@ -50,8 +55,5 @@ namespace QLTourism.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customers_Rewards> Customers_Rewards { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
     }
 }

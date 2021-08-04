@@ -141,14 +141,12 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Customers_Rewards.cs" />
     <Compile Include="Models\Medium.cs" />
-    <Compile Include="Models\Membership.cs" />
     <Compile Include="Models\News.cs" />
     <Compile Include="Models\Package.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\Reward.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TourismDB.cs" />
     <Compile Include="Models\TripType.cs" />
     <Compile Include="Models\User.cs" />
