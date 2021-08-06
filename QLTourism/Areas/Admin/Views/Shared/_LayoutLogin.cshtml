@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@Page.Title</title>
+    <!-- Bootstrap Css -->
+    <link href="~/Areas/Admin/Public/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/Areas/Admin/Public/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/Areas/Admin/Public/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    @RenderSection("head", required: false)
+</head>
+<body>
+    @RenderBody()
+
+    <!-- JAVASCRIPT -->
+    <script src="~/Areas/Admin/Public/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/Areas/Admin/Public/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Areas/Admin/Public/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="~/Areas/Admin/Public/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Areas/Admin/Public/assets/libs/node-waves/waves.min.js"></script>
+
+    <script src="~/Areas/Admin/Public/assets/js/app.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

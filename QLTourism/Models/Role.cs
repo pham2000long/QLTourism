@@ -1,7 +1,8 @@
-namespace QLTourism.Models
+﻿namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -16,8 +17,9 @@ namespace QLTourism.Models
 
         public int id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Tên quyền không được để trống!")]
         [StringLength(255)]
+        [DisplayName("Tên quyền")]
         public string name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

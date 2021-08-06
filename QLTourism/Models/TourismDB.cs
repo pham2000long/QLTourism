@@ -8,7 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-            : base("name=TourismDB1")
+            : base("name=TourismDB")
         {
         }
 

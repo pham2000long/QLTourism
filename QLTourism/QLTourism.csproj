@@ -131,6 +131,9 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1459,6 +1462,7 @@
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.css" />
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.min.js" />
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.standalone.min.js" />
+    <Content Include="Areas\Admin\wwwroot\avatar\user.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1547,6 +1551,20 @@
     <Content Include="Areas\Admin\Views\Category\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\Profile\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1657,4 +1675,11 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
 </Project>

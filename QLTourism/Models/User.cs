@@ -1,20 +1,21 @@
-namespace QLTourism.Models
+﻿namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web;
 
     public partial class User
     {
         public int id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Username không được để trống")]
         [StringLength(50)]
         public string username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password không được để trống")]
         [StringLength(255)]
         public string password { get; set; }
 
@@ -41,5 +42,6 @@ namespace QLTourism.Models
         public int? roleId { get; set; }
 
         public virtual Role Role { get; set; }
+
     }
 }

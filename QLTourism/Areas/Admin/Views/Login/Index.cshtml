@@ -1,0 +1,89 @@
+﻿@model QLTourism.Models.User
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutLogin.cshtml";
+}
+
+
+<div class="container">
+    <!-- Log In page -->
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card mb-0 shadow-none">
+                <div class="card-body">
+                    <h3 class="text-center m-0">
+                        <a href="index.html" class="logo logo-admin"><img src="~/Areas/Admin/Public/assets/images/logo-sm.png" height="60" alt="logo" class="my-3"></a>
+                    </h3>
+
+                    <div class="px-2 mt-2">
+                        <h4 class="text-muted font-size-18 mb-2 text-center">Welcome Back !</h4>
+                        <p class="text-muted text-center">Sign in to continue to Amezia.</p>
+                        @if (Session["Error"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">@Session["Error"]</div>
+                            Session["Error"] = null;
+                        }
+                        @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "form-horizontal my-4" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="far fa-user"></i></span>
+                                    </div>
+                                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter username" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userpassword">Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-key"></i></span>
+                                    </div>
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @Type = "password", @placeholder = "Enter username" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group row mt-4">
+                                <div class="col-sm-6">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customControlInline">
+                                        <label class="custom-control-label" for="customControlInline">Remember me</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <a href="pages-recoverpw-2.html" class="text-muted font-13"><i class="mdi mdi-lock"></i> Forgot your password?</a>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-0 row">
+                                <div class="col-12 mt-2">
+                                    <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Log In <i class="fas fa-sign-in-alt ml-1"></i></button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <!-- End Log In page -->
+</div>
+
+@if (ViewBag.Error != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
