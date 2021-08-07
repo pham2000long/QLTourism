@@ -2,6 +2,11 @@
 <html>
 <head>
     <title>@Page.Title</title>
+    <link href="~/Areas/Admin/Public/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/Admin/Public/assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/Admin/Public/assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <link href="~/Areas/Admin/Public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="~/Areas/Admin/Public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Areas/Admin/Public/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/assets/css/icons.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Public/assets/css/app.min.css" rel="stylesheet" />
@@ -115,6 +120,13 @@
                         </a>
 
                     </li>
+                    <li>
+                        <a href="@Url.Action("Index", "News")" class="waves-effect">
+                            <i class="mdi mdi-speedometer"></i>
+                            <span>News</span>
+                        </a>
+
+                    </li>
                 </ul>
             </div>
         </div>
@@ -146,6 +158,25 @@
     <script src="~/Areas/Admin/Public/assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="~/Areas/Admin/Public/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="~/Areas/Admin/Public/assets/libs/node-waves/waves.min.js"></script>
+
+    <script src="~/Areas/Admin/Public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+    <script src="~/Areas/Admin/Public/assets/libs/select2/js/select2.min.js"></script>
+    <!--tinymce js-->
+    <script src="~/Areas/Admin/Public/assets/libs/tinymce/tinymce.min.js"></script>
+
+    <!-- Gmaps file -->
+    <script src="~/Areas/Admin/Public/assets/libs/gmaps/gmaps.min.js"></script>
+    <script src="assets/libs/dropzone/min/dropzone.min.js"></script>
+    <script src="~/Areas/Admin/Public/assets/libs/dropify/js/dropify.min.js"></script>
+
+    <!-- Magnific Popup-->
+    <script src="~/Areas/Admin/Public/assets/libs/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- init js -->
+    <script src="~/Areas/Admin/Public/assets/js/pages/form-editor.init.js"></script>
+    <script src="~/Areas/Admin/Public/assets/js/pages/form-advanced.init.js"></script>
+    <script src="~/Areas/Admin/Public/assets/js/pages/form-fileuploads.init.js"></script>
     <script src="~/Areas/Admin/Public/assets/js/app.js"></script>
 </body>
 </html>
