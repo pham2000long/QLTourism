@@ -39,11 +39,6 @@ namespace QLTourism.Models
                 .IsFixedLength();
 
             modelBuilder.Entity<Category>()
-                .HasMany(e => e.Categories1)
-                .WithOptional(e => e.Category1)
-                .HasForeignKey(e => e.parentId);
-
-            modelBuilder.Entity<Category>()
                 .HasMany(e => e.News)
                 .WithRequired(e => e.Category)
                 .WillCascadeOnDelete(false);
