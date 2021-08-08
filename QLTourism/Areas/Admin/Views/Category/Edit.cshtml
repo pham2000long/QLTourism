@@ -1,24 +1,26 @@
 ﻿@model QLTourism.Models.Category
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Sửa thông tin danh mục</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Category</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="text" class="form-control" name="name" id="name" value="@ViewBag.id.name.Replace("-","")"/>
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -27,10 +29,18 @@
             @Html.LabelFor(model => model.parentId, "parentId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.DropDownList("parentId", null, htmlAttributes: new { @class = "form-control" })*@
-                <select name="parentId" class = "form-control">
-                    @foreach (var item in ViewBag.parentId)
+                <select class="form-control" name="parentid">
+                    <option value="0">chọn danh mục cha</option>
+                    @foreach (var item in @ViewBag.parentId)
                     {
-                        <option value="value">text</option>
+                        if (@item.id == ViewBag.id.parentId)
+                        {
+                            <option value="@item.id" selected>@item.name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.id">@item.name</option>
+                        }
                     }
                 </select>
                 @Html.ValidationMessageFor(model => model.parentId, "", new { @class = "text-danger" })
@@ -39,16 +49,16 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Trở về", "Index")
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+}*@
