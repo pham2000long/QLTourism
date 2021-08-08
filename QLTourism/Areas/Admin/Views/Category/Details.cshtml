@@ -5,12 +5,19 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Chi tiết danh mục</h2>
 
 <div>
-    <h4>Category</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.name)
         </dt>
@@ -19,17 +26,9 @@
             @Html.DisplayFor(model => model.name)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.parentId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.parentId)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Trở về", "Index")
 </p>

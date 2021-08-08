@@ -21,7 +21,7 @@ namespace QLTourism.Models
         [StringLength(255)]
         public string name { get; set; }
 
-        public int parentId { get; set; }
+        public int? parentId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<News> News { get; set; }

@@ -13,11 +13,13 @@ namespace QLTourism.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private TourismDB db = new TourismDB();
+        private List<Category> Categories;
 
         // GET: Admin/Category
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            var categories = db.Categories.ToList();
+            return View(categories);
         }
 
         // GET: Admin/Category/Details/5
@@ -38,14 +40,38 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Category/Create
         public ActionResult Create()
         {
+            this.Categories = db.Categories.ToList();
+            var categories = categoryRecusive(0);
+            ViewBag.parentId = categories;
             return View();
         }
 
+        public List<Category> categoryRecusive(int parent_id = 0, int id = 0, string text = " ")
+        {
+            var Categories = this.Categories;
+            foreach (var item in Categories)
+            {
+                if (item.parentId == id)
+                {
+                    if (parent_id == 0 && parent_id == id)
+                    {
+                        item.name = text + item.name;
+                    }
+                    else
+                    {
+                        item.name = text + item.name;
+                    }
+                    categoryRecusive((int)item.parentId, item.id, text + "--");
+                }
+            }
+            return Categories;
+        }
         // POST: Admin/Category/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public ActionResult Create([Bind(Include = "id,name,parentId")] Category category)
         {
             if (ModelState.IsValid)
@@ -55,6 +81,7 @@ namespace QLTourism.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.parentId = new SelectList(db.Categories, "id", "name", category.parentId);
             return View(category);
         }
 
@@ -70,7 +97,11 @@ namespace QLTourism.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(category);
+            ViewBag.id = category;
+            this.Categories = db.Categories.ToList();
+            var categories = categoryRecusive(0);
+            ViewBag.parentId = categories;
+            return View();
         }
 
         // POST: Admin/Category/Edit/5
@@ -86,6 +117,7 @@ namespace QLTourism.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.parentId = new SelectList(db.Categories, "id", "name", category.parentId);
             return View(category);
         }
 

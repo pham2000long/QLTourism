@@ -1,0 +1,75 @@
+﻿@model QLTourism.Models.News
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Xóa</h2>
+
+<h3>Bạn có chắc chắn muốn xóa tin tức này?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.summary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.summary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.detail)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.detail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.thumbail)
+        </dt>
+
+        <dd>
+            @{
+                string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + Model.thumbail;
+            }
+            <img src="@Url.Content(ImagePath)" width="500" class="img-thumbnail" />
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    }
+</div>
