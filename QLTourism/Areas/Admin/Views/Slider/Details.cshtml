@@ -1,0 +1,46 @@
+﻿@model QLTourism.Models.Slider
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Slider</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imagePath)
+        </dt>
+
+        <dd>
+            @{ 
+                string ImagePath = "~/Areas/Admin/wwwroot/slider/" + Model.imagePath;
+            }
+            <img src="@Url.Content(ImagePath)"width="100"class="img-thumbnail" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.urlPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.urlPath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

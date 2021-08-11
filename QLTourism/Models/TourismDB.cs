@@ -8,7 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-            : base("name=TourismDB")
+            : base("name=TourismDB4")
         {
         }
 
@@ -146,5 +146,7 @@ namespace QLTourism.Models
                 .Property(e => e.avatar)
                 .IsUnicode(false);
         }
+
+        public System.Data.Entity.DbSet<QLTourism.Models.Slider> Sliders { get; set; }
     }
 }
