@@ -8,11 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-<<<<<<< HEAD
             : base("name=TourismDB1")
-=======
-            : base("name=TourismDB4")
->>>>>>> origin/yen
         {
         }
 
