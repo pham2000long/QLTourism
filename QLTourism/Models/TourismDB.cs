@@ -8,7 +8,11 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
+<<<<<<< HEAD
             : base("name=TourismDB1")
+=======
+            : base("name=TourismDB4")
+>>>>>>> origin/yen
         {
         }
 
@@ -146,5 +150,7 @@ namespace QLTourism.Models
                 .Property(e => e.avatar)
                 .IsUnicode(false);
         }
+
+        public System.Data.Entity.DbSet<QLTourism.Models.Slider> Sliders { get; set; }
     }
 }

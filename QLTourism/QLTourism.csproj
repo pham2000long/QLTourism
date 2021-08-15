@@ -135,6 +135,7 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\Reward.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Slider.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TourismDB.cs" />
     <Compile Include="Models\TripType.cs" />
@@ -1467,6 +1469,7 @@
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.min.js" />
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.standalone.min.js" />
     <Content Include="Areas\Admin\wwwroot\avatar\user.png" />
+    <Content Include="Areas\Admin\wwwroot\slider\slider.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1574,6 +1577,11 @@
     <Content Include="Areas\Admin\Views\News\Details.cshtml" />
     <Content Include="Areas\Admin\Views\News\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\News\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
