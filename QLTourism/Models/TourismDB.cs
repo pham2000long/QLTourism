@@ -8,7 +8,11 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
+<<<<<<< HEAD
             : base("name=TourismDB5")
+=======
+            : base("name=TourismBang")
+>>>>>>> minhtudev
         {
         }
 
@@ -25,20 +29,15 @@ namespace QLTourism.Models
         public virtual DbSet<Reward> Rewards { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+=======
+>>>>>>> minhtudev
         public virtual DbSet<TripType> TripTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BookingDetail>()
-                .Property(e => e.Price)
-                .HasPrecision(19, 4);
-
-            modelBuilder.Entity<BookingDetail>()
-                .Property(e => e.customerNote)
-                .IsFixedLength();
-
             modelBuilder.Entity<Category>()
                 .HasMany(e => e.News)
                 .WithRequired(e => e.Category)
@@ -78,49 +77,9 @@ namespace QLTourism.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Package>()
-                .Property(e => e.pkgTimePeriod)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.pkgStartPlace)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.pkgEndPlace)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.pkgRules)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.pkgTransporter)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.pkgBasePrice)
-                .HasPrecision(19, 4);
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.pkgCondition)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.pkgSlot)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
-                .Property(e => e.active)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Package>()
                 .HasMany(e => e.Media)
                 .WithRequired(e => e.Package)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Price>()
-                .Property(e => e.price1)
-                .HasPrecision(19, 4);
 
             modelBuilder.Entity<Reward>()
                 .HasMany(e => e.Customers_Rewards)

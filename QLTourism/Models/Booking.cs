@@ -21,7 +21,7 @@ namespace QLTourism.Models
         [StringLength(50)]
         public string bookingNo { get; set; }
 
-        public double? travelerCount { get; set; }
+        public int? travelerCount { get; set; }
 
         public int? customerId { get; set; }
 

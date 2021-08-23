@@ -43,7 +43,7 @@ namespace QLTourism.Areas.Admin.Controllers
             this.Categories = db.Categories.ToList();
             var categories = categoryRecusive(0);
             ViewBag.parentId = categories;
-            return View();
+            return View(new Category());
         }
 
         public List<Category> categoryRecusive(int parent_id = 0, int id = 0, string text = " ")

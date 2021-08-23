@@ -1,0 +1,123 @@
+﻿@model QLTourism.Models.Package
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Package</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgStartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgStartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgTimePeriod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgTimePeriod)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgStartPlace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgStartPlace)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgEndPlace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgEndPlace)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgDesc)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.pkgDesc)
+        </dd>
+            
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgRules)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgRules)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgTransporter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgTransporter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgBasePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgBasePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgCondition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgCondition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pkgSlot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pkgSlot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.active)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

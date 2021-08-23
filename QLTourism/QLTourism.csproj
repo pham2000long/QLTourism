@@ -134,6 +134,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingDetail.cs" />
     <Compile Include="Models\Category.cs" />
@@ -1582,6 +1584,12 @@
     <Content Include="Areas\Admin\Views\Slider\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Slider\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Slider\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Package\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Package\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Package\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Package\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Package\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Package\Prices.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -20,40 +20,38 @@ namespace QLTourism.Models
         public int id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(255)]
         public string pkgName { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? pkgStartDate { get; set; }
 
-        [StringLength(10)]
+        [StringLength(255)]
         public string pkgTimePeriod { get; set; }
 
-        [StringLength(10)]
+        [StringLength(255)]
         public string pkgStartPlace { get; set; }
 
-        [StringLength(10)]
+        [StringLength(255)]
         public string pkgEndPlace { get; set; }
 
-        [StringLength(50)]
+        [Column(TypeName = "ntext")]
         public string pkgDesc { get; set; }
 
-        [StringLength(10)]
+        [StringLength(255)]
         public string pkgRules { get; set; }
 
-        [StringLength(10)]
+        [StringLength(255)]
         public string pkgTransporter { get; set; }
 
-        [Column(TypeName = "money")]
-        public decimal pkgBasePrice { get; set; }
+        public int pkgBasePrice { get; set; }
 
-        [StringLength(10)]
+        [StringLength(255)]
         public string pkgCondition { get; set; }
 
-        [StringLength(10)]
-        public string pkgSlot { get; set; }
+        public int? pkgSlot { get; set; }
 
-        [StringLength(10)]
-        public string active { get; set; }
+        public int? active { get; set; }
 
         public int? categoryId { get; set; }
 

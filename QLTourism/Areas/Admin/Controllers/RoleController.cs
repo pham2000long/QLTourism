@@ -38,7 +38,7 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Role/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Role());
         }
 
         // POST: Admin/Role/Create

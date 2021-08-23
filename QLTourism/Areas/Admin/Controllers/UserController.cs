@@ -40,7 +40,7 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.roleId = new SelectList(db.Roles, "id", "name");
-            return View();
+            return View(new User());
         }
 
         // POST: Admin/User/Create
