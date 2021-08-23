@@ -40,7 +40,7 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.categoryId = new SelectList(db.Categories, "id", "name");
-            return View();
+            return View(new News());
         }
 
         // POST: Admin/News/Create

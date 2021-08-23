@@ -1,10 +1,11 @@
-namespace QLTourism.Models
+﻿namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.ComponentModel;
 
     public partial class Package
     {
@@ -19,41 +20,52 @@ namespace QLTourism.Models
 
         public int id { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "Không được để trống tên")]
+        [DisplayName("Tên tour")]
+        [StringLength(255)]
         public string pkgName { get; set; }
 
+        [DisplayName("Ngày khởi hành")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [Column(TypeName = "date")]
         public DateTime? pkgStartDate { get; set; }
 
-        [StringLength(10)]
+        [DisplayName("Thời gian")]
+        [StringLength(255)]
         public string pkgTimePeriod { get; set; }
 
-        [StringLength(10)]
+        [DisplayName("Điểm khởi hành")]
+        [StringLength(255)]
         public string pkgStartPlace { get; set; }
 
-        [StringLength(10)]
+        [DisplayName("Điểm kết thúc")]
+        [StringLength(255)]
         public string pkgEndPlace { get; set; }
 
-        [StringLength(50)]
+        [DisplayName("Chi tiết")]
+        [Column(TypeName = "ntext")]
         public string pkgDesc { get; set; }
 
-        [StringLength(10)]
+        [DisplayName("Quy định")]
+        [StringLength(255)]
         public string pkgRules { get; set; }
 
-        [StringLength(10)]
+        [DisplayName("Phương tiện")]
+        [StringLength(255)]
         public string pkgTransporter { get; set; }
 
-        [Column(TypeName = "money")]
-        public decimal pkgBasePrice { get; set; }
+        [DisplayName("Giá cơ bản")]
+        public int pkgBasePrice { get; set; }
 
-        [StringLength(10)]
+        [DisplayName("Điều kiện")]
+        [StringLength(255)]
         public string pkgCondition { get; set; }
 
-        [StringLength(10)]
-        public string pkgSlot { get; set; }
+        [DisplayName("Chỗ")]
+        public int? pkgSlot { get; set; }
 
-        [StringLength(10)]
-        public string active { get; set; }
+        [DisplayName("Kích hoạt")]
+        public int? active { get; set; }
 
         public int? categoryId { get; set; }
 

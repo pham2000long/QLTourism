@@ -10,8 +10,6 @@ namespace QLTourism.Models
     {
         public int id { get; set; }
 
-        public double? itineraryNo { get; set; }
-
         public DateTime? tripStart { get; set; }
 
         public DateTime? tripEnd { get; set; }
@@ -22,10 +20,9 @@ namespace QLTourism.Models
         [StringLength(255)]
         public string destination { get; set; }
 
-        [Column(TypeName = "money")]
-        public decimal? Price { get; set; }
+        public int? Price { get; set; }
 
-        [StringLength(10)]
+        [StringLength(255)]
         public string customerNote { get; set; }
 
         public int? bookingId { get; set; }

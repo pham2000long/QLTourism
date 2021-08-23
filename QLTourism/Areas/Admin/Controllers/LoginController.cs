@@ -20,7 +20,7 @@ namespace QLTourism.Areas.Admin.Controllers
                 Session["Message"] = "Bạn đã đăng nhập!";
                 return RedirectToAction("Index", "Dashboard");
             }
-            return View();
+            return View(new User());
         }
 
         [HttpPost]

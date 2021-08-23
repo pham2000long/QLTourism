@@ -8,14 +8,13 @@ namespace QLTourism.Models
 
     public partial class Price
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [StringLength(255)]
         public string title { get; set; }
 
-        [Column("price", TypeName = "money")]
-        public decimal? price1 { get; set; }
+        [Column("price")]
+        public int? price1 { get; set; }
 
         public int? packageId { get; set; }
 

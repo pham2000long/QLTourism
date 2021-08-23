@@ -17,10 +17,10 @@ namespace QLTourism.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
-        [StringLength(50)]
+        [StringLength(255)]
         public string rwdName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(255)]
         public string rwdDesc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

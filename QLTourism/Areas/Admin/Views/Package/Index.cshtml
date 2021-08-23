@@ -1,0 +1,107 @@
+﻿@model IEnumerable<QLTourism.Models.Package>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Quản lý tour</h2>
+
+<p>
+    @Html.ActionLink("Tạo mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgStartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgTimePeriod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgStartPlace)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgEndPlace)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgRules)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgTransporter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgBasePrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgCondition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pkgSlot)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.active)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgStartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgTimePeriod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgStartPlace)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgEndPlace)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgRules)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgTransporter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgBasePrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgCondition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pkgSlot)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.active)
+        </td>
+        <td>
+            @Html.ActionLink("Gói combos", "Prices", new { id = item.id }) |
+            @Html.ActionLink("Sửa", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id = item.id }) |
+            @Html.ActionLink("Xoá", "Delete", new { id = item.id })
+        </td>
+    </tr>
+}
+
+</table>
