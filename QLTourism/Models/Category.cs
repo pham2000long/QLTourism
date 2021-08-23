@@ -1,11 +1,10 @@
-﻿namespace QLTourism.Models
+namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.ComponentModel;
 
     public partial class Category
     {
@@ -19,11 +18,9 @@
         public int id { get; set; }
 
         [Required]
-        [DisplayName("Danh mục")]
         [StringLength(255)]
         public string name { get; set; }
 
-        [DisplayName("Danh mục cha")]
         public int parentId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

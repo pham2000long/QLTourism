@@ -1,11 +1,10 @@
-﻿namespace QLTourism.Models
+namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.ComponentModel;
 
     public partial class Package
     {
@@ -20,51 +19,38 @@
 
         public int id { get; set; }
 
-        [Required(ErrorMessage = "Không được để trống tên")]
-        [DisplayName("Tên tour")]
+        [Required]
         [StringLength(255)]
         public string pkgName { get; set; }
 
-        [DisplayName("Ngày khởi hành")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         [Column(TypeName = "date")]
         public DateTime? pkgStartDate { get; set; }
 
-        [DisplayName("Thời gian")]
         [StringLength(255)]
         public string pkgTimePeriod { get; set; }
 
-        [DisplayName("Điểm khởi hành")]
         [StringLength(255)]
         public string pkgStartPlace { get; set; }
 
-        [DisplayName("Điểm kết thúc")]
         [StringLength(255)]
         public string pkgEndPlace { get; set; }
 
-        [DisplayName("Chi tiết")]
         [Column(TypeName = "ntext")]
         public string pkgDesc { get; set; }
 
-        [DisplayName("Quy định")]
         [StringLength(255)]
         public string pkgRules { get; set; }
 
-        [DisplayName("Phương tiện")]
         [StringLength(255)]
         public string pkgTransporter { get; set; }
 
-        [DisplayName("Giá cơ bản")]
         public int pkgBasePrice { get; set; }
 
-        [DisplayName("Điều kiện")]
         [StringLength(255)]
         public string pkgCondition { get; set; }
 
-        [DisplayName("Chỗ")]
         public int? pkgSlot { get; set; }
 
-        [DisplayName("Kích hoạt")]
         public int? active { get; set; }
 
         public int? categoryId { get; set; }
