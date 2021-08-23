@@ -8,7 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-            : base("name=TourismDB1")
+            : base("name=TourismDB5")
         {
         }
 
@@ -24,6 +24,7 @@ namespace QLTourism.Models
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<Reward> Rewards { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Slider> Sliders { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TripType> TripTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -126,6 +127,14 @@ namespace QLTourism.Models
                 .WithRequired(e => e.Reward)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Slider>()
+                .Property(e => e.imagePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Slider>()
+                .Property(e => e.urlPath)
+                .IsUnicode(false);
+
             modelBuilder.Entity<User>()
                 .Property(e => e.username)
                 .IsUnicode(false);
@@ -146,7 +155,5 @@ namespace QLTourism.Models
                 .Property(e => e.avatar)
                 .IsUnicode(false);
         }
-
-        public System.Data.Entity.DbSet<QLTourism.Models.Slider> Sliders { get; set; }
     }
 }

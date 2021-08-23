@@ -36,11 +36,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })*@
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose" name="date" data-provide="datepicker" data-date-format="yyyy/mm/dd">
                     <div class="input-group-append bg-custom b-0"><span class="input-group-text"><i class="mdi mdi-calendar"></i></span></div>
-                </div><!-- input-group -->
+                </div>
                 @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
             </div>
         </div>
