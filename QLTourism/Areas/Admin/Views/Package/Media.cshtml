@@ -40,7 +40,7 @@
                             <input type="file" id="input-file-now-custom-1" class="dropify" data-default-file="@Url.Content(@ImagePath)" />
                         </div>
                         <div class="col-md-10" id="videoChoice">
-                            @Html.EditorFor(model => model.path, new { htmlAttributes = new { @class = "form-control", @id = "titlez" } })
+                            @Html.EditorFor(model => model.path, new { htmlAttributes = new { @class = "form-control", @id = "video" } })
                             @Html.ValidationMessageFor(model => model.path, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -299,6 +299,10 @@
             });
 
     })
+
+    var addz = function () {
+        $("#videoz").val('');
+    }
 
     var Confirmz = function (id) {
         $("#DeleteId").val(id);
