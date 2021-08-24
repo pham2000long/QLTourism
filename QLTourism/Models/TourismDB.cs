@@ -8,11 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-<<<<<<< HEAD
-            : base("name=TourismDB5")
-=======
             : base("name=TourismBang")
->>>>>>> minhtudev
         {
         }
 
@@ -29,10 +25,6 @@ namespace QLTourism.Models
         public virtual DbSet<Reward> Rewards { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
-<<<<<<< HEAD
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-=======
->>>>>>> minhtudev
         public virtual DbSet<TripType> TripTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
