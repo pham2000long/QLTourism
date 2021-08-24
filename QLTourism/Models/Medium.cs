@@ -8,7 +8,6 @@ namespace QLTourism.Models
 
     public partial class Medium
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         public int type { get; set; }

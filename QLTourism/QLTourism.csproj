@@ -1469,6 +1469,7 @@
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.min.js" />
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.standalone.min.js" />
     <Content Include="Areas\Admin\wwwroot\avatar\user.png" />
+    <Content Include="Areas\Admin\wwwroot\thumbail\tourThumbail.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1582,6 +1583,7 @@
     <Content Include="Areas\Admin\Views\Package\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Package\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Package\Prices.cshtml" />
+    <Content Include="Areas\Admin\Views\Package\Media.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1638,7 +1640,7 @@
     <Folder Include="Areas\Admin\Public\assets\libs\pdfmake\src\" />
     <Folder Include="Areas\Admin\Public\assets\libs\raphael\dev\test\" />
     <Folder Include="Areas\Admin\Public\assets\libs\save\test\" />
-    <Folder Include="Areas\Admin\wwwroot\thumbail\" />
+    <Folder Include="Areas\Admin\wwwroot\tourImage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

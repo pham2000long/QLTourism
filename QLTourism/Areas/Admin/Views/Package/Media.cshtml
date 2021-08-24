@@ -1,0 +1,320 @@
+﻿@model QLTourism.Models.Medium
+
+@{
+    ViewBag.Title = "Media";
+    var ImagePath = "~/Areas/Admin/wwwroot/thumbail/tourThumbail.jpg";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/Areas/Admin/Public/assets/libs/jquery/jquery.min.js"></script>
+
+<h2>Thư viện ảnh, video của tour "@ViewBag.Ten"</h2>
+
+<p>
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addMedia">Thêm mới</a>
+</p>
+
+<div class="modal fade" id="addMedia">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm media</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <div class="form-group">
+                        <input id="zz" name="packageId" type="hidden" value="@ViewBag.Id" />
+                        @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="radio" id="imageMedia" name="type" value="1" >
+                            <label for="videoMedia">Ảnh</label><br>
+                            <input type="radio" id="videoMedia" name="type" value="2">
+                            <label for="imageMedia">Video</label><br>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.path, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10" id="imageChoice">
+                            <input type="file" id="input-file-now-custom-1" class="dropify" data-default-file="@Url.Content(@ImagePath)" />
+                        </div>
+                        <div class="col-md-10" id="videoChoice">
+                            @Html.EditorFor(model => model.path, new { htmlAttributes = new { @class = "form-control", @id = "titlez" } })
+                            @Html.ValidationMessageFor(model => model.path, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="btnSave" class="btn btn-primary mr-2" data-save="modal">Thêm</a>
+                <a href="#" id="btnCancel" class="btn btn-danger" data-dismiss="modal">Huỷ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editMedia">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Sửa</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <input id="editId" name="id" type="hidden" value="" />
+                        <input id="zzz" name="packageId" type="hidden" value="@ViewBag.Id" />
+                        @Html.LabelFor(model => model.type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="radio" id="imageMediaz" name="type" value="1">
+                            <label for="videoMedia">Ảnh</label><br>
+                            <input type="radio" id="videoMediaz" name="type" value="2">
+                            <label for="imageMedia">Video</label><br>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.path, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10" id="imageChoicez">
+                            <div class="col-md-3">
+                                <input type="file" name="path" id="input-file-now-custom-2" class="dropify" data-default-file="@Url.Content(@ImagePath)" />
+                            </div>
+                        </div>
+                        <div class="col-md-10" id="videoChoicez">
+                            @Html.EditorFor(model => model.path, new { htmlAttributes = new { @class = "form-control", @id = "videoz" } })
+                            @Html.ValidationMessageFor(model => model.path, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="btnEdit" class="btn btn-primary mr-2" data-save="modal">Lưu</a>
+                <a href="#" id="btnCancel" class="btn btn-danger" data-dismiss="modal">Huỷ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" aria-hidden="true" id="deleteMedia">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="DeleteId" name="DeleteId" type="hidden" value="" />
+                <h3>Bạn có chắc chắn muốn xoá ảnh/video này không?</h3>
+            </div>
+            <div class="modal-footer">
+                <a href="#" id="btnDelete" class="btn btn-primary mr-2" data-save="modal">Xoá</a>
+                <a href="#" id="btnCancel" class="btn btn-danger" data-dismiss="modal">Huỷ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Package.pkgName)
+            </th>*@
+        <th>
+            Loại
+        </th>
+        <th>
+            Ảnh/đường dẫn video
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.Medias)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Package.pkgName)
+                </td>*@
+            @{
+                if (@item.type == 1)
+                {
+                    <td>Ảnh</td>
+                }
+                else if (@item.type == 2)
+                {
+                    <td>Video</td>
+                }
+            }
+            @if (item.type == 1)
+            {
+                string ImagePathz = "~/Areas/Admin/wwwroot/tourImage/" + item.path;
+                <td>
+                    <img src="@Url.Content(ImagePathz)" width="100" class="img-thumbnail" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @item.path
+                </td>
+            }
+            <td>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editMedia" onclick="editz(@item.id,@item.type,'@item.path')">Sửa</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#deleteMedia" onclick="Confirmz(@item.id)">Xoá </a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+
+    $(document).ready(function () {
+        $("#btnSave").click(function () {
+            let media = {};
+            let form = new FormData();
+            let formData = $('#addForm').serializeArray({
+            });
+            $.each(formData, function (index, value) {
+                media["" + value.name + ""] = value.value;
+            });
+            let image = $("#input-file-now-custom-1").prop("files")[0];
+            form.append("media", JSON.stringify(media));
+            form.append("hinhanh", image);
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Package/AddMedia',
+                cache: false,
+                processData: false,
+                contentType : false,
+                enctype: "multipart/form-data",
+                data: form,
+                async: true,
+                success: function (response) {
+                    $("#add-message").html(response.message);
+                    if (response.status == true) {
+                        $("#add-message").addClass("text-warning");
+                        setTimeout(function () {
+                            window.location.href = "/Admin/Package/Media/" + "@ViewBag.Id";
+                        }, 500)
+                    } else {
+                        $("#add-message").addClass("text-danger");
+                    }
+                },
+                error: function (response) {
+                    console.log(xhr.responseText);
+                    alert("Error has occurred..");
+                }
+            });
+            return false;
+        })
+
+        $("#btnEdit").click(function () {
+            let media = {};
+            let form = new FormData();
+            let formData = $('#editForm').serializeArray({
+            });
+            $.each(formData, function (index, value) {
+                media["" + value.name + ""] = value.value;
+            });
+            let image = $("#input-file-now-custom-1").prop("files")[0];
+            form.append("media", JSON.stringify(media));
+            form.append("hinhanh", image);
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Package/EditMedia',
+                cache: false,
+                processData: false,
+                contentType : false,
+                enctype: "multipart/form-data",
+                data: form,
+                async: true,
+                success: function (response) {
+                    $("#add-message").html(response.message);
+                    if (response.status == true) {
+                        $("#add-message").addClass("text-warning");
+                        setTimeout(function () {
+                            window.location.href = "/Admin/Package/Media/" + "@ViewBag.Id";
+                        }, 500)
+                    } else {
+                        $("#add-message").addClass("text-danger");
+                    }
+                },
+                error: function (response) {
+                    console.log(xhr.responseText);
+                    alert("Error has occurred..");
+                }
+            });
+            return false;
+        })
+
+        $("#btnDelete").click(function () {
+            var idz = $("#DeleteId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Package/DeleteMedia",
+                data: {id: idz},
+                success: function (result) {
+                    window.location.href = "/Admin/Package/Media/" + "@ViewBag.Id"
+                }
+            })
+        })
+
+        $("#btnCancel").click(function () {
+            window.location.href = "/Admin/Package/Prices/" + "@ViewBag.Id";
+        })
+
+        $('input:radio[id="imageMedia"]').change(
+            function () {
+                if ($(this).is(':checked')) {
+                    $('#imageChoice').show();
+                    $('#videoChoice').hide();
+                }
+            });
+        $('input:radio[id="videoMedia"]').change(
+            function () {
+                if ($(this).is(':checked')) {
+                    $('#videoChoice').show();
+                    $('#imageChoice').hide();
+                }
+            });
+
+        $('input:radio[id="imageMediaz"]').change(
+            function () {
+                if ($(this).is(':checked')) {
+                    $('#imageChoicez').show();
+                    $('#videoChoicez').hide();
+                }
+            });
+        $('input:radio[id="videoMediaz"]').change(
+            function () {
+                if ($(this).is(':checked')) {
+                    $('#videoChoicez').show();
+                    $('#imageChoicez').hide();
+                }
+            });
+
+    })
+
+    var Confirmz = function (id) {
+        $("#DeleteId").val(id);
+    }
+    var editz = function (id, type, path) {
+        if (type == 1) {
+            $("#imageMediaz").prop("checked", true);
+            $('#imageChoicez').show();
+            $('#videoChoicez').hide();
+        }
+        else {
+            $("#videoMediaz").prop("checked", true);
+            $('#videoChoicez').show();
+            $('#imageChoicez').hide();
+            $("#videoz").val(path);
+        }
+        $("#editId").val(id);
+    }
+</script>

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using QLTourism.Models;
 using System.Dynamic;
+using System.Web.Script.Serialization;
 
 namespace QLTourism.Areas.Admin.Controllers
 {
@@ -115,6 +116,8 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult Prices(int? id)
         {
             var prices = db.Prices.Where(p => p.packageId == id);
+            string ten = db.Packages.Where(p => p.id == id).FirstOrDefault().pkgName;
+            ViewBag.Ten = ten;
             ViewBag.Prices = prices.ToList();
             ViewBag.Id = id;
             return View(new Price());
@@ -155,6 +158,90 @@ namespace QLTourism.Areas.Admin.Controllers
             db.Packages.Remove(package);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Media(int? id)
+        {
+            var medias = db.Media.Where(p => p.packageId == id);
+            string ten = db.Packages.Where(p => p.id == id).FirstOrDefault().pkgName;
+            ViewBag.Ten = ten;
+            ViewBag.Medias = medias.ToList();
+            ViewBag.Id = id;
+            return View(new Medium());
+        }
+
+        public JsonResult AddMedia(string media, HttpPostedFileBase hinhanh)
+        {
+            try
+            {
+                JavaScriptSerializer convert = new JavaScriptSerializer();
+                Medium item = convert.Deserialize<Medium>(media);
+                var f = hinhanh;
+                if (f != null && f.ContentLength > 0 && item.type == 1)
+                {
+                    string fileName = System.IO.Path.GetFileName(f.FileName);
+                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/tourImage/" + fileName);
+                    f.SaveAs(urlImage);
+                    item.path = fileName;
+                }
+                db.Media.Add(item);
+                db.SaveChanges();
+                return Json(new { status = true, message = "Thêm thành công!" });
+            }
+            catch (Exception)
+            {
+                return Json(new { status = false, message = "Thêm không thành công!" });
+            }
+        }
+
+        public JsonResult EditMedia(string media, HttpPostedFileBase hinhanh)
+        {
+            try
+            {
+                bool image = false;
+                JavaScriptSerializer convert = new JavaScriptSerializer();
+                Medium item = convert.Deserialize<Medium>(media);
+                var f = hinhanh;
+                string oldImage = "";
+                if (f != null && f.ContentLength > 0 && item.type == 1)
+                {
+                    string fileName = System.IO.Path.GetFileName(f.FileName);
+                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/tourImage/" + fileName);
+                    f.SaveAs(urlImage);
+                    if (!item.path.Equals(fileName))
+                    {
+                        oldImage = urlImage;
+                        image = true;
+                    }
+                    item.path = fileName;
+                    image = true;
+                }
+                db.Entry(item).State = EntityState.Modified;
+                db.SaveChanges();
+                if(image)
+                    System.IO.File.Delete(oldImage);
+                return Json(new { status = true, message = "Thêm thành công!" });
+            }
+            catch (Exception)
+            {
+                return Json(new { status = false, message = "Thêm không thành công!" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteMedia(int id)
+        {
+            bool result = false;
+            Medium med = db.Media.Find(id);
+            db.Media.Remove(med);
+            if(med.type == 1)
+            {
+                string oldImage = Server.MapPath("~/Areas/Admin/wwwroot/tourImage/" + med.path);
+                System.IO.File.Delete(oldImage);
+            }
+            db.SaveChanges();
+            result = true;
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
