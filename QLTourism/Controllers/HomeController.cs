@@ -22,18 +22,11 @@ namespace QLTourism.Controllers
             return PartialView(danhmucs);
         }
 
-        public ActionResult About()
+        [ChildActionOnly]
+        public ActionResult HomeSlider()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            IEnumerable<Slider> slider = db.Sliders.Select(p => p);
+            return PartialView(slider);
         }
     }
 }

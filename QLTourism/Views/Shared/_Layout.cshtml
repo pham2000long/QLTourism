@@ -20,6 +20,9 @@
     <link href="~/Assets/css/style.css" rel="stylesheet">
     <link href="~/Assets/css/vendors.css" rel="stylesheet">
 
+    <!-- SPECIFIC CSS -->
+    <link href="~/Assets/layerslider/css/layerslider.css" rel="stylesheet">
+
     <!-- YOUR CUSTOM CSS -->
     <link href="~/Assets/css/custom.css" rel="stylesheet">
 </head>
@@ -50,60 +53,15 @@
             <nav id="menu" class="main-menu">
                 <ul>
                     <li>
-                        <span><a href="#0">Home</a></span>
-                        <ul>
-                            <li>
-                                <span><a href="index.html">Home version 1</a></span>
-                                <ul>
-                                    <li><a href="index-2.html">Home version 2</a></li>
-                                    <li><a href="index-3.html">Home version 3</a></li>
-                                    <li><a href="index-4.html">Home version 4</a></li>
-                                    <li><a href="index-5.html">Home version 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="index-2.html">Home version 2</a></li>
-                            <li><a href="index-3.html">Home version 3</a></li>
-                            <li><a href="index-4.html">Home version 4</a></li>
-                            <li><a href="index-5.html">Home version 5</a></li>
-                            <li><a href="index-6.html">With Cookie bar (EU law)</a></li>
-                            <li><a href="index-7.html">Home version 7</a></li>
-                        </ul>
+                        <span><a href="Home">Trang chủ</a></span>
                     </li>
                     @{ Html.RenderAction("TourMenu", "Home");}
                     <li>
-                        <span><a href="#0">Pages</a></span>
-                        <ul>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="media-gallery.html">Media gallery</a></li>
-                            <li><a href="help.html">Help Section</a></li>
-                            <li><a href="faq.html">Faq Section</a></li>
-                            <li><a href="wishlist.html">Wishlist page</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                        </ul>
+                        <span><a href="#0">Tin tức</a></span>
                     </li>
                     <li>
-                        <span><a href="#0">Extra</a></span>
-                        <ul>
-                            <li><a href="menu-options.html">Menu Position Options</a></li>
-                            <li><a href="tour-detail-singlemonth-datepicker.html">Single month Datepicker</a></li>
-                            <li><a href="404.html">404 Error page</a></li>
-                            <li><a href="cart-1.html">Cart page 1</a></li>
-                            <li><a href="cart-2.html">Cart page 2</a></li>
-                            <li><a href="cart-3.html">Cart page 3</a></li>
-                            <li><a href="pricing-tables.html">Responsive pricing tables</a></li>
-                            <li><a href="coming_soon/index.html">Coming soon</a></li>
-                            <li><a href="invoice.html">Invoice</a></li>
-                            <li><a href="icon-pack-1.html">Icon pack 1</a></li>
-                            <li><a href="icon-pack-2.html">Icon pack 2</a></li>
-                            <li><a href="icon-pack-3.html">Icon pack 3</a></li>
-                            <li><a href="icon-pack-4.html">Icon pack 4</a></li>
-                            <li><a href="hamburgers.html">Animated Hamburgers</a></li>
-                        </ul>
+                        <span><a href="#0">Liên hệ</a></span>
                     </li>
-                    <li><span><a href="#0">Buy template</a></span></li>
                 </ul>
             </nav>
         </header>
@@ -253,6 +211,24 @@
     <script src="~/Assets/js/common_scripts.js"></script>
     <script src="~/Assets/js/main.js"></script>
     <script src="~/Assets/assets/validate.js"></script>
-    @RenderSection("scripts", required: false)
+    <!-- SPECIFIC SCRIPTS -->
+    <script src="~/Assets/layerslider/js/greensock.js"></script>
+    <script src="~/Assets/layerslider/js/layerslider.transitions.js"></script>
+    <script src="~/Assets/layerslider/js/layerslider.kreaturamedia.jquery.js"></script>
+    <script>
+        'use strict';
+        $('#layerslider').layerSlider({
+            autoStart: true,
+            navButtons: false,
+            navStartStop: false,
+            showCircleTimer: false,
+            responsive: true,
+            responsiveUnder: 1280,
+            layersContainer: 1200,
+            skinsPath: 'Assets/layerslider/skins/'
+            // Please make sure that you didn't forget to add a comma to the line endings
+            // except the last line!
+        });
+    </script>
 </body>
 </html>

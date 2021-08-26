@@ -19,7 +19,7 @@
         public int id { get; set; }
 
         [Required]
-        [DisplayName("Danh mục")]
+        [DisplayName("Tên danh mục")]
         [StringLength(255)]
         public string name { get; set; }
 

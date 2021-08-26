@@ -24,6 +24,7 @@ namespace QLTourism.Models
         public virtual DbSet<Program> Programs { get; set; }
         public virtual DbSet<Reward> Rewards { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Slider> Sliders { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TripType> TripTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -77,6 +78,14 @@ namespace QLTourism.Models
                 .HasMany(e => e.Customers_Rewards)
                 .WithRequired(e => e.Reward)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Slider>()
+                .Property(e => e.imagePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Slider>()
+                .Property(e => e.urlPath)
+                .IsUnicode(false);
 
             modelBuilder.Entity<User>()
                 .Property(e => e.username)

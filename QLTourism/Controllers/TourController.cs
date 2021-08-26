@@ -21,7 +21,7 @@ namespace QLTourism.Controllers
             ViewBag.searchString = searchString;
             ViewBag.madm = madm;
             var tours = db.Packages.Select(p => p);
-            if (!String.IsNullOrEmpty(searchString) || !searchString.Equals(""))
+            if (!String.IsNullOrEmpty(searchString))
             {
                 tours = tours.Where(p => p.pkgName.Contains(searchString));
             }

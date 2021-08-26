@@ -142,6 +142,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\Reward.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Slider.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TourismDB.cs" />
     <Compile Include="Models\TripType.cs" />
@@ -1476,6 +1478,7 @@
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.min.js" />
     <Content Include="Areas\Admin\Public\assets\libs\tippy.js\tippy.standalone.min.js" />
     <Content Include="Areas\Admin\wwwroot\avatar\user.png" />
+    <Content Include="Areas\Admin\wwwroot\slider\slider.jpg" />
     <Content Include="Areas\Admin\wwwroot\thumbail\tourThumbail.jpg" />
     <Content Include="Assets\css\ajax-loader.gif" />
     <Content Include="Assets\css\blog.css" />
@@ -2591,6 +2594,11 @@
     <Content Include="Assets\sass\_layout.scss" />
     <Content Include="Assets\sass\_mixin.scss" />
     <Content Include="Assets\sass\_variables.scss" />
+    <Content Include="Areas\Admin\Views\Slider\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Slider\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2613,11 +2621,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\TourMenu.cshtml" />
     <Content Include="Views\Tour\ListTour.cshtml" />
+    <Content Include="Views\Home\HomeSlider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
