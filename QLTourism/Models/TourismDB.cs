@@ -8,7 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-            : base("name=TourismTu")
+            : base("name=TourismLong")
         {
         }
 
@@ -66,6 +66,10 @@ namespace QLTourism.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<News>()
+                .Property(e => e.thumbail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Package>()
                 .Property(e => e.thumbail)
                 .IsUnicode(false);
 

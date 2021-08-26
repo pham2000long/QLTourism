@@ -8,6 +8,11 @@
 <h2>Xóa danh mục</h2>
 
 <h3>Bạn có chắc chắn muốn xóa danh mục này?</h3>
+@if (ViewBag.Error != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+}
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -36,7 +41,8 @@
         </dd>
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -45,3 +51,6 @@
         </div>
     }
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -7,7 +7,11 @@
 <script src="~/Areas/Admin/Public/assets/libs/jquery/jquery.min.js"></script>
 
 <h2>Các gói combo của tour @ViewBag.Ten</h2>
-
+@if (ViewBag.Error != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+}
 <p>
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addPrice">Thêm combo</a>
     <a href="/Admin/Package/" class="btn btn-danger">Trở về</a>
@@ -109,8 +113,8 @@
 <table class="table">
     <tr>
         @*<th>
-            Tên tour
-        </th>*@
+                Tên tour
+            </th>*@
         <th>
             Loại combo
         </th>
@@ -124,8 +128,8 @@
     {
         <tr>
             @*<td>
-                @item.Package.pkgName
-            </td>*@
+                    @item.Package.pkgName
+                </td>*@
             <td>
                 @item.title
             </td>
@@ -200,3 +204,6 @@
 
 
 </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

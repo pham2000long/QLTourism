@@ -1,7 +1,8 @@
-namespace QLTourism.Models
+﻿namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -16,10 +17,12 @@ namespace QLTourism.Models
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         public int rewardId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Mã khuyến mại không được để trống!")]
         [StringLength(25)]
+        [DisplayName("Mã khuyến mại")]
         public string rwdNumber { get; set; }
 
         public virtual Customer Customer { get; set; }

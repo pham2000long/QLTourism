@@ -38,6 +38,7 @@ namespace QLTourism.Areas.Admin.Controllers
                         Session["username"] = data.FirstOrDefault().username;
                         Session["idUser"] = data.FirstOrDefault().id;
                         Session["avatar"] = data.FirstOrDefault().avatar;
+                        Session["roleId"] = data.FirstOrDefault().roleId;
                         return RedirectToAction("Index", "Dashboard");
                     }
                     else
@@ -62,6 +63,7 @@ namespace QLTourism.Areas.Admin.Controllers
             Session["username"] = null;
             Session["idUser"] = null;
             Session["avatar"] = null;
+            Session["roleId"] = null;
             return RedirectToAction("Index");
         }
     }

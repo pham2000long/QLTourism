@@ -11,6 +11,12 @@
     @*@Html.ActionLink("Create New", "Create")*@
     <a class="btn btn-primary" href="@Url.Action("Create", "User")" role="button">Thêm mới</a>
 </p>
+@if (Session["Error"] != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">@Session["Error"]</div>
+    Session["Error"] = null;
+}
 <table class="table">
     <tr>
         <th>
@@ -34,46 +40,51 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.username)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.email)
-    </td>
-    <td>
-        @if ( item.gender == true)
-        {
-            <p>Nam</p>
-        }
-        else {
-            <p>Nữ</p>
-        }
-    </td>
-    <td>
-        @if (item.avatar != null)
-        {
-            string ImagePath = "~/Areas/Admin/wwwroot/avatar/" + item.avatar;
-            <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
-        }
-        else
-        {
-            <img src="~/Areas/Admin/wwwroot/avatar/user.png" width="100" class="img-thumbnail" />
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @if (item.gender == true)
+                {
+                    <p>Nam</p>
+                }
+                else
+                {
+                    <p>Nữ</p>
+                }
+            </td>
+            <td>
+                @if (item.avatar != null)
+                {
+                    string ImagePath = "~/Areas/Admin/wwwroot/avatar/" + item.avatar;
+                    <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
+                }
+                else
+                {
+                    <img src="~/Areas/Admin/wwwroot/avatar/user.png" width="100" class="img-thumbnail" />
+                }
 
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Role.name)
-    </td>
-    <td>
-        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.id })
-    </td>
-</tr>
-}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.name)
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.id }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
 
 </table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

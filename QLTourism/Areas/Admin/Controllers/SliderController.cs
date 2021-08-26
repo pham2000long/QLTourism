@@ -147,9 +147,17 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Slider slider = db.Sliders.Find(id);
-            db.Sliders.Remove(slider);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Sliders.Remove(slider);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Lỗi nhập dữ liệu!" + ex.Message;
+                return View(slider);
+            }
         }
 
         protected override void Dispose(bool disposing)

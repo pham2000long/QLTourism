@@ -51,22 +51,28 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "id,title,date,summary,detail,categoryId,thumbail")] News news, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (image != null && image.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(image.FileName);
-                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
-                    image.SaveAs(urlImage);
-                    news.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    if (image != null && image.ContentLength > 0)
+                    {
+                        string fileName = System.IO.Path.GetFileName(image.FileName);
+                        string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                        image.SaveAs(urlImage);
+                        news.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    }
+                    db.News.Add(news);
+                    db.SaveChanges();
                 }
-                db.News.Add(news);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", news.categoryId);
-            return View(news);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                ViewBag.categoryId = new SelectList(db.Categories, "id", "name", news.categoryId);
+                return View(news);
+            }
         }
 
         // GET: Admin/News/Edit/5
@@ -93,21 +99,28 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult Edit([Bind(Include = "id,title,date,summary,detail,categoryId,thumbail")] News news, HttpPostedFileBase editImage)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (editImage != null && editImage.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(editImage.FileName);
-                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
-                    editImage.SaveAs(urlImage);
-                    news.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    if (editImage != null && editImage.ContentLength > 0)
+                    {
+                        string fileName = System.IO.Path.GetFileName(editImage.FileName);
+                        string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                        editImage.SaveAs(urlImage);
+                        news.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    }
+                    db.Entry(news).State = EntityState.Modified;
+                    db.SaveChanges(); 
                 }
-                db.Entry(news).State = EntityState.Modified;
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", news.categoryId);
-            return View(news);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                ViewBag.categoryId = new SelectList(db.Categories, "id", "name", news.categoryId);
+                return View(news);
+            }
         }
 
         // GET: Admin/News/Delete/5
@@ -131,9 +144,18 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             News news = db.News.Find(id);
-            db.News.Remove(news);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.News.Remove(news);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                return View(news);
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

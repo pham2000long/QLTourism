@@ -17,28 +17,43 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Role
         public ActionResult Index()
         {
-            return View(db.Roles.ToList());
+            if (Session["roleId"].Equals(1))
+            {
+                return View(db.Roles.ToList());
+            }
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý quyền hạn!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // GET: Admin/Role/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["roleId"].Equals(1))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Role role = db.Roles.Find(id);
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
             }
-            Role role = db.Roles.Find(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý quyền hạn!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // GET: Admin/Role/Create
         public ActionResult Create()
         {
-            return View(new Role());
+            if (Session["roleId"].Equals(1))
+            {
+                return View(new Role());
+            }
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý quyền hạn!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // POST: Admin/Role/Create
@@ -67,16 +82,21 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Role/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["roleId"].Equals(1))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Role role = db.Roles.Find(id);
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
             }
-            Role role = db.Roles.Find(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý quyền hạn!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // POST: Admin/Role/Edit/5
@@ -105,16 +125,21 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Role/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["roleId"].Equals(1))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Role role = db.Roles.Find(id);
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
             }
-            Role role = db.Roles.Find(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý quyền hạn!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // POST: Admin/Role/Delete/5
@@ -132,7 +157,7 @@ namespace QLTourism.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 ViewBag.Error = "Không thể xóa bản ghi" + ex.Message;
-                return View();
+                return View(role);
             }
         }
 

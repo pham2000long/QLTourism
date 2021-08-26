@@ -74,15 +74,21 @@ namespace QLTourism.Areas.Admin.Controllers
 
         public ActionResult Create([Bind(Include = "id,name,parentId")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Categories.Add(category);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
-
-            ViewBag.parentId = new SelectList(db.Categories, "id", "name", category.parentId);
-            return View(category);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                ViewBag.parentId = new SelectList(db.Categories, "id", "name", category.parentId);
+                return View(category);
+            }
         }
 
         // GET: Admin/Category/Edit/5
@@ -111,14 +117,21 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,parentId")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Entry(category).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
-            ViewBag.parentId = new SelectList(db.Categories, "id", "name", category.parentId);
-            return View(category);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                ViewBag.parentId = new SelectList(db.Categories, "id", "name", category.parentId);
+                return View(category);
+            }
         }
 
         // GET: Admin/Category/Delete/5
@@ -142,9 +155,18 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Categories.Remove(category);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                return View(category);
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

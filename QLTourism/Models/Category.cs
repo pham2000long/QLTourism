@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.ComponentModel;
 
     public partial class Category
     {
@@ -16,14 +16,15 @@
             Packages = new HashSet<Package>();
         }
 
+        [DisplayName("Mã danh mục")]
         public int id { get; set; }
 
-        [Required]
         [DisplayName("Tên danh mục")]
+        [Required(ErrorMessage = "Tên danh mục không được để trống!")]
         [StringLength(255)]
         public string name { get; set; }
 
-        [DisplayName("Danh mục cha")]
+        [DisplayName("Tên danh mục cha")]
         public int parentId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -69,10 +69,15 @@
         </dt>
 
         <dd>
-            @{
+            @if (Model.avatar != null)
+            {
                 string ImagePath = "~/Areas/Admin/wwwroot/avatar/" + Model.avatar;
+                <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
             }
-            <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
+            else
+            {
+                <img src="~/Areas/Admin/wwwroot/avatar/user.png" width="100" class="img-thumbnail" />
+            }
         </dd>
 
         <dt>
@@ -94,5 +99,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Quay lại", "Index")
 </p>

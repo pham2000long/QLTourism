@@ -67,23 +67,29 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,pkgName,pkgStartDate,pkgTimePeriod,pkgStartPlace,pkgEndPlace,pkgDesc,pkgRules,pkgTransporter,pkgBasePrice,pkgCondition,pkgSlot,active,categoryId")] Package package, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (image != null && image.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(image.FileName);
-                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
-                    image.SaveAs(urlImage);
-                    package.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    if (image != null && image.ContentLength > 0)
+                    {
+                        string fileName = System.IO.Path.GetFileName(image.FileName);
+                        string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                        image.SaveAs(urlImage);
+                        package.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    }
+                    package.pkgDesc = System.Net.WebUtility.HtmlDecode(package.pkgDesc);
+                    db.Packages.Add(package);
+                    db.SaveChanges();
                 }
-                package.pkgDesc = System.Net.WebUtility.HtmlDecode(package.pkgDesc);
-                db.Packages.Add(package);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", package.categoryId);
-            return View(package);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Lỗi nhập dữ liệu " + ex.Message;
+                ViewBag.categoryId = new SelectList(db.Categories, "id", "name", package.categoryId);
+                return View(package);
+            }
         }
 
         // GET: Admin/Package/Edit/5
@@ -109,23 +115,30 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,pkgName,pkgStartDate,pkgTimePeriod,pkgStartPlace,pkgEndPlace,pkgDesc,pkgRules,pkgTransporter,pkgBasePrice,pkgCondition,pkgSlot,active,categoryId")] Package package, HttpPostedFileBase editImage)
         {
-            if (ModelState.IsValid)
+            try
             {
-                package.thumbail = db.Packages.AsNoTracking().Where(p => p.id == package.id).FirstOrDefault().thumbail;
-                if (editImage != null && editImage.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(editImage.FileName);
-                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
-                    editImage.SaveAs(urlImage);
-                    package.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    package.thumbail = db.Packages.AsNoTracking().Where(p => p.id == package.id).FirstOrDefault().thumbail;
+                    if (editImage != null && editImage.ContentLength > 0)
+                    {
+                        string fileName = System.IO.Path.GetFileName(editImage.FileName);
+                        string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                        editImage.SaveAs(urlImage);
+                        package.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    }
+                    package.pkgDesc = System.Net.WebUtility.HtmlDecode(package.pkgDesc);
+                    db.Entry(package).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
-                package.pkgDesc = System.Net.WebUtility.HtmlDecode(package.pkgDesc);
-                db.Entry(package).State = EntityState.Modified;
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", package.categoryId);
-            return View(package);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Lỗi nhập dữ liệu " + ex.Message;
+                ViewBag.categoryId = new SelectList(db.Categories, "id", "name", package.categoryId);
+                return View(package);
+            }
         }
 
         // GET: Admin/Package/Delete/5
@@ -149,9 +162,18 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Package package = db.Packages.Find(id);
-            db.Packages.Remove(package);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Packages.Remove(package);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Lỗi không xóa đươc " + ex.Message;
+                return View(package);
+            }
+            
         }
 
         public ActionResult Programs(int? id)
@@ -167,17 +189,34 @@ namespace QLTourism.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddProgram(Program prc)
         {
-            db.Programs.Add(prc);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Programs.Add(prc);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Xảy ra lỗi " + ex.Message;
+                return View(prc);
+            }
         }
 
         [HttpPost]
         public ActionResult EditProgram(Program prc)
         {
-            db.Entry(prc).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Entry(prc).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Xảy ra lỗi " + ex.Message;
+                return View(prc);
+            }
+            
         }
 
         [HttpPost]
@@ -204,17 +243,33 @@ namespace QLTourism.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddPrice(Price prc)
         {
-            db.Prices.Add(prc);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Prices.Add(prc);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Xảy ra lỗi " + ex.Message;
+                return View(prc);
+            }
         }
 
         [HttpPost]
         public ActionResult EditPrice(Price prc)
         {
-            db.Entry(prc).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Entry(prc).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Xảy ra lỗi " + ex.Message;
+                return View(prc);
+            }
         }
 
         [HttpPost]

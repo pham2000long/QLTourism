@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.ComponentModel;
 
     public partial class Package
     {
@@ -20,57 +20,63 @@
 
         public int id { get; set; }
 
-        [Required(ErrorMessage = "Không được để trống tên")]
-        [DisplayName("Tên tour")]
+        [Required(ErrorMessage = "Tên tour không được để trống!")]
         [StringLength(255)]
+        [DisplayName("Tên tour du lịch")]
         public string pkgName { get; set; }
 
-        [DisplayName("Ngày khởi hành")]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [DisplayName("Ngày bắt đầu")]
+        [Required(ErrorMessage = "Ngày bắt đầu không được để trống!")]
         [Column(TypeName = "date")]
         public DateTime? pkgStartDate { get; set; }
 
-        [DisplayName("Thời gian")]
         [StringLength(255)]
+        [Required(ErrorMessage = "Thời gian diễn ra không được để trống!")]
+        [DisplayName("Thời gian diễn ra")]
         public string pkgTimePeriod { get; set; }
 
-        [DisplayName("Điểm khởi hành")]
         [StringLength(255)]
+        [Required(ErrorMessage = "Điểm xuất phát không được để trống!")]
+        [DisplayName("Điểm xuất phát")]
         public string pkgStartPlace { get; set; }
 
-        [DisplayName("Điểm kết thúc")]
         [StringLength(255)]
+        [Required(ErrorMessage = "Điểm đến không được để trống!")]
+        [DisplayName("Điểm đến")]
         public string pkgEndPlace { get; set; }
 
-        [DisplayName("Chi tiết")]
         [Column(TypeName = "ntext")]
+        [DisplayName("Mô tả")]
         public string pkgDesc { get; set; }
 
-        [DisplayName("Quy định")]
         [StringLength(255)]
+        [DisplayName("Quy định")]
         public string pkgRules { get; set; }
 
-        [DisplayName("Phương tiện")]
         [StringLength(255)]
+        [DisplayName("Phương tiện")]
         public string pkgTransporter { get; set; }
 
         [DisplayName("Giá cơ bản")]
+        [Required(ErrorMessage = "Giá cơ bản không được để trống!")]
         public int pkgBasePrice { get; set; }
 
-        [DisplayName("Điều kiện")]
         [StringLength(255)]
+        [DisplayName("Tình trạng")]
         public string pkgCondition { get; set; }
 
-        [DisplayName("Chỗ")]
+        [DisplayName("Vị trí trống")]
+        [Required(ErrorMessage = "Vị trí trống không được để trống!")]
         public int? pkgSlot { get; set; }
 
-        [DisplayName("Kích hoạt")]
+        [DisplayName("Trạng thái")]
         public int? active { get; set; }
 
+        [DisplayName("Mã danh mục")]
         public int? categoryId { get; set; }
 
-        [DisplayName("Ảnh")]
         [StringLength(255)]
+        [DisplayName("Ảnh bìa")]
         public string thumbail { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

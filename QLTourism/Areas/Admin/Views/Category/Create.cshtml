@@ -7,13 +7,16 @@
 
 <h2>Thêm mới danh mục</h2>
 
-
-@using (Html.BeginForm()) 
+@if (ViewBag.Error != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+}
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4></h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -27,9 +30,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.parentId, "Danh mục cha", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select class = "form-control" name="parentId">
+                <select class="form-control" name="parentId">
                     <option value="0">Chọn danh mục cha</option>
-                    @foreach(var item in @ViewBag.parentId)
+                    @foreach (var item in @ViewBag.parentId)
                     {
                         <option value="@item.id">@item.name</option>
                     }
@@ -50,6 +53,6 @@
     @Html.ActionLink("Trở về", "Index")
 </div>
 
-@*@section Scripts {
+@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}*@
+}

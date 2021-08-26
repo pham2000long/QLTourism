@@ -8,11 +8,16 @@
 
 <h2>Sửa</h2>
 
+@if (ViewBag.Error != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+}
 
 @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Tin tức</h4>
         <hr />
@@ -48,7 +53,7 @@
             <div class="col-md-10">
                 <textarea id="elm1" class="form-control" name="detail">@Model.detail</textarea>
                 @*@Html.TextAreaFor("elm1", model => model.detail, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.ValidationMessageFor(model => model.detail, "", new { @class = "text-danger" }) 
+                @Html.ValidationMessageFor(model => model.detail, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -80,6 +85,6 @@
     @Html.ActionLink("Trở về", "Index")
 </div>
 
-@*@section Scripts {
+@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}*@
+}

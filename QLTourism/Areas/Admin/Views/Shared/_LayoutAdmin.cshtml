@@ -142,18 +142,22 @@
                             <span>Package</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Role")" class="waves-effect">
-                            <i class="mdi mdi-speedometer"></i>
-                            <span>Role</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "User")" class="waves-effect">
-                            <i class="mdi mdi-speedometer"></i>
-                            <span>User</span>
-                        </a>
-                    </li>
+                    @if (Session["roleId"].Equals(1))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Role")" class="waves-effect">
+                                <i class="mdi mdi-speedometer"></i>
+                                <span>Role</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "User")" class="waves-effect">
+                                <i class="mdi mdi-speedometer"></i>
+                                <span>User</span>
+                            </a>
+                        </li>
+                    }
+
                     <li>
                         <a href="@Url.Action("Index", "News")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>

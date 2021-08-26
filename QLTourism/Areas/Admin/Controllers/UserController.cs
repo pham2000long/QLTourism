@@ -17,30 +17,46 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/User
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Role);
-            return View(users.ToList());
+            if (Session["roleId"].Equals(1))
+            {
+                var users = db.Users.Include(u => u.Role);
+                return View(users.ToList());
+            }
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý nhân viên!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // GET: Admin/User/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["roleId"].Equals(1))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                User user = db.Users.Find(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(user);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý nhân viên!";
+            return RedirectToAction("Index", "Dashboard");
+
         }
 
         // GET: Admin/User/Create
         public ActionResult Create()
         {
-            ViewBag.roleId = new SelectList(db.Roles, "id", "name");
-            return View(new User());
+            if (Session["roleId"].Equals(1))
+            {
+                ViewBag.roleId = new SelectList(db.Roles, "id", "name");
+                return View(new User());
+            }
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý nhân viên!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // POST: Admin/User/Create
@@ -50,22 +66,28 @@ namespace QLTourism.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,username,password,name,email,phone,gender,birthday,address,roleId")] User user, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (image != null && image.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(image.FileName);
-                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/avatar/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
-                    image.SaveAs(urlImage);
-                    user.avatar = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    if (image != null && image.ContentLength > 0)
+                    {
+                        string fileName = System.IO.Path.GetFileName(image.FileName);
+                        string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/avatar/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                        image.SaveAs(urlImage);
+                        user.avatar = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                    }
+                    db.Users.Add(user);
+                    db.SaveChanges();
                 }
-                db.Users.Add(user);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.roleId = new SelectList(db.Roles, "id", "name", user.roleId);
-            return View(user);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                ViewBag.roleId = new SelectList(db.Roles, "id", "name", user.roleId);
+                return View(user);
+            }
         }
 
         // GET: Admin/User/Edit/5
@@ -89,52 +111,68 @@ namespace QLTourism.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,username,password,name,email,phone,gender,birthday,address,roleId")] User user, HttpPostedFileBase editImage)
+        public ActionResult Edit([Bind(Include = "id,username,password,name,email,phone,gender,birthday,address")] User user, HttpPostedFileBase editImage)
         { 
-            if (ModelState.IsValid)
+            try
             {
-                User modifyUser = db.Users.Find(user.id);
-                modifyUser.username = user.username;
-                modifyUser.password = user.password;
-                modifyUser.name = user.name;
-                modifyUser.email = user.email;
-                modifyUser.phone = user.phone;
-                modifyUser.gender = user.gender;
-                modifyUser.birthday = user.birthday;
-                modifyUser.address = user.address;
-                modifyUser.roleId = user.roleId;
-                if (modifyUser != null )
+                if (ModelState.IsValid)
                 {
-                    if (editImage != null && editImage.ContentLength > 0)
+                    User modifyUser = db.Users.Find(user.id);
+                    modifyUser.username = user.username;
+                    modifyUser.password = user.password;
+                    modifyUser.name = user.name;
+                    modifyUser.email = user.email;
+                    modifyUser.phone = user.phone;
+                    modifyUser.gender = user.gender;
+                    modifyUser.birthday = user.birthday;
+                    modifyUser.address = user.address;
+                    if (modifyUser != null)
                     {
-                        string fileName = System.IO.Path.GetFileName(editImage.FileName);
-                        string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/avatar/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
-                        editImage.SaveAs(urlImage);
-                        modifyUser.avatar = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                        if (editImage != null && editImage.ContentLength > 0)
+                        {
+                            string fileName = System.IO.Path.GetFileName(editImage.FileName);
+                            string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/avatar/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                            editImage.SaveAs(urlImage);
+                            modifyUser.avatar = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                        }
                     }
+                    db.Entry(modifyUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["avatar"] = db.Users.Find(user.id).avatar;
                 }
-                db.Entry(modifyUser).State = EntityState.Modified;
-                db.SaveChanges();
-                Session["avatar"] = db.Users.Find(user.id).avatar;
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Dashboard");
             }
-            ViewBag.roleId = new SelectList(db.Roles, "id", "name", user.roleId);
-            return View(user);
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                ViewBag.roleId = new SelectList(db.Roles, "id", "name", user.roleId);
+                return View(user);
+            }
         }
 
         // GET: Admin/User/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["roleId"].Equals(1))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                User user = db.Users.Find(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                if (user.id.Equals(Session["idUser"]))
+                {
+                    Session["Error"] = "Không thể xóa tài khoản đang sử dụng!";
+                    return RedirectToAction("Index");
+                }
+                return View(user);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            Session["Message"] = "Bạn không có quyền truy cập trang quản lý nhân viên!";
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // POST: Admin/User/Delete/5
@@ -143,9 +181,18 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Users.Remove(user);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                return View(user);
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
