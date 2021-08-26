@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using QLTourism.Models;
 using System.Dynamic;
 using System.Web.Script.Serialization;
+using PagedList;
 
 namespace QLTourism.Areas.Admin.Controllers
 {
@@ -17,10 +18,15 @@ namespace QLTourism.Areas.Admin.Controllers
         private TourismDB db = new TourismDB();
 
         // GET: Admin/Package
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var packages = db.Packages.Include(p => p.Category);
-            return View(packages.ToList());
+            ViewBag.searchString = searchString;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                packages = packages.Where(p => p.pkgName.Contains(searchString));
+            }
+            return View(packages.OrderBy(sp => sp.id).ToPagedList(page, pageSize));
         }
 
         // GET: Admin/Package/Details/5
