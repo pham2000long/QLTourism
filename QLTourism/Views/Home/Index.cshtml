@@ -31,17 +31,17 @@
                     @if (item.thumbail != null)
                     {
                         string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
-                        <a href="#"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
+                        <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
                     }
                     else
                     {
                         string ImagePath = "~/Areas/Admin/wwwroot/thumbail/tourThumbail.jpg";
-                        <a href="#"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
+                        <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
                     }
                     <small>@item.Category.name</small>
                 </figure>
                 <div class="wrapper">
-                    <h3><a href="tour-detail.html">@item.pkgName</a></h3>
+                    <h3><a href="/Tour/Details/@item.id">@item.pkgName</a></h3>
                     @if (item.pkgDesc != null)
                     {
                         <p>@item.pkgDesc.Split('>', '<')[2]</p>

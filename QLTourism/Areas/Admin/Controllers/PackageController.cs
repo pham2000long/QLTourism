@@ -16,15 +16,24 @@ namespace QLTourism.Areas.Admin.Controllers
     public class PackageController : Controller
     {
         private TourismDB db = new TourismDB();
+        List<Category> dropDown;
 
         // GET: Admin/Package
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string searchString, int dmFilter = 0, int page = 1, int pageSize = 10)
         {
+            this.dropDown = db.Categories.ToList();
+            var dropDownCate = categoryRecusive(0);
+            ViewBag.DropDown = dropDownCate;
             var packages = db.Packages.Include(p => p.Category);
             ViewBag.searchString = searchString;
+            ViewBag.dmFilter = dmFilter;
             if (!String.IsNullOrEmpty(searchString))
             {
                 packages = packages.Where(p => p.pkgName.Contains(searchString));
+            }
+            if (dmFilter != 0)
+            {
+                packages = packages.Where(p => p.categoryId == dmFilter);
             }
             return View(packages.OrderByDescending(sp => sp.id).ToPagedList(page, pageSize));
         }
@@ -301,6 +310,27 @@ namespace QLTourism.Areas.Admin.Controllers
             db.SaveChanges();
             result = true;
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public List<Category> categoryRecusive(int parent_id = 0, int id = 0, string text = " ")
+        {
+            var Categories = this.dropDown;
+            foreach (var item in Categories)
+            {
+                if (item.parentId == id)
+                {
+                    if (parent_id == 0 && parent_id == id)
+                    {
+                        item.name = text + item.name;
+                    }
+                    else
+                    {
+                        item.name = text + item.name;
+                    }
+                    categoryRecusive((int)item.parentId, item.id, text + "--");
+                }
+            }
+            return Categories;
         }
 
         protected override void Dispose(bool disposing)

@@ -18,6 +18,17 @@
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon2"><span class="fas fa-search"></span></span>
                     <input type="text" class="form-control" name="searchString" value="@ViewBag.searchString" id="exampleInputIconLeft" placeholder="Tên sản phẩm" aria-label="Search" aria-describedby="basic-addon2" />
+                    <select id="dmFilter" name="dmFilter">
+                        <option value="0">Chọn danh mục</option>
+                        @foreach (var item in @ViewBag.DropDown)
+                        {
+                            string a = item.name;
+                            if (a.Contains("----"))
+                            {
+                                <option value="@item.id">@a.Substring(5)</option>
+                            }
+                        }
+                    </select>
                 </div>
             </form>
         </div>
@@ -32,6 +43,9 @@
             Tên tour
         </th>
         <th>
+            Hình thu nhỏ
+        </th>
+        <th>
             Ngày khởi hành
         </th>
         <th>
@@ -42,9 +56,6 @@
         </th>
         <th>
             Điểm kết thúc
-        </th>
-        <th>
-            Chi tiết
         </th>
         <th>
             Điều khoản
@@ -77,6 +88,13 @@
         @Html.DisplayFor(modelItem => item.pkgName)
     </td>
     <td>
+        @if (item.thumbail != null)
+        {
+            string ImagePathz = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+            <img src="@Url.Content(ImagePathz)" width="100" class="img-thumbnail" />
+        }
+    </td>
+    <td>
         @Html.DisplayFor(modelItem => item.pkgStartDate)
     </td>
     <td>
@@ -87,9 +105,6 @@
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.pkgEndPlace)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.pkgDesc)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.pkgRules)
@@ -112,7 +127,7 @@
     <td>
         @Html.ActionLink("Lịch trình", "Programs", new { id = item.id }) |
         @Html.ActionLink("Ảnh và video", "Media", new { id = item.id }) |
-        @Html.ActionLink("Gói combos", "Prices", new { id = item.id }) |
+        @Html.ActionLink("Gói combos", "Prices", new { id = item.id }) <br />
         @Html.ActionLink("Sửa", "Edit", new { id = item.id }) |
         @Html.ActionLink("Chi tiết", "Details", new { id = item.id }) |
         @Html.ActionLink("Xoá", "Delete", new { id = item.id })

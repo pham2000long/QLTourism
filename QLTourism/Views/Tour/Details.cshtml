@@ -2,9 +2,16 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int programIndex = 1;
+    int priceCount = 0;
+    string urlImage = "";
+    if (Model.thumbail != null)
+    {
+        urlImage = "~/Areas/Admin/wwwroot/thumbail/" + Model.thumbail;
+    }
 }
 
-<section class="hero_in tours_detail">
+<section class="hero_in tours_detail" style="background: url(@Url.Content(urlImage)) center center no-repeat @if (Model.thumbail != null) { Html.Raw("!important"); }; background-size:cover;">
     <div class="wrapper">
         <div class="container">
             <h1 class="fadeInUp"><span></span>@Model.pkgName</h1>
@@ -43,114 +50,93 @@
                 <section id="description">
                     <h2>Chi tiết</h2>
                     @Html.Raw(Model.pkgDesc)
+                    <hr>
                     <h3>Phương tiện: @Model.pkgTransporter</h3>
+                    <hr>
                     <h3>Điều kiện</h3>
                     <p>@Model.pkgCondition</p>
+                    <hr>
                     <h3>Điều khoản</h3>
                     <p>@Model.pkgRules</p>
                     <div id="instagram-feed" class="clearfix"></div>
                     <hr>
 
-                    <h3>Lịch trình <small>@Model.pkgTimePeriod</small></h3>
+                    <h3>Lịch trình: <small>@Model.pkgTimePeriod</small></h3>
                     <p>
                         Xuất phát từ @Model.pkgStartPlace ngày @{string a = Model.pkgStartDate.ToString().Split(' ')[0]; @a}, kết thúc chuyến đi tại @Model.pkgEndPlace.
                     </p>
                     <ul class="cbp_tmtimeline">
-                        <li>
-                            <time class="cbp_tmtime" datetime="09:30">
-                                <span>30 min.</span><span>09:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                1
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_1.jpg" alt="" class="rounded-circle thumb_visit">
+                        @foreach (var item in Model.Programs)
+                        {
+                            <li>
+                                <time class="cbp_tmtime" datetime="">
+                                    <span></span><span>@item.title</span>
+                                </time>
+                                <div class="cbp_tmicon">
+                                    @programIndex
                                 </div>
-                                <h4>Interior of the cathedral</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <time class="cbp_tmtime" datetime="11:30">
-                                <span>2 hours</span><span>11:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                2
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_2.jpg" alt="" class="rounded-circle thumb_visit">
+                                <div class="cbp_tmlabel">
+                                    <div class="hidden-xs">
+                                        @*<img src="img/tour_plan_1.jpg" alt="" class="rounded-circle thumb_visit">*@
+                                    </div>
+                                    <h4>@item.summary</h4>
+                                    <p>
+                                        @item.detail
+                                    </p>
                                 </div>
-                                <h4>Statue of Saint Reparata</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <time class="cbp_tmtime" datetime="13:30">
-                                <span>1 hour</span><span>13:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                3
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_3.jpg" alt="" class="rounded-circle thumb_visit">
-                                </div>
-                                <h4>Huge clock decorated</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
-                        <li>
-                            <time class="cbp_tmtime" datetime="14:30">
-                                <span>2 hours</span><span>14:30</span>
-                            </time>
-                            <div class="cbp_tmicon">
-                                4
-                            </div>
-                            <div class="cbp_tmlabel">
-                                <div class="hidden-xs">
-                                    <img src="img/tour_plan_4.jpg" alt="" class="rounded-circle thumb_visit">
-                                </div>
-                                <h4>Vasari's fresco</h4>
-                                <p>
-                                    Vero consequat cotidieque ad eam. Ea duis errem qui, impedit blandit sed eu. Ius diam vivendo ne.
-                                </p>
-                            </div>
-                        </li>
+                                @{ programIndex++;}
+                            </li>
+                        }
                     </ul>
                     <hr>
-                    <p>Mea appareat omittantur eloquentiam ad, nam ei quas <strong>oportere democritum</strong>. Prima causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+                    <h3>Bảng giá</h3>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="bullets">
-                                <li>Dolorem mediocritatem</li>
-                                <li>Mea appareat</li>
-                                <li>Prima causae</li>
-                                <li>Singulis indoctum</li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="bullets">
-                                <li>Timeam inimicus</li>
-                                <li>Oportere democritum</li>
-                                <li>Cetero inermis</li>
-                                <li>Pertinacia eum</li>
-                            </ul>
-                        </div>
+                        @if (Model.Prices.Count() <= 1)
+                        {
+                            foreach (var item in Model.Prices)
+                            {
+                                <div class="col-lg-6">
+                                    <ul class="bullets">
+                                        <li>@item.title - @String.Format("{0:n}", item.price1) VNĐ</li>
+                                    </ul>
+                                </div>
+                            }
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            int iz = Model.Prices.Count() / 2;
+                            int iz2 = 0;
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    @foreach (var item in Model.Prices)
+                                    {
+                                        if (priceCount < iz)
+                                        {
+                                            <li>@item.title - @String.Format("{0:n}", item.price1) VNĐ</li>
+                                            priceCount++;
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="bullets">
+                                    @foreach (var item in Model.Prices)
+                                    {
+                                        if (iz2 >= iz)
+                                        {
+                                            <li>@item.title - @String.Format("{0:n}", item.price1) VNĐ</li>
+                                        }
+                                        iz2++;
+                                    }
+                                </ul>
+                            </div>
+                        }
                     </div>
                     <!-- /row -->
-
-                    <hr>
-                    <h3>Location</h3>
-                    <div id="map" class="map map_single add_bottom_30"></div>
-                    <!-- End Map -->
                 </section>
                 <!-- /section -->
 

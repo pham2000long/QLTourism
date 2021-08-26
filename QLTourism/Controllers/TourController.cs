@@ -34,9 +34,9 @@ namespace QLTourism.Controllers
             return View(tours.OrderBy(p => p.id).ToList());
         }
 
-        public ActionResult Details(int? maTour)
+        public ActionResult Details(int? id)
         {
-            Package package = db.Packages.Include(p => p.Media).Include(p => p.Prices).Include(p => p.Category).FirstOrDefault(p => p.id == maTour);
+            Package package = db.Packages.Include(p=>p.Programs).Include(p => p.Media).Include(p => p.Prices).Include(p => p.Category).FirstOrDefault(p => p.id == id);
             return View(package);
         }
     }
