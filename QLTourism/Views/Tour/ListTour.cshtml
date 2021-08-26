@@ -5,5 +5,179 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ListTour</h2>
+<input type="number" id="tourCount" style="display: none;" value="@Model.Count()"/>
 
+<section class="hero_in tours">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Paris tours grid</h1>
+        </div>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="filters_listing sticky_horizontal">
+    <div class="container">
+        <ul class="clearfix">
+        </ul>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /filters -->
+
+<div class="collapse" id="collapseMap">
+    <div id="map" class="map"></div>
+</div>
+<!-- End Map -->
+
+<div class="container margin_60_35">
+    <form>
+        <div class="col-lg-12">
+            <div class="row no-gutters custom-search-input-2 inner">
+                <div class="col-lg-7">
+                    <div class="form-group">
+                        <input class="form-control" value="@ViewBag.searchString" name="searchString" type="text" placeholder="What are you looking for...">
+                        <i class="icon_search"></i>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <select class="wide" name="madm">
+                        <option value="0">Tất cả danh mục</option>
+                        @foreach (var item in @ViewBag.DropDown)
+                        {
+                            <option value="@item.id">@item.name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <input type="submit" class="btn_search" value="Tìm kiếm">
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+    </form>
+    <!-- /custom-search-input-2 -->
+
+    <div class="isotope-wrapper">
+        <div class="row" id="MainTourRow">
+            @foreach (var item in Model)
+            {
+                if (item.active == 4)
+                {
+                    <div class="col-xl-4 col-lg-6 col-md-6 isotope-item popular">
+                        <div class="box_grid">
+                            <figure>
+                                <a href="#0" class="wish_bt"></a>
+                                @if (item.thumbail != null)
+                                {
+                                    string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+                                    <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
+                                }
+                                else
+                                {
+                                    string ImagePath = "~/Areas/Admin/wwwroot/thumbail/tourThumbail.jpg";
+                                    <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
+                                }
+                                <small>@item.Category.name</small>
+                            </figure>
+                            <div class="wrapper">
+                                <h3><a href="/Tour/Details/@item.id">@item.pkgName</a></h3>
+                                @if (item.pkgDesc != null)
+                                {
+                                    <p>@item.pkgDesc.Split('>', '<')[2]</p>
+                                }
+                                else
+                                {
+                                    <p>Chưa có mô tả</p>
+                                }
+                                @if (item.pkgBasePrice == 0)
+                                {
+                                    <span class="price"><strong>Giá liên hệ</strong></span>
+                                }
+                                else
+                                {
+                                    <span class="price">Giá từ <strong>@String.Format("{0:n}", item.pkgBasePrice) VNĐ</strong></span>
+                                }
+                            </div>
+                            <ul>
+                                <li><i class="icon_clock_alt"></i> @item.pkgTimePeriod </li>
+                                <li><div class="score"><span>@{string a = item.pkgStartDate.ToString().Split(' ')[0]; @a}<em>@item.pkgTransporter</em></span><a href="#0"><strong>Giữ chỗ</strong></a></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /box_grid -->
+                }
+            }
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /isotope-wrapper -->
+
+    @*<p class="text-center"><a href="#0" class="btn_1 rounded add_top_30" id="btnAddMore">Xem thêm</a></p>*@
+
+</div>
+<!-- /container -->
+
+<div class="bg_color_1">
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-md-4">
+                <a href="#0" class="boxed_list">
+                    <i class="pe-7s-help2"></i>
+                    <h4>Need Help? Contact us</h4>
+                    <p>Cum appareat maiestatis interpretaris et, et sit.</p>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#0" class="boxed_list">
+                    <i class="pe-7s-wallet"></i>
+                    <h4>Payments</h4>
+                    <p>Qui ea nemore eruditi, magna prima possit eu mei.</p>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#0" class="boxed_list">
+                    <i class="pe-7s-note2"></i>
+                    <h4>Cancel Policy</h4>
+                    <p>Hinc vituperata sed ut, pro laudem nonumes ex.</p>
+                </a>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->
+<script src="~/Assets/js/jquery-2.2.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnAddMore").click(function () {
+            var indexz = $('').val();
+            alert(1);
+            $.ajax({
+                type: 'POST',
+                data: { "madm": '@ViewBag.madm', "searchString": '@ViewBag.searchString', "index": indexz
+                },
+                url: '/Tour/AddMore',
+                dataType: "json",
+                success: function (data) {
+                    $.each(response.pkg, function (index) {
+                        $("#MainTourRow").append(
+                            '<div class="col-xl-4 col-lg-6 col-md-6 isotope-item popular"><div class="box_grid"><figure><a href="#0" class="wish_bt"></a>'
+                            + '<a href="/Tour/Details/' + response.pkg[index].id + '"><img src="' + reponse.pkg[index].thumbail + '" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>'
+                            + '<small>' + response.pkg[index].Category.name + '</small></figure><div class="wrapper"><h3><a href="/Tour/Details/' + response.pkg[index].id + '">' + response.pkg[index].pkgName + '</a></h3>'
+                            + '<p>' + response.pkg[index].pkgDesc + '</p>' + '<span class="price"><strong>' + response.pkg[index].pkgBasePrice + '</strong></span>'
+                            + '</div><ul><li><i class="icon_clock_alt"></i> ' + response.pkg[index].pkgTimePeriod + ' </li><li><div class="score"><span>' + response.pkg[index].pkgStartDate + '<em>' + response.pkg[index].pkgTransporter + '</em></span><a href="#0"><strong>Giữ chỗ</strong></a></div></li></ul></div></div>'
+                        );
+                    })
+                },
+                error: function (response) {
+                    //debugger;
+                    console.log(xhr.responseText);
+                    alert("Error has occurred..");
+                }
+            })
+        })
+    })
+</script>

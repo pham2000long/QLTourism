@@ -1480,6 +1480,9 @@
     <Content Include="Areas\Admin\wwwroot\avatar\user.png" />
     <Content Include="Areas\Admin\wwwroot\slider\slider.jpg" />
     <Content Include="Areas\Admin\wwwroot\thumbail\tourThumbail.jpg" />
+    <Content Include="Assets\assets\contact.php" />
+    <Content Include="Assets\assets\newsletter.php" />
+    <Content Include="Assets\assets\validate.js" />
     <Content Include="Assets\css\ajax-loader.gif" />
     <Content Include="Assets\css\blog.css" />
     <Content Include="Assets\css\bootstrap.css" />

@@ -5,14 +5,14 @@
     if (item.parentId == 0)
     {
         <li>
-            <span><a href="#0">@item.name</a></span>
+            <span><a href="@Url.Action("ListTour","Tour", new { madm = item.id })">@item.name</a></span>
             <ul>
                 @foreach (var itemz in Model)
                 {
                     if (itemz.parentId == item.id)
                     {
                         <li>
-                            <span><a href="#0">@itemz.name</a></span>
+                            <span><a href="@Url.Action("ListTour","Tour", new { madm = itemz.id })">@itemz.name</a></span>
                             <ul>
                                 @foreach (var itemzz in Model)
                                 {
