@@ -15,52 +15,50 @@
 <div class="container-fluid margin_80_0">
     <div class="main_title_2">
         <span><em></em></span>
-        <h2>Our Popular Tours</h2>
-        <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+        <h2>Tour phổ biến</h2>
+        <p>Được lựa chọn nhiều nhất trong thời gian gần đây.</p>
     </div>
     <div id="reccomended" class="owl-carousel owl-theme">
-        <div class="item">
-            <div class="box_grid">
-                <figure>
-                    <a href="#0" class="wish_bt"></a>
-                    <a href="tour-detail.html"><img src="~/Assets/img/tour_1.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
-                    <small>Historic</small>
-                </figure>
-                <div class="wrapper">
-                    <h3><a href="tour-detail.html">Arc Triomphe</a></h3>
-                    <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
-                    <span class="price">From <strong>$54</strong> /per person</span>
-                </div>
-                <ul>
-                    <li><i class="icon_clock_alt"></i> 1h 30min</li>
-                    <li><div class="score"><span>Superb<em>350 Reviews</em></span><strong>8.9</strong></div></li>
-                </ul>
-            </div>
-        </div>
         @foreach (var item in Model)
         {
             if (item.active == 4)
             {
-                <div class="box_grid">
-                    <figure>
-                        <a href="#0" class="wish_bt"></a>
-                        @if (item.thumbail != null)
-                        {
-                            string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
-                            <a href="tour-detail.html"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
-                        }
-                        <small>@item.Category.name</small>
-                    </figure>
-                    <div class="wrapper">
-                        <h3><a href="tour-detail.html">@item.pkgName</a></h3>
-                        <p>@item.pkgDesc.Substring(0,</p>
-                        <span class="price">From <strong>$54</strong> /per person</span>
-                    </div>
-                    <ul>
-                        <li><i class="icon_clock_alt"></i> 1h 30min</li>
-                        <li><div class="score"><span>Superb<em>350 Reviews</em></span><strong>8.9</strong></div></li>
-                    </ul>
+        <div class="item">
+            <div class="box_grid">
+                <figure>
+                    <a href="#0" class="wish_bt"></a>
+                    @if (item.thumbail != null)
+                    {
+                        string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+                        <a href="tour-detail.html"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
+                    }
+                    <small>@item.Category.name</small>
+                </figure>
+                <div class="wrapper">
+                    <h3><a href="tour-detail.html">@item.pkgName</a></h3>
+                    @if (item.pkgDesc != null)
+                    {
+                        <p>@item.pkgDesc.Split('>', '<')[2]</p>
+                    }
+                    else
+                    {
+                        <p>Chưa có mô tả</p>
+                    }
+                    @if (item.pkgBasePrice == 0)
+                    {
+                        <span class="price"><strong>Giá liên hệ</strong></span>
+                    }
+                    else
+                    {
+                        <span class="price">Giá từ <strong>@String.Format("{0:n}", item.pkgBasePrice)</strong></span>
+                    }
                 </div>
+                <ul>
+                    <li><i class="icon_clock_alt"></i> @item.pkgTimePeriod </li>
+                    <li><div class="score"><span>Ngày khởi hành: @{string a = item.pkgStartDate.ToString().Split(' ')[0]; @a}<em>Phương tiện: @item.pkgTransporter</em></span><a href="#0"><strong>Giữ chỗ</strong></a></div></li>
+                </ul>
+            </div>
+        </div>
             }
         }
     </div>

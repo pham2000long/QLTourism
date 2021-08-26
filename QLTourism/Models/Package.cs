@@ -69,6 +69,7 @@
 
         public int? categoryId { get; set; }
 
+        [DisplayName("Ảnh")]
         [StringLength(255)]
         public string thumbail { get; set; }
 

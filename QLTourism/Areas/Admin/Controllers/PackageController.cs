@@ -26,7 +26,7 @@ namespace QLTourism.Areas.Admin.Controllers
             {
                 packages = packages.Where(p => p.pkgName.Contains(searchString));
             }
-            return View(packages.OrderBy(sp => sp.id).ToPagedList(page, pageSize));
+            return View(packages.OrderByDescending(sp => sp.id).ToPagedList(page, pageSize));
         }
 
         // GET: Admin/Package/Details/5
@@ -102,6 +102,7 @@ namespace QLTourism.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                package.thumbail = db.Packages.AsNoTracking().Where(p => p.id == package.id).FirstOrDefault().thumbail;
                 if (editImage != null && editImage.ContentLength > 0)
                 {
                     string fileName = System.IO.Path.GetFileName(editImage.FileName);
