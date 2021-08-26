@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using QLTourism.Models;
+using System.Data.Entity;
 
 namespace QLTourism.Controllers
 {
@@ -31,6 +32,12 @@ namespace QLTourism.Controllers
                 ViewBag.DanhMuc = db.Categories.Where(p => p.id == madm).FirstOrDefault();
             }
             return View(tours.OrderBy(p => p.id).ToList());
+        }
+
+        public ActionResult Details(int? maTour)
+        {
+            Package package = db.Packages.Include(p => p.Media).Include(p => p.Prices).Include(p => p.Category).FirstOrDefault(p => p.id == maTour);
+            return View(package);
         }
     }
 }

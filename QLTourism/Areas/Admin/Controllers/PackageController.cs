@@ -134,6 +134,54 @@ namespace QLTourism.Areas.Admin.Controllers
             return View(package);
         }
 
+        // POST: Admin/Package/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Package package = db.Packages.Find(id);
+            db.Packages.Remove(package);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Programs(int? id)
+        {
+            var programs = db.Programs.Where(p => p.packageId == id);
+            string ten = db.Packages.Where(p => p.id == id).FirstOrDefault().pkgName;
+            ViewBag.Ten = ten;
+            ViewBag.Programs = programs.ToList();
+            ViewBag.Id = id;
+            return View(new Program());
+        }
+
+        [HttpPost]
+        public ActionResult AddProgram(Program prc)
+        {
+            db.Programs.Add(prc);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult EditProgram(Program prc)
+        {
+            db.Entry(prc).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult DeleteProgram(int id)
+        {
+            bool result = false;
+            Program prc = db.Programs.Find(id);
+            db.Programs.Remove(prc);
+            db.SaveChanges();
+            result = true;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Prices(int? id)
         {
             var prices = db.Prices.Where(p => p.packageId == id);
@@ -143,6 +191,7 @@ namespace QLTourism.Areas.Admin.Controllers
             ViewBag.Id = id;
             return View(new Price());
         }
+
         [HttpPost]
         public ActionResult AddPrice(Price prc)
         {
@@ -168,17 +217,6 @@ namespace QLTourism.Areas.Admin.Controllers
             db.SaveChanges();
             result = true;
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        // POST: Admin/Package/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Package package = db.Packages.Find(id);
-            db.Packages.Remove(package);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         public ActionResult Media(int? id)

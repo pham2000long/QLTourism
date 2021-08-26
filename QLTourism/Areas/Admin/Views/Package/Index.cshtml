@@ -110,6 +110,7 @@
         @Html.DisplayFor(modelItem => item.active)
     </td>
     <td>
+        @Html.ActionLink("Lịch trình", "Programs", new { id = item.id }) |
         @Html.ActionLink("Ảnh và video", "Media", new { id = item.id }) |
         @Html.ActionLink("Gói combos", "Prices", new { id = item.id }) |
         @Html.ActionLink("Sửa", "Edit", new { id = item.id }) |

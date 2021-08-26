@@ -6038,7 +6038,7 @@ ul.list_3 li:before {
 }
 
 .call_section {
-  background: url(../img/bg_call_section.jpg) center center no-repeat fixed;
+  background: url(../img/sectionCallBG.jpg) center center no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

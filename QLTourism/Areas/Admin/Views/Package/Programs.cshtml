@@ -1,22 +1,21 @@
-﻿@model QLTourism.Models.Price
+﻿@model QLTourism.Models.Program
 
 @{
-    ViewBag.Title = "Prices";
+    ViewBag.Title = "Programs";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <script src="~/Areas/Admin/Public/assets/libs/jquery/jquery.min.js"></script>
 
 <h2>Các gói combo của tour @ViewBag.Ten</h2>
-
 <p>
-    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addPrice">Thêm combo</a>
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addProgram">Thêm lịch trình</a>
     <a href="/Admin/Package/" class="btn btn-danger">Trở về</a>
 </p>
-<div class="modal fade" id="addPrice">
+<div class="modal fade" id="addProgram">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Thêm combo</h4>
+                <h4 class="modal-title">Thêm lịch trình</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>x</span>
                 </button>
@@ -32,10 +31,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.price1, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label for="summary" class="control-label col-md-2">Tiêu đề</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.price1, new { htmlAttributes = new { @class = "form-control", @id = "price1zz" } })
-                            @Html.ValidationMessageFor(model => model.price1, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.summary, new { htmlAttributes = new { @class = "form-control", @id = "summaryzz" } })
+                            @Html.ValidationMessageFor(model => model.summary, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="detail" class="control-label col-md-2">Chi tiết</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.detail, new { htmlAttributes = new { @class = "form-control", @id = "detailzz" } })
+                            @Html.ValidationMessageFor(model => model.detail, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </form>
@@ -48,11 +54,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="editPrice">
+<div class="modal fade" id="editProgram">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Sửa combo</h4>
+                <h4 class="modal-title">Sửa lịch trình</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>x</span>
                 </button>
@@ -63,16 +69,23 @@
                         <input id="editId" name="id" type="hidden" value="" />
                         <input id="zzz" name="packageId" type="hidden" value="@ViewBag.Id" />
                         @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-10" >
                             @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control", @id = "titlez" } })
                             @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.price1, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label for="summary" class="control-label col-md-2">Tiêu đề</label>
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.price1, new { htmlAttributes = new { @class = "form-control", @id = "price1z" } })
-                            @Html.ValidationMessageFor(model => model.price1, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.summary, new { htmlAttributes = new { @class = "form-control", @id = "summaryz" } })
+                            @Html.ValidationMessageFor(model => model.summary, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="detail" class="control-label col-md-2">Chi tiết</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.detail, new { htmlAttributes = new { @class = "form-control", @id = "detailz" } })
+                            @Html.ValidationMessageFor(model => model.detail, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </form>
@@ -85,7 +98,7 @@
     </div>
 </div>
 
-<div class="modal fade" aria-hidden="true" id="deletePrice">
+<div class="modal fade" aria-hidden="true" id="deleteProgram">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,7 +109,7 @@
             </div>
             <div class="modal-body">
                 <input id="DeleteId" name="DeleteId" type="hidden" value="" />
-                <h3>Bạn có chắc chắn muốn xoá combo này không?</h3>
+                <h3>Bạn có chắc chắn muốn xoá lịch trình này không?</h3>
             </div>
             <div class="modal-footer">
                 <a href="#" id="btnDelete" class="btn btn-primary mr-2" data-save="modal">Xoá</a>
@@ -108,48 +121,49 @@
 
 <table class="table">
     <tr>
-        @*<th>
-            Tên tour
-        </th>*@
         <th>
-            Loại combo
+            Tiêu đề
         </th>
         <th>
-            Giá
+            Tóm tắt
+        </th>
+        <th>
+            Chi tiết
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in ViewBag.Prices)
+    @foreach (var item in ViewBag.Programs)
     {
         <tr>
-            @*<td>
-                @item.Package.pkgName
-            </td>*@
             <td>
                 @item.title
             </td>
             <td>
-                @item.price1
+                @item.summary
             </td>
             <td>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editPrice" onclick="editz(@item.id,'@item.title',@item.price1)">Sửa</a>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#deletePrice" onclick="Confirmz(@item.id)">Xoá </a>
+                @item.detail
+            </td>
+            <td>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editProgram" onclick="editz(@item.id,'@item.title','@item.summary','@item.detail')">Sửa</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#deleteProgram" onclick="Confirmz(@item.id)">Xoá </a>
             </td>
         </tr>
     }
 
 </table>
+
 <script>
     $(document).ready(function () {
         $("#btnSave").click(function () {
             var dataAdd = $("#addForm").serialize();
             $.ajax({
                 type: "POST",
-                url: "/Admin/Package/AddPrice",
+                url: "/Admin/Package/AddProgram",
                 data: dataAdd,
                 success: function () {
-                    window.location.href = "/Admin/Package/Prices/" + "@ViewBag.Id"
+                    window.location.href = "/Admin/Package/Programs/" + "@ViewBag.Id"
                 }
             })
         })
@@ -158,10 +172,10 @@
             var dataAdd = $("#editForm").serialize();
             $.ajax({
                 type: "POST",
-                url: "/Admin/Package/EditPrice",
+                url: "/Admin/Package/EditProgram",
                 data: dataAdd,
                 success: function () {
-                    window.location.href = "/Admin/Package/Prices/" + "@ViewBag.Id"
+                    window.location.href = "/Admin/Package/Programs/" + "@ViewBag.Id"
                 }
             })
         })
@@ -170,33 +184,36 @@
             var idz = $("#DeleteId").val();
             $.ajax({
                 type: "POST",
-                url: "/Admin/Package/DeletePrice",
+                url: "/Admin/Package/DeleteProgram",
                 data: {id: idz},
                 success: function (result) {
-                    window.location.href = "/Admin/Package/Prices/" + "@ViewBag.Id"
+                    window.location.href = "/Admin/Package/Programs/" + "@ViewBag.Id"
                 }
             })
         })
 
         $("#btnCancel").click(function () {
-            window.location.href = "/Admin/Package/Prices/" + "@ViewBag.Id";
+            window.location.href = "/Admin/Package/Programs/" + "@ViewBag.Id";
         })
 
     })
 
     var Addz = function (id) {
         $("#titlezz").val('');
-        $("#price1zz").val('');
+        $("#summaryzz").val('');
+        $("#detailzz").val('');
     }
 
     var Confirmz = function (id) {
         $("#DeleteId").val(id);
     }
-    var editz = function (id,title,price) {
+    var editz = function (id,title,summary,detail) {
         $("#editId").val(id);
         $("#titlez").val(title);
-        $("#price1z").val(price);
+        $("#summaryz").val(summary);
+        $("#detailz").val(detail);
     }
 
 
 </script>
+
