@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + Model.thumbail;
 }
 
 <h2>Edit</h2>
@@ -32,7 +33,7 @@
                 <div class="col-md-10">
                     @*@Html.EditorFor(model => model.pkgStartDate, new { htmlAttributes = new { @class = "form-control" } })*@
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose" name="pkgStartDate" data-provide="datepicker" data-date-format="yyyy/mm/dd" value="@(((DateTime)Model.pkgStartDate).ToString("yyyy/MM/dd"))" >
+                        <input type="text" class="form-control" placeholder="yyyy/mm/dd" id="datepicker-autoclose" name="pkgStartDate" data-provide="datepicker" data-date-format="yyyy/mm/dd" value="@(((DateTime)Model.pkgStartDate).ToString("yyyy/MM/dd"))">
                         <div class="input-group-append bg-custom b-0"><span class="input-group-text"><i class="mdi mdi-calendar"></i></span></div>
                     </div><!-- input-group -->
                     @Html.ValidationMessageFor(model => model.pkgStartDate, "", new { @class = "text-danger" })
@@ -100,10 +101,20 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.thumbail, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="col-md-3">
+                <input type="file" name="editImage" id="input-file-now-custom-1" class="dropify" data-default-file="@Url.Content(@ImagePath)" />
+            </div>
+            @Html.ValidationMessageFor(model => model.thumbail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.pkgDesc, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@Html.EditorFor(model => model.pkgDesc, new { htmlAttributes = new { @class = "form-control" } })*@
-            <textarea id="elm1" class="form-control" name="pkgDesc" ></textarea>
+            <textarea id="elm1" class="form-control" name="pkgDesc"></textarea>
             @Html.ValidationMessageFor(model => model.pkgDesc, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -120,7 +131,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.active, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.active, new { htmlAttributes = new { @type = "number", @min = "0", @max = "1", @step = "1", @value = "0", @class = "form-control" } })
+            @Html.EditorFor(model => model.active, new { htmlAttributes = new { @type = "number", @min = "0", @max = "4", @step = "1", @value = "0", @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.active, "", new { @class = "text-danger" })
         </div>
     </div>

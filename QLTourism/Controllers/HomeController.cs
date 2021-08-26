@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using QLTourism.Models;
+using System.Data.Entity;
 
 namespace QLTourism.Controllers
 {
@@ -12,7 +13,10 @@ namespace QLTourism.Controllers
         private TourismDB db = new TourismDB();
         public ActionResult Index()
         {
-            return View();
+            var packages = db.Packages.Include(p => p.Category);
+            packages = packages.OrderByDescending(p => p.id);
+            ViewBag.TongTour = packages.Count();
+            return View(packages.ToList());
         }
 
         [ChildActionOnly]

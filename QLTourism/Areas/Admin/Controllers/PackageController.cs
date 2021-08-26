@@ -56,10 +56,17 @@ namespace QLTourism.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,pkgName,pkgStartDate,pkgTimePeriod,pkgStartPlace,pkgEndPlace,pkgDesc,pkgRules,pkgTransporter,pkgBasePrice,pkgCondition,pkgSlot,active,categoryId")] Package package)
+        public ActionResult Create([Bind(Include = "id,pkgName,pkgStartDate,pkgTimePeriod,pkgStartPlace,pkgEndPlace,pkgDesc,pkgRules,pkgTransporter,pkgBasePrice,pkgCondition,pkgSlot,active,categoryId")] Package package, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                if (image != null && image.ContentLength > 0)
+                {
+                    string fileName = System.IO.Path.GetFileName(image.FileName);
+                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                    image.SaveAs(urlImage);
+                    package.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                }
                 package.pkgDesc = System.Net.WebUtility.HtmlDecode(package.pkgDesc);
                 db.Packages.Add(package);
                 db.SaveChanges();
@@ -91,10 +98,17 @@ namespace QLTourism.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,pkgName,pkgStartDate,pkgTimePeriod,pkgStartPlace,pkgEndPlace,pkgDesc,pkgRules,pkgTransporter,pkgBasePrice,pkgCondition,pkgSlot,active,categoryId")] Package package)
+        public ActionResult Edit([Bind(Include = "id,pkgName,pkgStartDate,pkgTimePeriod,pkgStartPlace,pkgEndPlace,pkgDesc,pkgRules,pkgTransporter,pkgBasePrice,pkgCondition,pkgSlot,active,categoryId")] Package package, HttpPostedFileBase editImage)
         {
             if (ModelState.IsValid)
             {
+                if (editImage != null && editImage.ContentLength > 0)
+                {
+                    string fileName = System.IO.Path.GetFileName(editImage.FileName);
+                    string urlImage = Server.MapPath("~/Areas/Admin/wwwroot/thumbail/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                    editImage.SaveAs(urlImage);
+                    package.thumbail = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                }
                 package.pkgDesc = System.Net.WebUtility.HtmlDecode(package.pkgDesc);
                 db.Entry(package).State = EntityState.Modified;
                 db.SaveChanges();
