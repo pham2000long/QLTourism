@@ -1,5 +1,5 @@
-﻿@model IEnumerable<QLTourism.Models.News>
-
+﻿@model PagedList.IPagedList<QLTourism.Models.News>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,51 +10,62 @@
 <p>
     @Html.ActionLink("Thêm mới", "Create", new object { }, new { @class = "btn btn-primary" })
 </p>
+@using (Html.BeginForm())
+{
+    <p>
+        Tìm kiếm danh mục: @Html.TextBox("searchString", ViewBag.currentFilter as string)
+        <input type="submit" value="Tìm" class="btn btn-primary" />
+    </p>
+}
 <table class="table table-bordered">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.title)
+            @Html.ActionLink("Tên bài viết", "Index", new { sortOrder = ViewBag.SapXepTheoTitle, currentFilter = ViewBag.currentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.date)
+            @Html.ActionLink("Ngày viết bài", "Index", new { sortOrder = ViewBag.SapXepTheoTitle, currentFilter = ViewBag.currentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.summary)
+            Nội dung tóm tắt
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.thumbail)
+            Ảnh bìa bài viết
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.summary)
-        </td>
-        <td>
-            @if (item.thumbail != null)
-            {
-                string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
-                <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
-            }
-            else
-            {
-                <img src="~/Areas/Admin/wwwroot/thumbail/h0.png" width="100" class="img-thumbnail" />
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Sửa", "Edit", new { id=item.id }, new { @class = "btn btn-secondary" }) |
-            @Html.ActionLink("Chi tiết", "Details", new { id=item.id }, new { @class = "btn btn-info" }) |
-            @Html.ActionLink("Xóa", "Delete", new { id=item.id }, new { @class = "btn btn-danger" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.summary)
+            </td>
+            <td>
+                @if (item.thumbail != null)
+                {
+                    string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+                    <img src="@Url.Content(ImagePath)" width="100" class="img-thumbnail" />
+                }
+                else
+                {
+                    <img src="~/Areas/Admin/wwwroot/thumbail/h0.png" width="100" class="img-thumbnail" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.id }, new { @class = "btn btn-secondary" }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.id }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>
+<br />
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using QLTourism.Models;
 
 namespace QLTourism.Areas.Admin.Controllers
@@ -16,10 +17,47 @@ namespace QLTourism.Areas.Admin.Controllers
         private List<Category> Categories;
 
         // GET: Admin/Category
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            var categories = db.Categories.OrderByDescending(x => x.id).ToList();
-            return View(categories);
+            ViewBag.currentSort = sortOrder;
+
+            ViewBag.SapXepTheoId = String.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewBag.SapXepTheoTen = sortOrder == "ten" ? "ten_desc" : "ten";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.currentFilter = searchString;
+            var categories = db.Categories.Select(p => p);
+            // Lọc sản phẩm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                categories = categories.Where(p => p.name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "id_desc":
+                    categories = categories.OrderByDescending(s => s.id);
+                    break;
+                case "ten":
+                    categories = categories.OrderBy(s => s.name);
+                    break;
+                case "ten_desc":
+                    categories = categories.OrderByDescending(s => s.name);
+                    break;
+                default:
+                    categories = categories.OrderBy(s => s.id);
+                    break;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(categories.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Category/Details/5
