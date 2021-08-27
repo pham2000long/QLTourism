@@ -164,7 +164,7 @@
                 url: '/Tour/AddMore',
                 success: function (response) {
                     if (response.fullStatus == 1) {
-                        $("#btnAddMore").hide();
+                        $("#btnAddMore").html("Đó là tất cả");
                     }
                     $.each(response.pkg, function (index) {
                         $("#MainTourRow").append(
