@@ -97,7 +97,7 @@
                             {
                                 <div class="col-lg-6">
                                     <ul class="bullets">
-                                        <li>@item.title - @String.Format("{0:n}", item.price1) VNĐ</li>
+                                        <li>@item.title - @String.Format("{0:n0}", item.price1) VNĐ</li>
                                     </ul>
                                 </div>
                             }
@@ -116,7 +116,7 @@
                                     {
                                         if (priceCount < iz)
                                         {
-                                            <li>@item.title - @String.Format("{0:n}", item.price1) VNĐ</li>
+                                            <li>@item.title - @String.Format("{0:n0}", item.price1) VNĐ</li>
                                             priceCount++;
                                         }
                                     }
@@ -128,7 +128,7 @@
                                     {
                                         if (iz2 >= iz)
                                         {
-                                            <li>@item.title - @String.Format("{0:n}", item.price1) VNĐ</li>
+                                            <li>@item.title - @String.Format("{0:n0}", item.price1) VNĐ</li>
                                         }
                                         iz2++;
                                     }

@@ -19,7 +19,7 @@ namespace QLTourism.Controllers
             return View();
         }
 
-        public ActionResult ListTour(string searchString, int? madm)
+        public ActionResult ListTour(string searchString, int? madm = 0)
         {
             this.dropDown = db.Categories.AsNoTracking().ToList();
             var dropDownCate = categoryRecusive(0);

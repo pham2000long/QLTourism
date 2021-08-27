@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace QLTourism.Controllers
 {
-    public class CustomerController : Controller
+    public class RegisterController : Controller
     {
         private TourismDB db = new TourismDB();
         // Get: /Customer

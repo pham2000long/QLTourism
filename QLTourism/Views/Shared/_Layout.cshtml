@@ -39,7 +39,7 @@
             </div>
             <ul id="top_menu">
                 <li><a href="cart-1.html" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
-                <li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>
+                <li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Đăng nhập</a></li>
                 <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
             </ul>
             <!-- /top_menu -->
@@ -57,10 +57,13 @@
                     </li>
                     @{ Html.RenderAction("TourMenu", "Home");}
                     <li>
-                        <span><a href="#0">Tin tức</a></span>
+                        <span><a href="@Url.Action("Index", "NewsView")">Tin tức</a></span>
                     </li>
                     <li>
                         <span><a href="@Url.Action("Index", "About")">Liên hệ</a></span>
+                    </li>
+                    <li>
+                        <span><a href="@Url.Action("LoginPage","ClientLogin")">Đăng nhập</a></span>
                     </li>
                 </ul>
             </nav>
