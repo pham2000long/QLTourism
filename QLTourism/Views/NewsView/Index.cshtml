@@ -1,0 +1,55 @@
+﻿@model IEnumerable<QLTourism.Models.News>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- SPECIFIC CSS -->
+<link href="~/Assets/css/blog.css" rel="stylesheet">
+
+<section class="hero_in general">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Tin tức</h1>
+        </div>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="container margin_60_35">
+    <div class="row">
+        <div class="col-lg-9">
+            @foreach (var item in Model)
+            {
+                string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+                <article class="blog wow fadeIn">
+                    <div class="row no-gutters">
+                        <div class="col-lg-7">
+                            <figure>
+                                <a href="/NewsView/ArticleDetail/@item.id">
+                                    <img src="@Url.Content(ImagePath)" alt="">
+                                    <div class="preview"><span>Xem thêm</span></div>
+                                </a>
+                            </figure>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="post_info">
+                                <small>@{string a = item.date.ToString().Split(' ')[0]; @a}</small>
+                                <h3><a href="/NewsView/ArticleDetail/@item.id">@item.title</a></h3>
+                                <p>@item.summary</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <!-- /article -->
+            }
+        </div>
+        <!-- /col -->
+
+        <aside class="col-lg-3">
+            @{ Html.RenderAction("SideMenu", "NewsView");}
+        </aside>
+        <!-- /aside -->
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
