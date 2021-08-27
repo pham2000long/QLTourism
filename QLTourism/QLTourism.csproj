@@ -2094,6 +2094,7 @@
     <Content Include="Assets\img\icon_ccv.gif" />
     <Content Include="Assets\img\icon_heart.svg" />
     <Content Include="Assets\img\icon_login.svg" />
+    <Content Include="Assets\img\images\avatar.jpg" />
     <Content Include="Assets\img\logo.png" />
     <Content Include="Assets\img\logo_2x.png" />
     <Content Include="Assets\img\logo_sticky.png" />
@@ -2647,6 +2648,7 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\ClientLogin\login.cshtml" />
     <Content Include="Views\ClientLogin\LoginPage.cshtml" />
+    <Content Include="Views\ClientLogin\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

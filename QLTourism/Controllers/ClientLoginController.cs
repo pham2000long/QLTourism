@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QLTourism.Models;
@@ -34,6 +36,7 @@ namespace QLTourism.Views.Home
                     Session["ClientidUser"] = tk.id;
                     Session["ClientUsername"] = tk.username;
                     Session["ClientName"] = tk.name;
+                    Session["ClientAvatar"] = tk.avatar;
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -53,12 +56,68 @@ namespace QLTourism.Views.Home
                 Session["ClientidUser"] = tk.id;
                 Session["ClientUsername"] = tk.username;
                 Session["ClientName"] = tk.name;
+                Session["ClientAvatar"] = tk.avatar;
                 return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
             }
             else
                 return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
         }
+        public new ActionResult Profile(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
 
+        // POST: /ClientLogin/EditProfile/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile([Bind(Include = "id,username,password,name,email,phone,gender,city,country,birthday,address")] Customer customer, HttpPostedFileBase editImage)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Customer modifyCustomer = db.Customers.Find(customer.id);
+                    modifyCustomer.username = customer.username;
+                    modifyCustomer.password = customer.password;
+                    modifyCustomer.name = customer.name;
+                    modifyCustomer.email = customer.email;
+                    modifyCustomer.phone = customer.phone;
+                    modifyCustomer.gender = customer.gender;
+                    modifyCustomer.city = customer.city;
+                    modifyCustomer.country = customer.country;
+                    modifyCustomer.birthday = customer.birthday;
+                    modifyCustomer.address = customer.address;
+                    if (modifyCustomer != null)
+                    {
+                        if (editImage != null && editImage.ContentLength > 0)
+                        {
+                            string fileName = System.IO.Path.GetFileName(editImage.FileName);
+                            string urlImage = Server.MapPath("~/Assets/img/images/" + DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName);
+                            editImage.SaveAs(urlImage);
+                            modifyCustomer.avatar = DateTime.Now.ToString("ddMMyyyy_hhmmss_tt_") + fileName;
+                        }
+                    }
+                    db.Entry(modifyCustomer).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["ClientAvatar"] = db.Customers.Find(customer.id).avatar;
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Đã xảy ra lỗi " + ex.Message;
+                return View(customer);
+            }
+        }
         [ChildActionOnly]
         public ActionResult login()
         {
