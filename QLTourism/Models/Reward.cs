@@ -1,8 +1,7 @@
-﻿namespace QLTourism.Models
+namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -19,12 +18,9 @@
         public int id { get; set; }
 
         [StringLength(255)]
-        [DisplayName("Tên khuyến mại")]
-        [Required(ErrorMessage = "Tên khuyến mại không được để trống!")]
         public string rwdName { get; set; }
 
         [StringLength(255)]
-        [DisplayName("Mô tả")]
         public string rwdDesc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
