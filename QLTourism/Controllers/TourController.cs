@@ -173,20 +173,32 @@ namespace QLTourism.Controllers
                 }
             }
             List<Package> dsThem = new List<Package>();
+            int dem = 0;
+            int dembatdau = 0;
             foreach (var item in tours.ToList())
             {
-                item.thumbail = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
-                if(item.pkgDesc == null)
+                if(dembatdau >= index)
                 {
-                    item.pkgDesc = "Chưa có mô tả";
-                }
-                else
-                    item.pkgDesc = item.pkgDesc.Split('>', '<')[2];
-                dsThem.Add(item);
-                
-            }
+                    item.thumbail = Url.Content("~/Areas/Admin/wwwroot/thumbail/" + item.thumbail);
+                    if (item.pkgDesc == null)
+                    {
+                        item.pkgDesc = "Chưa có mô tả";
+                    }
+                    else
+                        item.pkgDesc = item.pkgDesc.Split('>', '<')[2];
 
-            return Json(new { pkg = dsThem, id = 2 }, JsonRequestBehavior.AllowGet);
+                    dsThem.Add(item);
+                    dem++;
+                    if (dem >= 3)
+                        break;
+                }
+                dembatdau++;
+            }
+            int isFull = 0;
+            if (dsThem.Count() <= 0)
+                isFull = 1;
+
+            return Json(new { pkg = dsThem, fullStatus = isFull }, JsonRequestBehavior.AllowGet);
         }
     }
 }

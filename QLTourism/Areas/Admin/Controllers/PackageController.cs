@@ -21,9 +21,47 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Package
         public ActionResult Index(string searchString, int dmFilter = 0, int page = 1, int pageSize = 10)
         {
-            this.dropDown = db.Categories.ToList();
+            this.dropDown = db.Categories.AsNoTracking().ToList();
             var dropDownCate = categoryRecusive(0);
-            ViewBag.DropDown = dropDownCate;
+            List<Category> dropDownOrder = new List<Category>();
+            int type = 0;
+            foreach (var item in dropDownCate.ToList())
+            {
+                if (!item.name.Contains("--"))
+                {
+                    dropDownOrder.Add(item);
+                    foreach (var itemz in dropDownCate.ToList())
+                    {
+                        if (itemz.parentId == item.id)
+                        {
+                            dropDownOrder.Add(itemz);
+                            foreach (var itemzz in dropDownCate.ToList())
+                            {
+                                if (itemzz.parentId == itemz.id)
+                                {
+                                    dropDownOrder.Add(itemzz);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (item.id == dmFilter)
+                {
+                    if (item.name.Contains("----"))
+                    {
+                        type = 1;
+                    }
+                    else if (item.name.Contains("--"))
+                    {
+                        type = 2;
+                    }
+                    else
+                    {
+                        type = 3;
+                    }
+                }
+            }
+            ViewBag.DropDown = dropDownOrder;
             var packages = db.Packages.Include(p => p.Category);
             ViewBag.searchString = searchString;
             ViewBag.dmFilter = dmFilter;
@@ -33,7 +71,24 @@ namespace QLTourism.Areas.Admin.Controllers
             }
             if (dmFilter != 0)
             {
-                packages = packages.Where(p => p.categoryId == dmFilter);
+                if (type == 1)
+                {
+                    packages = packages.Where(p => p.categoryId == dmFilter);
+                }
+                else if (type == 2)
+                {
+                    packages = packages.Where(p => p.Category.parentId == dmFilter);
+                }
+                else
+                {
+                    var kz = db.Categories.Where(p => p.parentId == dmFilter).ToList();
+                    List<int> ds = new List<int>();
+                    foreach (var itemzz in kz)
+                    {
+                        ds.Add(itemzz.id);
+                    }
+                    packages = packages.Where(p => ds.Contains(p.Category.parentId));
+                }
             }
             return View(packages.OrderByDescending(sp => sp.id).ToPagedList(page, pageSize));
         }
@@ -56,7 +111,9 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Package/Create
         public ActionResult Create()
         {
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name");
+            this.dropDown = db.Categories.AsNoTracking().ToList();
+            var dropDownCate = categoryRecusive(0);
+            ViewBag.categoryId = dropDownCate.ToList();
             return View(new Package());
         }
 
