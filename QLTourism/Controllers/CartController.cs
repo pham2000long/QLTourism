@@ -19,16 +19,28 @@ namespace QLTourism.Controllers
                 List<string[]> ds = new List<string[]>();
                 List<int> dsPkg = new List<int>();
                 string z = Session["CartItem"].ToString();
+                int total = 0;
+                int totalprice = 0;
                 foreach (var item in z.Split('&'))
                 {
                     var a = item.Split('|');
                     ds.Add(a);
                     dsPkg.Add(Int32.Parse(a[2]));
+                    total += Int32.Parse(a[1]);
+                    int zzz = Int32.Parse(a[0]);
+                    totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
                 }
                 var pkg = db.Packages.Where(p => dsPkg.Contains(p.id)).Include(p => p.Prices);
+                ViewBag.total = total;
+                ViewBag.totalprice = totalprice;
                 ViewBag.dsSession = ds;
                 ViewBag.pkg = pkg;
                 ViewBag.all = pkg.Count();
+            }
+            else
+            {
+                ViewBag.total = 0;
+                ViewBag.totalprice = 0;
             }
             return View();
         }
@@ -104,6 +116,37 @@ namespace QLTourism.Controllers
                 return Json(new { Success = 0 }, JsonRequestBehavior.AllowGet);
             }
             
+        }
+
+        [HttpPost]
+        public ActionResult updateCart(string ses)
+        {
+            try
+            {
+                List<string[]> ds = new List<string[]>();
+                List<int> dsPkg = new List<int>();
+                string z = ses;
+                int total = 0;
+                int totalprice = 0;
+                foreach (var item in z.Split('&'))
+                {
+                    var a = item.Split('|');
+                    ds.Add(a);
+                    dsPkg.Add(Int32.Parse(a[2]));
+                    total += Int32.Parse(a[1]);
+                    int zzz = Int32.Parse(a[0]);
+                    totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
+                }
+                var pkg = db.Packages.Where(p => dsPkg.Contains(p.id)).Include(p => p.Prices);
+                ViewBag.total = total;
+                ViewBag.totalprice = totalprice;
+                return Json(new { totalz = total, totalpricez = totalprice }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { totalz = 0, totalpricez = 0 }, JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }
