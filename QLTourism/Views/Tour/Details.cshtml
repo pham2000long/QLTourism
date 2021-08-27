@@ -179,7 +179,7 @@
             var num = parseInt($("#numberBuy").val());
             var data = {
                 "priceId": parseInt($('#comboPrice').find(":selected").val()),
-                "numberBuy": num==null?0:1,
+                "numberBuy": num==null?0:num,
                 "pkgId": @Model.id
             };
             $.ajax({
@@ -189,12 +189,16 @@
                 dataType: "json",
                 contentType: "application/json",
                 success: function (response) {
-                    if (response.Success) {
+                    if (response.Success == 1) {
                         $("#cartCount").html(parseInt($("#cartCount").html()) + 1);
                         alert("Thêm thành công!")
                      }
+                    else if (response.Success == 2)
+                        alert("Thêm thất bại, tour này đã có trong giỏ rồi.")
+                    else if (response.Success == 3)
+                        alert("Thêm thất bại, số lượng phải lớn hơn 0.")
                     else
-                        alert("Thêm thất bại")
+                        alert("Thêm thất bại.")
                 },
                 error: function () {
 

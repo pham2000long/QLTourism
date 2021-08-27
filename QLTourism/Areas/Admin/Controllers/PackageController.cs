@@ -100,7 +100,7 @@ namespace QLTourism.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Package package = db.Packages.Find(id);
+            Package package = db.Packages.Where(p => p.id == id).Include(p => p.Category).FirstOrDefault();
             if (package == null)
             {
                 return HttpNotFound();
@@ -205,7 +205,7 @@ namespace QLTourism.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Package package = db.Packages.Find(id);
+            Package package = db.Packages.Where(p => p.id == id).Include(p => p.Category).FirstOrDefault();
             if (package == null)
             {
                 return HttpNotFound();
