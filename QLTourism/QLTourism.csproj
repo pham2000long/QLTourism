@@ -171,6 +171,7 @@
     <Compile Include="Models\TripType.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\ClientLoginController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Public\assets\css\app-dark.css" />
@@ -2638,6 +2639,7 @@
     <Content Include="Views\NewsView\Index.cshtml" />
     <Content Include="Views\NewsView\ArticleDetail.cshtml" />
     <Content Include="Views\NewsView\SideMenu.cshtml" />
+    <Content Include="Views\ClientLogin\login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
