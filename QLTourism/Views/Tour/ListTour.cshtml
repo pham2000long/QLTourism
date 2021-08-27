@@ -157,20 +157,25 @@
 
         $("#btnAddMore").click(function () {
             var indexz = $('#tourCount').val();
-            alert(1);
             $.ajax({
                 type: 'POST',
                 data: { "madm": '@ViewBag.madm', "searchString": '@ViewBag.searchString', "index": indexz
                 },
                 url: '/Tour/AddMore',
-                success: function (data) {
-                    $("#MainTourRow").append(
-                        '<div class="col-xl-4 col-lg-6 col-md-6 isotope-item popular"><div class="box_grid"><figure><a href="#0" class="wish_bt"></a>'
-                        + '<a href="/Tour/Details/' + response.pkg[index].id + '"><img src="' + reponse.pkg[index].thumbail + '" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>'
-                        + '<small>' + response.pkg[index].Category.name + '</small></figure><div class="wrapper"><h3><a href="/Tour/Details/' + response.pkg[index].id + '">' + response.pkg[index].pkgName + '</a></h3>'
-                        + '<p>' + response.pkg[index].pkgDesc + '</p>' + '<span class="price"><strong>' + response.pkg[index].pkgBasePrice + '</strong></span>'
-                        + '</div><ul><li><i class="icon_clock_alt"></i> ' + response.pkg[index].pkgTimePeriod + ' </li><li><div class="score"><span>' + dateFormat(new Date(parseInt((response.pkg[index].pkgStartDate).match(/\d+/)[0]))) + '<em>' + response.pkg[index].pkgTransporter + '</em></span><a href="#0"><strong>Giữ chỗ</strong></a></div></li></ul></div></div>'
-                    );
+                success: function (response) {
+                    if (response.fullStatus == 1) {
+                        $("#btnAddMore").hide();
+                    }
+                    $.each(response.pkg, function (index) {
+                        $("#MainTourRow").append(
+                            '<div class="col-xl-4 col-lg-6 col-md-6 isotope-item popular"><div class="box_grid"><figure><a href="#0" class="wish_bt"></a>'
+                            + '<a href="/Tour/Details/' + response.pkg[index].id + '"><img src="' + response.pkg[index].thumbail + '" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>'
+                            + '<small>' + response.pkg[index].Category.name + '</small></figure><div class="wrapper"><h3><a href="/Tour/Details/' + response.pkg[index].id + '">' + response.pkg[index].pkgName + '</a></h3>'
+                            + '<p>' + response.pkg[index].pkgDesc + '</p>' + '<span class="price"><strong>' + response.pkg[index].pkgBasePrice + '</strong></span>'
+                            + '</div><ul><li><i class="icon_clock_alt"></i> ' + response.pkg[index].pkgTimePeriod + ' </li><li><div class="score"><span>' + dateFormat(new Date(parseInt((response.pkg[index].pkgStartDate).match(/\d+/)[0]))) + '<em>' + response.pkg[index].pkgTransporter + '</em></span><a href="#0"><strong>Giữ chỗ</strong></a></div></li></ul></div></div>'
+                        );
+                        $('#tourCount').val(parseInt($('#tourCount').val())+1);
+                    })
                 }, 
                 error: function (response) {
                     //debugger;
