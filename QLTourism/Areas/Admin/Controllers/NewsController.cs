@@ -17,7 +17,7 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/News
         public ActionResult Index()
         {
-            var news = db.News.Include(n => n.Category);
+            var news = db.News.Include(n => n.Category).OrderByDescending(x => x.id);
             return View(news.ToList());
         }
 

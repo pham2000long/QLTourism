@@ -19,7 +19,7 @@ namespace QLTourism.Areas.Admin.Controllers
         {
             if (Session["roleId"].Equals(1))
             {
-                return View(db.Roles.ToList());
+                return View(db.Roles.OrderByDescending(x => x.id).ToList());
             }
             Session["Message"] = "Bạn không có quyền truy cập trang quản lý quyền hạn!";
             return RedirectToAction("Index", "Dashboard");
