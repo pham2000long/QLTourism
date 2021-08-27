@@ -36,7 +36,7 @@
             <div class="row no-gutters custom-search-input-2 inner">
                 <div class="col-lg-7">
                     <div class="form-group">
-                        <input class="form-control" value="@ViewBag.searchString" name="searchString" type="text" placeholder="What are you looking for...">
+                        <input class="form-control" value="@ViewBag.searchString" name="searchString" type="text" placeholder="Nhập từ khoá để tìm kiếm...">
                         <i class="icon_search"></i>
                     </div>
                 </div>
@@ -62,51 +62,48 @@
         <div class="row" id="MainTourRow">
             @foreach (var item in Model)
             {
-                if (item.active == 4)
-                {
-                    <div class="col-xl-4 col-lg-6 col-md-6 isotope-item popular">
-                        <div class="box_grid">
-                            <figure>
-                                <a href="#0" class="wish_bt"></a>
-                                @if (item.thumbail != null)
-                                {
-                                    string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
-                                    <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
-                                }
-                                else
-                                {
-                                    string ImagePath = "~/Areas/Admin/wwwroot/thumbail/tourThumbail.jpg";
-                                    <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
-                                }
-                                <small>@item.Category.name</small>
-                            </figure>
-                            <div class="wrapper">
-                                <h3><a href="/Tour/Details/@item.id">@item.pkgName</a></h3>
-                                @if (item.pkgDesc != null)
-                                {
-                                    <p>@item.pkgDesc.Split('>', '<')[2]</p>
-                                }
-                                else
-                                {
-                                    <p>Chưa có mô tả</p>
-                                }
-                                @if (item.pkgBasePrice == 0)
-                                {
-                                    <span class="price"><strong>Giá liên hệ</strong></span>
-                                }
-                                else
-                                {
-                                    <span class="price">Giá từ <strong>@String.Format("{0:n}", item.pkgBasePrice) VNĐ</strong></span>
-                                }
-                            </div>
-                            <ul>
-                                <li><i class="icon_clock_alt"></i> @item.pkgTimePeriod </li>
-                                <li><div class="score"><span>@{string a = item.pkgStartDate.ToString().Split(' ')[0]; @a}<em>@item.pkgTransporter</em></span><a href="#0"><strong>Giữ chỗ</strong></a></div></li>
-                            </ul>
+                <div class="col-xl-4 col-lg-6 col-md-6 isotope-item popular">
+                    <div class="box_grid">
+                        <figure>
+                            <a href="#0" class="wish_bt"></a>
+                            @if (item.thumbail != null)
+                            {
+                                string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+                                <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
+                            }
+                            else
+                            {
+                                string ImagePath = "~/Areas/Admin/wwwroot/thumbail/tourThumbail.jpg";
+                                <a href="/Tour/Details/@item.id"><img src="@Url.Content(ImagePath)" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Chi tiết</span></div></a>
+                            }
+                            <small>@item.Category.name</small>
+                        </figure>
+                        <div class="wrapper">
+                            <h3><a href="/Tour/Details/@item.id">@item.pkgName</a></h3>
+                            @if (item.pkgDesc != null)
+                            {
+                                <p>@item.pkgDesc.Split('>', '<')[2]</p>
+                            }
+                            else
+                            {
+                                <p>Chưa có mô tả</p>
+                            }
+                            @if (item.pkgBasePrice == 0)
+                            {
+                                <span class="price"><strong>Giá liên hệ</strong></span>
+                            }
+                            else
+                            {
+                                <span class="price">Giá từ <strong>@String.Format("{0:n}", item.pkgBasePrice) VNĐ</strong></span>
+                            }
                         </div>
+                        <ul>
+                            <li><i class="icon_clock_alt"></i> @item.pkgTimePeriod </li>
+                            <li><div class="score"><span>@{string a = item.pkgStartDate.ToString().Split(' ')[0]; @a}<em>@item.pkgTransporter</em></span><a href="#0"><strong>Giữ chỗ</strong></a></div></li>
+                        </ul>
                     </div>
-                    <!-- /box_grid -->
-                }
+                </div>
+                <!-- /box_grid -->
             }
 
         </div>

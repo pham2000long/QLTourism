@@ -1,0 +1,38 @@
+﻿@model IEnumerable<QLTourism.Models.News>
+
+
+<!-- /widget -->
+<div class="widget">
+    <form action="/NewsView/Index">
+        <div class="form-group">
+            <input type="text" name="searchString" id="search" class="form-control" placeholder="Tìm kiếm...">
+        </div>
+        <button type="submit" id="submit" class="btn_1 rounded">Tìm kiếm</button>
+    </form>
+</div>
+<div class="widget">
+    <div class="widget-title">
+        <h4>Bài đăng gần đây</h4>
+    </div>
+    <ul class="comments-list">
+        @{
+            int i = 0;
+            foreach (var item in Model)
+            {
+                int z = 35;
+                if (item.title.Length <= 35)
+                {
+                    z = item.title.Length - 3;
+                }
+                string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+                <li>
+                    <div class="alignleft">
+                        <a href="#0"><img src="@Url.Content(ImagePath)" alt=""></a>
+                    </div>
+                    <small>@{string a = item.date.ToString().Split(' ')[0]; @a}</small>
+                    <h3><a href="#" title="">@item.title.Substring(0, z) ...</a></h3>
+                </li>
+            }
+        }
+    </ul>
+</div>

@@ -1,0 +1,47 @@
+﻿@model QLTourism.Models.News
+@{
+    ViewBag.Title = "ArticleDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + Model.thumbail;
+}
+
+<!-- SPECIFIC CSS -->
+<link href="~/Assets/css/blog.css" rel="stylesheet">
+
+<section class="hero_in general" style="background: url(@Url.Content(ImagePath)) center center no-repeat @if (Model.thumbail != null) { Html.Raw("!important"); }; background-size:cover;">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>tin tức</h1>
+        </div>
+    </div>
+</section>
+<!--/hero_in-->
+
+<div class="container margin_60_35">
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="bloglist singlepost">
+                <p><img alt="" class="img-fluid" src="img/blog-single.jpg"></p>
+                <h1>@Model.title</h1>
+                <div class="postmeta">
+                    <ul><li><a href="#"><i class="icon_clock_alt"></i> @{string a = Model.date.ToString().Split(' ')[0]; @a}</a></li>
+                    </ul>
+                </div>
+                <!-- /post meta -->
+                <div class="post-content">
+                    <p>@Model.summary</p>
+                    <hr />
+                    <p>@Html.Raw(Model.detail)</p>
+                </div>
+                <!-- /post -->
+            </div>
+            <!-- /single-post -->
+         </div>
+        <aside class="col-lg-3">
+            @{ Html.RenderAction("SideMenu", "NewsView");}
+        </aside>
+        <!-- /aside -->
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
