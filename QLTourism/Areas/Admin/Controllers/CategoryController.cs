@@ -18,7 +18,7 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Category
         public ActionResult Index()
         {
-            var categories = db.Categories.ToList();
+            var categories = db.Categories.OrderByDescending(x => x.id).ToList();
             return View(categories);
         }
 

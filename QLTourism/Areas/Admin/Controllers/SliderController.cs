@@ -17,7 +17,7 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Sliders
         public ActionResult Index()
         {
-            return View(db.Sliders.ToList());
+            return View(db.Sliders.OrderByDescending(x => x.id).ToList());
         }
 
         // GET: Admin/Sliders/Details/5

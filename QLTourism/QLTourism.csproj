@@ -138,6 +138,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
@@ -145,7 +146,11 @@
     <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\CustomerController.cs" />
+=======
+    <Compile Include="Controllers\AboutController.cs" />
+>>>>>>> origin/longdev3
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsViewController.cs" />
     <Compile Include="Controllers\TourController.cs" />
@@ -2606,6 +2611,9 @@
     <Content Include="Areas\Admin\Views\Slider\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Slider\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Package\Programs.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2638,6 +2646,7 @@
     <Content Include="Views\NewsView\Index.cshtml" />
     <Content Include="Views\NewsView\ArticleDetail.cshtml" />
     <Content Include="Views\NewsView\SideMenu.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
