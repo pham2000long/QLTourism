@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using QLTourism.Models;
 
 namespace QLTourism.Areas.Admin.Controllers
@@ -15,10 +16,47 @@ namespace QLTourism.Areas.Admin.Controllers
         private TourismDB db = new TourismDB();
 
         // GET: Admin/News
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            var news = db.News.Include(n => n.Category).OrderByDescending(x => x.id);
-            return View(news.ToList());
+            ViewBag.currentSort = sortOrder;
+
+            ViewBag.SapXepTheoTitle = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.SapXepTheoDate = sortOrder == "ten" ? "date_desc" : "date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.currentFilter = searchString;
+            var news = db.News.Select(p => p);
+            // Lọc sản phẩm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                news = news.Where(p => p.title.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    news = news.OrderByDescending(s => s.title);
+                    break;
+                case "date":
+                    news = news.OrderBy(s => s.date);
+                    break;
+                case "date_desc":
+                    news = news.OrderByDescending(s => s.date);
+                    break;
+                default:
+                    news = news.OrderBy(s => s.title);
+                    break;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(news.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/News/Details/5
