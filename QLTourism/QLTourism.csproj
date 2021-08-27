@@ -146,7 +146,7 @@
     <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsViewController.cs" />
@@ -2640,12 +2640,13 @@
     <Content Include="Views\Home\HomeSlider.cshtml" />
     <Content Include="Views\Tour\Details.cshtml" />
     <Content Include="Views\Shared\_RegisterPage.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\NewsView\Index.cshtml" />
     <Content Include="Views\NewsView\ArticleDetail.cshtml" />
     <Content Include="Views\NewsView\SideMenu.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\ClientLogin\login.cshtml" />
+    <Content Include="Views\ClientLogin\LoginPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

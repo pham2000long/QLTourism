@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Okayu - Công ty du lịch hàng đầu Việt Nam</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="~/Assets/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="~/Assets/img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="~/Assets/img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="~/Assets/img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="~/Assets/img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- BASE CSS -->
+    <link href="~/Assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/css/style.css" rel="stylesheet">
+    <link href="~/Assets/css/vendors.css" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="~/Assets/css/custom.css" rel="stylesheet">
+
+@{ 
+    Layout = null;
+}
+
+</head>
+
+<body id="login_bg" style="background: url(../Assets/img/sectionCallBG.jpg) center center no-repeat !important; background-size:cover;">
+
+    <nav id="menu" class="fake_menu"></nav>
+
+    <!-- End Preload -->
+
+    <div id="login">
+        <aside>
+            <figure>
+                <a href="/Home/index/"><img src="~/Assets/img/logo_sticky.png" width="155" height="36" data-retina="true" alt="" class="logo_sticky"></a>
+            </figure>
+            <form >
+                <div class="access_social">
+                    <a href="#0" class="social_bt facebook">Đăng nhập bằng Facebook</a>
+                    <a href="#0" class="social_bt google">Đăng nhập bằng Google</a>
+                </div>
+                <div class="divider"><span>Or</span></div>
+                <div class="form-group">
+                    <label>Tên đăng nhập</label>
+                    <input type="text" class="form-control" name="username" id="username">
+                    <i class="icon_mail_alt"></i>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" class="form-control" name="password" id="password" value="">
+                    <i class="icon_lock_alt"></i>
+                </div>
+                <div class="clearfix add_bottom_30">
+                    <div class="checkboxes float-left">
+                        <label class="container_check">
+                            Ghi nhớ tôi
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Quên mật khẩu?</a></div>
+                </div>
+                <p class="text-center bg-danger">@ViewBag.Error</p>
+                <input type="submit" class="btn_1 rounded full-width" value="Đăng nhập"/>
+                <div class="text-center add_top_10">Bạn là người mới? <strong><a href="/Register/index/">Đăng ký!</a></strong></div>
+            </form>
+            <div class="copy">© 2021 Okayu</div>
+        </aside>
+    </div>
+    <!-- /login -->
+    <!-- COMMON SCRIPTS -->
+    <script src="~/Assets/js/jquery-2.2.4.min.js"></script>
+    <script src="~/Assets/js/common_scripts.js"></script>
+    <script src="~/Assets/js/main.js"></script>
+    <script src="~/Assets/assets/validate.js"></script>
+
+</body>
+</html>

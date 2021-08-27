@@ -10,7 +10,7 @@
         <figure>
             <a href="/Home"><img src="~/Assets/img/logo_sticky.png" width="155" height="36" data-retina="true" alt="" class="logo_sticky"></a>
         </figure>
-        @using (Html.BeginForm("Register", "Customer", FormMethod.Post))
+        @using (Html.BeginForm("Register", "Register", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
