@@ -146,6 +146,7 @@
     <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2681,6 +2682,7 @@
     <Folder Include="Areas\Admin\Public\assets\libs\raphael\dev\test\" />
     <Folder Include="Areas\Admin\Public\assets\libs\save\test\" />
     <Folder Include="Areas\Admin\wwwroot\tourImage\" />
+    <Folder Include="Views\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
