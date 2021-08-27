@@ -2650,6 +2650,7 @@
     <Content Include="Views\ClientLogin\login.cshtml" />
     <Content Include="Views\ClientLogin\LoginPage.cshtml" />
     <Content Include="Views\ClientLogin\Profile.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2682,7 +2683,6 @@
     <Folder Include="Areas\Admin\Public\assets\libs\raphael\dev\test\" />
     <Folder Include="Areas\Admin\Public\assets\libs\save\test\" />
     <Folder Include="Areas\Admin\wwwroot\tourImage\" />
-    <Folder Include="Views\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
