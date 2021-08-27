@@ -182,11 +182,12 @@ namespace QLTourism.Controllers
                 }
                 else
                     item.pkgDesc = item.pkgDesc.Split('>', '<')[2];
+
                 dsThem.Add(item);
                 
             }
 
-            return Json(new { pkg = dsThem, id = 2 }, JsonRequestBehavior.AllowGet);
+            return Json(new { pkg = dsThem }, JsonRequestBehavior.AllowGet);
         }
     }
 }

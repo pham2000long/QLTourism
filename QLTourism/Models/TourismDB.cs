@@ -10,6 +10,7 @@ namespace QLTourism.Models
         public TourismDB()
             : base("name=TourismTu")
         {
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public virtual DbSet<BookingDetail> BookingDetails { get; set; }
