@@ -38,7 +38,12 @@
                 </a>
             </div>
             <ul id="top_menu">
-                <li><a href="cart-1.html" class="cart-menu-btn" title="Cart"><strong id="cartCount">4</strong></a></li>
+                <li><a href="cart-1.html" class="cart-menu-btn" title="Cart"><strong id="cartCount">@{
+                    int size = 0;
+                    if(Session["CartItem"]!=null){
+                        size = Session["CartItem"].ToString().Split('&').Count();
+                   }
+                    @size                                                              }</strong></a></li>
                 @if (Session["ClientidUser"] == null)
                 {
                     <li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Đăng nhập</a></li>

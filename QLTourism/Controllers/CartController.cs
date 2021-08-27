@@ -15,7 +15,7 @@ namespace QLTourism.Controllers
         }
 
         [HttpPost]
-        public ActionResult addToCart(int priceId, int numberBuy, int pkgId)
+        public ActionResult addToCart(int priceId, int numberBuy , int pkgId)
         {
             try
             {
