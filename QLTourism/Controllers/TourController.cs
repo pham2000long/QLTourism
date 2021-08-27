@@ -198,8 +198,7 @@ namespace QLTourism.Controllers
             if (dsThem.Count() <= 0)
                 isFull = 1;
 
-            return Json(new { 
-               = dsThem, fullStatus = isFull }, JsonRequestBehavior.AllowGet);
+            return Json(new { pkg = dsThem, fullStatus = isFull }, JsonRequestBehavior.AllowGet);
         }
     }
 }
