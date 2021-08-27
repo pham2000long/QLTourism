@@ -8,6 +8,11 @@
 <h2>Xóa tài khoản khách</h2>
 
 <h3>Bạn có muốn xóa tài khoản khách hàng?</h3>
+@if (ViewBag.Error != null)
+{
+    <br />
+    <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+}
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -116,12 +121,16 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Quay lại", "Index")
         </div>
     }
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

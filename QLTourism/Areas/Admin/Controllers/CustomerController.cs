@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using QLTourism.Models;
 
 namespace QLTourism.Areas.Admin.Controllers
@@ -15,9 +16,47 @@ namespace QLTourism.Areas.Admin.Controllers
         private TourismDB db = new TourismDB();
 
         // GET: Admin/Customer
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return View(db.Customers.OrderByDescending(x => x.id).ToList());
+            ViewBag.currentSort = sortOrder;
+
+            ViewBag.SapXepTheoId = String.IsNullOrEmpty(sortOrder) ? "id_asc" : "";
+            ViewBag.SapXepTheoTen = sortOrder == "ten" ? "ten_desc" : "ten";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.currentFilter = searchString;
+            var customers = db.Customers.Select(p => p);
+            // Lọc khách hàng
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                customers = customers.Where(p => p.name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "id_asc":
+                    customers = customers.OrderBy(s => s.id);
+                    break;
+                case "ten":
+                    customers = customers.OrderBy(s => s.name);
+                    break;
+                case "ten_desc":
+                    customers = customers.OrderByDescending(s => s.name);
+                    break;
+                default:
+                    customers = customers.OrderByDescending(s => s.id);
+                    break;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(customers.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Customer/Details/5
@@ -56,9 +95,16 @@ namespace QLTourism.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Customer customer = db.Customers.Find(id);
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Customers.Remove(customer);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View(customer);
+            }
         }
 
         protected override void Dispose(bool disposing)

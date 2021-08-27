@@ -1,4 +1,5 @@
-﻿@model IEnumerable<QLTourism.Models.User>
+﻿@model PagedList.IPagedList<QLTourism.Models.User>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
@@ -17,25 +18,32 @@
     <div class="alert alert-danger" role="alert">@Session["Error"]</div>
     Session["Error"] = null;
 }
+@using (Html.BeginForm())
+{
+    <p>
+        Tìm kiếm danh mục: @Html.TextBox("searchString", ViewBag.currentFilter as string)
+        <input type="submit" value="Tìm" class="btn btn-primary" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.username)
+            Tên tài khoản
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            @Html.ActionLink("Tên nhân viên", "Index", new { sortOrder = ViewBag.SapXepTheoTen, currentFilter = ViewBag.currentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            Email
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.gender)
+            Giới tính
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.avatar)
+            Ảnh đại diện
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Role.name)
+            Quyền hạn
         </th>
         <th></th>
     </tr>
@@ -84,6 +92,8 @@
     }
 
 </table>
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

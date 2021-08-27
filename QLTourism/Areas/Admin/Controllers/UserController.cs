@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using QLTourism.Models;
 
 namespace QLTourism.Areas.Admin.Controllers
@@ -15,12 +16,49 @@ namespace QLTourism.Areas.Admin.Controllers
         private TourismDB db = new TourismDB();
 
         // GET: Admin/User
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
             if (Session["roleId"].Equals(1))
             {
-                var users = db.Users.Include(u => u.Role).OrderByDescending(x => x.id);
-                return View(users.ToList());
+                ViewBag.currentSort = sortOrder;
+
+                ViewBag.SapXepTheoId = String.IsNullOrEmpty(sortOrder) ? "id_asc" : "";
+                ViewBag.SapXepTheoTen = sortOrder == "ten" ? "ten_desc" : "ten";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+                ViewBag.currentFilter = searchString;
+                var users = db.Users.Select(p => p);
+                // Lọc nhân viên
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    users = users.Where(p => p.name.Contains(searchString));
+                }
+
+                switch (sortOrder)
+                {
+                    case "id_asc":
+                        users = users.OrderBy(s => s.id);
+                        break;
+                    case "ten":
+                        users = users.OrderBy(s => s.name);
+                        break;
+                    case "ten_desc":
+                        users = users.OrderByDescending(s => s.name);
+                        break;
+                    default:
+                        users = users.OrderByDescending(s => s.id);
+                        break;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                return View(users.ToPagedList(pageNumber, pageSize));
             }
             Session["Message"] = "Bạn không có quyền truy cập trang quản lý nhân viên!";
             return RedirectToAction("Index", "Dashboard");

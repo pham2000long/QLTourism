@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using QLTourism.Models;
 
 namespace QLTourism.Areas.Admin.Controllers
@@ -15,9 +16,47 @@ namespace QLTourism.Areas.Admin.Controllers
         private TourismDB db = new TourismDB();
 
         // GET: Admin/Sliders
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return View(db.Sliders.OrderByDescending(x => x.id).ToList());
+                ViewBag.currentSort = sortOrder;
+
+                ViewBag.SapXepTheoId = String.IsNullOrEmpty(sortOrder) ? "id_asc" : "";
+                ViewBag.SapXepTheoTen = sortOrder == "ten" ? "ten_desc" : "ten";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+                ViewBag.currentFilter = searchString;
+                var sliders = db.Sliders.Select(p => p);
+                // Lọc nhân viên
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    sliders = sliders.Where(p => p.name.Contains(searchString));
+                }
+
+                switch (sortOrder)
+                {
+                    case "id_asc":
+                        sliders = sliders.OrderBy(s => s.id);
+                        break;
+                    case "ten":
+                        sliders = sliders.OrderBy(s => s.name);
+                        break;
+                    case "ten_desc":
+                        sliders = sliders.OrderByDescending(s => s.name);
+                        break;
+                    default:
+                        sliders = sliders.OrderByDescending(s => s.id);
+                        break;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                return View(sliders.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Sliders/Details/5

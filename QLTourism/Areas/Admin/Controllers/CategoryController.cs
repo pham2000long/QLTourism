@@ -34,7 +34,7 @@ namespace QLTourism.Areas.Admin.Controllers
             }
             ViewBag.currentFilter = searchString;
             var categories = db.Categories.Select(p => p);
-            // Lọc sản phẩm
+            // Lọc danh mục
             if (!String.IsNullOrEmpty(searchString))
             {
                 categories = categories.Where(p => p.name.Contains(searchString));
