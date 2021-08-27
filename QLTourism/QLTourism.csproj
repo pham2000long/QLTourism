@@ -146,11 +146,8 @@
     <Compile Include="Areas\Admin\Controllers\SliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
-<<<<<<< HEAD
     <Compile Include="Controllers\CustomerController.cs" />
-=======
     <Compile Include="Controllers\AboutController.cs" />
->>>>>>> origin/longdev3
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsViewController.cs" />
     <Compile Include="Controllers\TourController.cs" />
