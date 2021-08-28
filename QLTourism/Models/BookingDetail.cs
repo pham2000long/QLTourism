@@ -16,6 +16,9 @@ namespace QLTourism.Models
 
         public int? packageId { get; set; }
 
+        [StringLength(255)]
+        public string bookingInfor { get; set; }
+
         public virtual Booking Booking { get; set; }
 
         public virtual Package Package { get; set; }
