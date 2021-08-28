@@ -1,8 +1,58 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="hero_in cart_section">
+    <div class="wrapper">
+        <div class="container">
+            <h1 class="fadeInUp"><span></span>Lịch sử đặt tour</h1>
+        </div>
+    </div>
+</div>
+<!--/hero_in-->
 
+<div class="bg_color_1">
+    <div class="container margin_60_35" style="max-width: 80% !important;">
+        <div class="row">
+            <div class="col-lg-8" style="flex: none !important; max-width:100% !important;">
+                <div class="box_cart">
+                    <table class="table table-striped cart-list">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Mã đơn
+                                </th>
+                                <th>
+                                    Ngày đặt
+                                </th>
+                                <th>
+                                    Đất nước
+                                </th>
+                                <th>
+                                    Thành phố
+                                </th>
+                                <th>
+                                    Địa chỉ
+                                </th>
+                                <th>
+                                    Ghi chú
+                                </th>
+                                <th>
+                                    
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ Html.RenderAction("Bookings", "UserBooking");}
+                        </tbody>
+                    </table>
+                    <!-- /cart-options -->
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bg_color_1 -->

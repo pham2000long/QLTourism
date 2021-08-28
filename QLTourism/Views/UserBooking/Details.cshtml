@@ -1,47 +1,17 @@
-﻿@model QLTourism.Models.Customer
-@{
-    ViewBag.Title = "Checkout";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<script src="~/Assets/js/jquery-2.2.4.min.js"></script>
+﻿@model QLTourism.Models.Booking
+
 <div class="hero_in cart_section">
     <div class="wrapper">
         <div class="container">
-            <div class="bs-wizard clearfix">
-                <div class="bs-wizard-step">
-                    <div class="text-center bs-wizard-stepnum">Giỏ hàng</div>
-                    <div class="progress">
-                        <div class="progress-bar"></div>
-                    </div>
-                    <a href="/Cart" class="bs-wizard-dot"></a>
-                </div>
-
-                <div class="bs-wizard-step active">
-                    <div class="text-center bs-wizard-stepnum">Thanh toán</div>
-                    <div class="progress">
-                        <div class="progress-bar"></div>
-                    </div>
-                    <a href="/Cart/Checkout" class="bs-wizard-dot"></a>
-                </div>
-
-                <div class="bs-wizard-step disabled">
-                    <div class="text-center bs-wizard-stepnum">Hoàn thành!</div>
-                    <div class="progress">
-                        <div class="progress-bar"></div>
-                    </div>
-                    <a href="#" class="bs-wizard-dot"></a>
-                </div>
-            </div>
-            <!-- End bs-wizard -->
+            <h1 class="fadeInUp"><span></span>Thông tin đơn hàng #@Model.bookingNo</h1>
+            <h4 class="fadeInUp"><span></span>Đặt ngày @{string a = Model.bookingDate.ToString().Split(' ')[0]; @a}</h4>
         </div>
     </div>
 </div>
-<!--/hero_in-->
 
 <div class="bg_color_1">
     <div class="container margin_60_35">
         <div class="row">
-
             <div class="col-lg-8">
                 <div class="box_cart">
                     <div class="form_title">
@@ -49,17 +19,16 @@
                     </div>
                     <div class="step">
                         <div class="row">
-                            <input type="hidden" id="customerId" value="@Session["ClientidUser"]"/>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Họ tên</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="@Html.DisplayFor(model => model.name)" readonly>
+                                    <input type="text" class="form-control" id="name" name="name" value="@ViewBag.Tk.name" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" value="@Html.DisplayFor(model => model.email)" readonly>
+                                    <input type="text" class="form-control" id="email" name="email" value="@ViewBag.Tk.email" readonly>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +36,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Số điện thoại</label>
-                                    <input type="text" id="phone" name="phone" class="form-control" value="@Html.DisplayFor(model => model.phone)" readonly>
+                                    <input type="text" id="phone" name="phone" class="form-control" value="@ViewBag.Tk.phone" readonly>
                                 </div>
                             </div>
                         </div>
@@ -76,9 +45,9 @@
                     <!--End step -->
 
                     <div class="form_title">
-                        <h3><strong>2</strong>Địa chỉ thanh toán</h3>
+                        <h3><strong>2</strong>Thông tin giao hàng</h3>
                     </div>
-                    <input type="hidden" id="BookingInfor" value="@ViewBag.Booking">
+                    <input type="hidden" id="bookingId" value="@Model.id" />
                     <div class="step">
                         <div class="row">
                             <div class="col-sm-6">
@@ -106,27 +75,36 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Ghi chú</label>
-                                    <input type="text" id="customerNote" name="customerNote" class="form-control" value="">
+                                    <input type="text" id="customerNote" name="customerNote" class="form-control" value="@Html.DisplayFor(model => model.address)">
                                 </div>
                             </div>
                         </div>
                         <!--End row -->
                     </div>
+                    <div class="form_title">
+                        <h3><strong>3</strong>Các tour</h3>
+                    </div>
+                    <input type="hidden" id="BookingInfor" value="@ViewBag.Booking">
+                    <div class="step">
+                        @foreach (var item in Model.BookingDetails)
+                        {
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @item.Package.pkgName
+                                </div>
+                                <div class="col-md-6">
+                                    @item.bookingInfor
+                                </div>
+                            </div>
+                        }
+                        <!--End row -->
+                    </div>
                 </div>
-                <button class="btn btn-default">Sửa thông tin</button>
             </div>
-            <!-- /col -->
-
             <aside class="col-lg-4" id="sidebar">
                 <div class="box_detail">
-                    <div id="total_cart">
-                        Tổng tiền: <span name="totalprice" class="float-right">@String.Format("{0:n0}", @ViewBag.totalprice) VNĐ</span>
-                    </div>
-                    <ul class="cart_details">
-                        <li name="travelerCount">Số gói <span>@ViewBag.total</span></li>
-                    </ul>
-                    <button id="payBtn" class="btn_1 full-width purchase">Thanh toán</button>
-                    <div class="text-center"><small>Tại bước này bạn chưa mất tiền!</small></div>
+                    <button id="updateBtn" class="btn_1 full-width purchase">Cập nhật thông tin giao hàng</button>
+                    <a href="/userbooking/index"><button id="payBtn" class="btn_1 full-width">Trở về</button></a>
                 </div>
             </aside>
         </div>
@@ -134,41 +112,43 @@
     </div>
     <!-- /container -->
 </div>
+<script src="~/Assets/js/jquery-2.2.4.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#payBtn').click(function () {
-            let bookingInfor = $("#BookingInfor").val();
-            let customerId = $("#customerId").val();
+        $('#updateBtn').click(function () {
             let city = $("#city").val();
             let country = $("#country").val();
             let address = $("#address").val();
             let customerNote = $("#customerNote").val();
+            let bookingId = $("#bookingId").val();
             var data = {
-                "bookingInfor": bookingInfor,
-                "customerId": customerId,
+                "id": bookingId,
                 "country": country,
                 "city": city,
                 "address": address,
                 "customerNote": customerNote
             };
             $.ajax({
-                url: "/Cart/FinishBooking",
+                url: "/UserBooking/Edit",
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: "json",
                 contentType: "application/json",
                 success: function (response) {
-                    if (response.Success == 1) {
-                        window.location.href = "/Cart/Finish"
+                    if (response.Success == 0) {
+                        window.location.href = "/ClientLogin/LoginPage"
+                    }
+                    else if (response.Success == 1) {
+                        alert('Cập nhật thành công')
+                    }
+                    else {
+                        alert('Cập nhật thất bại, xảy ra lỗi!')
                     }
                 },
                 error: function () {
-                    alert('Đã xảy ra lỗi');
+                    alert('Đã xảy ra lỗi không xác định!');
                 }
             });
         });
     });
 </script>
-
-
-

@@ -2660,6 +2660,8 @@
     <Content Include="Views\Cart\cartItems.cshtml" />
     <Content Include="Views\Cart\Finish.cshtml" />
     <Content Include="Views\UserBooking\Index.cshtml" />
+    <Content Include="Views\UserBooking\Bookings.cshtml" />
+    <Content Include="Views\UserBooking\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

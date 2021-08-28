@@ -73,9 +73,11 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <!-- item-->
-                            <a class="dropdown-item" href="@Url.Action("Profile", "ClientLogin", new { id = @Session["ClientidUser"]})"><i class="dripicons-user d-inlne-block text-muted mr-2"></i> Profile</a>
+                            <a class="dropdown-item" href="@Url.Action("Profile", "ClientLogin", new { id = @Session["ClientidUser"]})"><i class="dripicons-user d-inlne-block text-muted mr-2"></i> Thông tin</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="@Url.Action("Logout","ClientLogin", new { returnUrl = Request.RawUrl })"><i class="dripicons-exit d-inlne-block text-muted mr-2"></i> Logout</a>
+                            <a class="dropdown-item" href="/userbooking/index"><i class="dripicons-user d-inlne-block text-muted mr-2"></i> Lịch sử đặt tour</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Logout","ClientLogin", new { returnUrl = Request.RawUrl })"><i class="dripicons-exit d-inlne-block text-muted mr-2"></i> Đăng xuất</a>
                         </div>
                     </div>
                 }

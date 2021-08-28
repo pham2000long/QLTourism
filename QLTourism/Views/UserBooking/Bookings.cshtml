@@ -1,0 +1,32 @@
+﻿@model IEnumerable<QLTourism.Models.Booking>
+@if (Session["ClientidUser"] != null)
+{
+    int i = 0;
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.bookingNo
+            </td>
+            <td>
+                @{string a = item.bookingDate.ToString().Split(' ')[0]; @a}
+            </td>
+            <td>
+                @item.country
+            </td>
+            <td>
+                @item.city
+            </td>
+            <td>
+                @item.address
+            </td>
+            <td>
+                @item.customerNote
+            </td>
+            <td class="options" style="text-align:center;">
+                <a href="/userbooking/details/@item.id">Chi tiết - Sửa</a>
+            </td>
+        </tr>
+        i++;
+    }
+}
