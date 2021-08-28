@@ -21,7 +21,7 @@
 @using (Html.BeginForm())
 {
     <p>
-        Tìm kiếm danh mục: @Html.TextBox("searchString", ViewBag.currentFilter as string)
+        Tìm kiếm theo tên nhân viên: @Html.TextBox("searchString", ViewBag.currentFilter as string)
         <input type="submit" value="Tìm" class="btn btn-primary" />
     </p>
 }
