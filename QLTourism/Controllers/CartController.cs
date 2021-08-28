@@ -289,7 +289,9 @@ namespace QLTourism.Controllers
                     detail.bookingId = booking.id;
                     detail.packageId = Int32.Parse(arr[2]);
                     int zzz = Int32.Parse(arr[0]);
-                    detail.Price = Int32.Parse(arr[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
+                    Price cb = db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault();
+                    detail.Price = Int32.Parse(arr[1]) * Int32.Parse(cb.price1.ToString());
+                    detail.bookingInfor = cb.title + " - " + arr[1] + " suất";
                     db.BookingDetails.Add(detail);
                     db.SaveChanges();
                 }
