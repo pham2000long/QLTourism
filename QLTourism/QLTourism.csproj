@@ -152,6 +152,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsViewController.cs" />
     <Compile Include="Controllers\TourController.cs" />
+    <Compile Include="Controllers\UserBookingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2654,6 +2655,7 @@
     <Content Include="Views\Cart\Checkout.cshtml" />
     <Content Include="Views\Cart\cartItems.cshtml" />
     <Content Include="Views\Cart\Finish.cshtml" />
+    <Content Include="Views\UserBooking\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
