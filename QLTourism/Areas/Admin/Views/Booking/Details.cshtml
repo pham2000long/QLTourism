@@ -1,0 +1,77 @@
+﻿@model QLTourism.Models.Booking
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int price = 0;
+    if (ViewBag.BookingDetails != null)
+    {
+        foreach (var item in ViewBag.BookingDetails)
+        {
+            price += item.Price;
+        }
+    }
+}
+
+<h3>Chi tiết đặt tour</h3>
+
+<div>
+    <table width="600px" class="form-group" border="1" style="font-size: 16px">
+        <tr>
+            <td>Tên người đặt</td>
+            <td>@ViewBag.CustomerName</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.bookingDate)</td>
+            <td>@Html.DisplayFor(model => model.bookingDate)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.bookingNo)</td>
+            <td>@Html.DisplayFor(model => model.bookingNo)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.country)</td>
+            <td>@Html.DisplayFor(model => model.country)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.city)</td>
+            <td>@Html.DisplayFor(model => model.city)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.address)</td>
+            <td>@Html.DisplayFor(model => model.address)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.customerNote)</td>
+            <td>@Html.DisplayFor(model => model.customerNote)</td>
+        </tr>
+    </table>
+    <h4>Danh sách tour</h4>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                <b>Tên tour đã đặt</b>
+            </th>
+            <th>
+                <b>Tổng tiền</b>
+            </th>
+        </tr>
+
+        @foreach (var item in ViewBag.Packages)
+        {
+            <tr>
+                <td>
+                    @item.pkgName
+                </td>
+                <td></td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td>@price.ToString() VNĐ</td>
+        </tr>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Quay lại", "Index")
+</p>

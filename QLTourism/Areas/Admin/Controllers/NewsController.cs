@@ -20,7 +20,7 @@ namespace QLTourism.Areas.Admin.Controllers
         {
             ViewBag.currentSort = sortOrder;
 
-            ViewBag.SapXepTheoTitle = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.SapXepTheoTitle = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "title";
             ViewBag.SapXepTheoDate = sortOrder == "ten" ? "date_desc" : "date";
 
             if (searchString != null)
@@ -33,7 +33,7 @@ namespace QLTourism.Areas.Admin.Controllers
             }
             ViewBag.currentFilter = searchString;
             var news = db.News.Select(p => p);
-            // Lọc sản phẩm
+            // Lọc tin tức
             if (!String.IsNullOrEmpty(searchString))
             {
                 news = news.Where(p => p.title.Contains(searchString));
@@ -41,6 +41,9 @@ namespace QLTourism.Areas.Admin.Controllers
 
             switch (sortOrder)
             {
+                case "title":
+                    news = news.OrderBy(s => s.title);
+                    break;
                 case "title_desc":
                     news = news.OrderByDescending(s => s.title);
                     break;
@@ -51,7 +54,7 @@ namespace QLTourism.Areas.Admin.Controllers
                     news = news.OrderByDescending(s => s.date);
                     break;
                 default:
-                    news = news.OrderBy(s => s.title);
+                    news = news.OrderByDescending(s => s.id);
                     break;
             }
             int pageSize = 3;

@@ -1,0 +1,61 @@
+﻿@model PagedList.IPagedList<QLTourism.Models.Booking>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Danh sách đặt tour</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        Tìm theo tên khách: @Html.TextBox("searchString", ViewBag.currentFilter as string)
+        <input type="submit" value="Tìm" class="btn btn-primary" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Tên khách hàng", "Index", new { sortOrder = ViewBag.SapXepTheoTen, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            Ngày đặt tour
+        </th>
+        <th>
+            Mã tour
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bookingNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.id }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
