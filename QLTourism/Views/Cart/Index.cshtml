@@ -60,57 +60,15 @@
 
                             </tr>
                         </thead>
-                        <tbody>
-                            @if (Session["CartItem"] != null)
-                            {
-                                foreach (var item in ViewBag.pkg)
-                                {
-                                    int a = 0, b = 0;
-                                    foreach (string[] itemz in ViewBag.dsSession)
-                                    {
-                                        if (Int32.Parse(itemz[2]) == item.id)
-                                        {
-                                            a = Int32.Parse(itemz[0]);
-                                            b = Int32.Parse(itemz[1]);
-                                        }
-                                    }
-                                    <tr>
-                                        <td>
-                                            <div class="thumb_cart">
-                                                @if (item.thumbail != null)
-                                                {
-                                                    string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
-                                                    <img src="@Url.Content(ImagePath)" alt="Image" style="width:60px;height:60px;object-fit:cover;">
-                                                }
-                                            </div>
-                                            <span class="item_cart">@item.pkgName</span>
-                                        </td>
-                                        <td style="width:25%; !important">
-                                            <select name="combo" id="loaicombo@(i)" class="form-control">
-                                                @foreach (var itemCombo in item.Prices)
-                                                {
-                                                    <option value="@itemCombo.id" @(itemCombo.id == a ? "selected" : "" )>@itemCombo.title - @String.Format("{0:n0}", itemCombo.price1)</option>
-                                                }
-                                            </select>
-                                        </td>
-                                        <td style="width:15%; !important">
-                                            <input type="number" min="1" step="1" name="numberBuy" id="sogoi@(i)" class="form-control" value="@b" placeholder="">
-                                        </td>
-                                        <td class="options" style="width:5%; text-align:center;">
-                                            <a href="/cart/Delete/@item.id"><i class="icon-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    i++;
-                                }
-
-                            }
+                        <tbody id="listCartItem">
+                            @{ Html.RenderAction("cartItems", "Cart");}
                         </tbody>
                     </table>
                     <div class="cart-options clearfix">
                         <div class="float-left">
                         </div>
                         <div class="float-right fix_mobile">
-                            <button type="button" class="btn_1 outline" id="@if (Session["CartItem"] != null) {@Html.Raw("updateCart")} else {@Html.Raw("updateCartz")}">Cập nhật giỏ hàng</button>
+                            <button type="button" class="btn_1 outline" id="updateCartz">Cập nhật giỏ hàng</button>
                         </div>
                         @if (Session["Message"] != null)
                         {
@@ -148,11 +106,9 @@
     <!-- /container -->
 </div>
 <!-- /bg_color_1 -->
-
-<script src="~/Assets/js/jquery-2.2.4.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#updateCart').click(function () {
+        @*$('#updateCart').click(function () {
             var num = "";
             num = num @{
                 if (ViewBag.dsSession != null)
@@ -189,6 +145,45 @@
                 },
                 error: function () {
 
+                }
+            });
+        });*@
+        $('#updateCart').click(function () {
+            var num = "";
+            let a = $('.loaicombo').find(':selected').val();
+            let b = $('.sogoi').val();
+            let c = $('.idgoi').val();
+            if (a != null) {
+                for (let i = 0; i < a.length; i++) {
+                    num += a[i] + '|' + b[i] + '|' + c[i] + '&';
+                }
+                num = num.substring(0, num.length - 1);
+            }
+            var data = {
+                "ses": num
+            };
+            $.ajax({
+                url: "/Cart/updateCart",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.isEmpty == 0) {
+                        $.ajax({
+                            url: '/Cart/cartItems',
+                            success: function (partialView) {
+                                $('#listCartItem').html(partialView);
+                            }
+                        });  
+                        let number = response.totalpricez;
+                        $("#sumPrice").html(number.toLocaleString() + " VNĐ");
+                        $("#sumCombo").html(response.totalz);
+                        $("#cartCount").html(itemcount);
+                    }
+                },
+                error: function () {
+                    alert('Đã xảy ra lỗi');
                 }
             });
         });

@@ -16,26 +16,18 @@ namespace QLTourism.Controllers
         {
             if (Session["CartItem"] != null)
             {
-                List<string[]> ds = new List<string[]>();
-                List<int> dsPkg = new List<int>();
                 string z = Session["CartItem"].ToString();
                 int total = 0;
                 int totalprice = 0;
                 foreach (var item in z.Split('&'))
                 {
                     var a = item.Split('|');
-                    ds.Add(a);
-                    dsPkg.Add(Int32.Parse(a[2]));
                     total += Int32.Parse(a[1]);
                     int zzz = Int32.Parse(a[0]);
                     totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
                 }
-                var pkg = db.Packages.Where(p => dsPkg.Contains(p.id)).Include(p => p.Prices);
                 ViewBag.total = total;
                 ViewBag.totalprice = totalprice;
-                ViewBag.dsSession = ds;
-                ViewBag.pkg = pkg;
-                ViewBag.all = pkg.Count();
             }
             else
             {
@@ -43,6 +35,26 @@ namespace QLTourism.Controllers
                 ViewBag.totalprice = 0;
             }
             return View();
+        }
+        public ActionResult cartItems()
+        {
+            if (Session["CartItem"] != null)
+            {
+                List<string[]> ds = new List<string[]>();
+                List<int> dsPkg = new List<int>();
+                string z = Session["CartItem"].ToString();
+                foreach (var item in z.Split('&'))
+                {
+                    var a = item.Split('|');
+                    ds.Add(a);
+                    dsPkg.Add(Int32.Parse(a[2]));
+                }
+                var pkg = db.Packages.Where(p => dsPkg.Contains(p.id)).Include(p => p.Prices);
+                ViewBag.dsSession = ds;
+                ViewBag.pkg = pkg;
+                ViewBag.all = pkg.Count();
+            }
+            return PartialView();
         }
 
         public ActionResult Delete(int id)
@@ -123,48 +135,63 @@ namespace QLTourism.Controllers
         {
             try
             {
-                if (!String.IsNullOrEmpty(returnUrl))
+                if (Session["CartItem"] != null)
                 {
-                    if(Session["CartItem"]!=null)
-                        return Json(new { isNew = 1 }, JsonRequestBehavior.AllowGet);
+                    if(String.IsNullOrEmpty(ses))
+                    {
+                        int total = 0;
+                        int totalprice = 0;
+                        string[] addedSes = Session["CartItem"].ToString().Split('&');
+                        foreach (var item in addedSes)
+                        {
+                            var a = item.Split('|');
+                            total += Int32.Parse(a[1]);
+                            int zzz = Int32.Parse(a[0]);
+                            totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
+                        }
+                        int itemCountAll = addedSes.Count();
+                        return Json(new { totalz = total, totalpricez = totalprice, itemcount = itemCountAll, isEmpty = 0 }, JsonRequestBehavior.AllowGet);
+                    }
                     else
                     {
-                        return Json(new { isNew = 0 }, JsonRequestBehavior.AllowGet);
+                        string[] addedSes = Session["CartItem"].ToString().Split('&');
+                        string[] sesSplited = ses.Split('&');
+                        if (addedSes.Count() > sesSplited.Count())
+                        {
+                            for (int i = sesSplited.Count(); i < addedSes.Count(); i++)
+                            {
+                                ses += "&" + addedSes[i];
+                            }
+                        }
+                        int total = 0;
+                        int totalprice = 0;
+                        foreach (var item in sesSplited)
+                        {
+                            var a = item.Split('|');
+                            total += Int32.Parse(a[1]);
+                            int zzz = Int32.Parse(a[0]);
+                            totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
+                        }
+                        foreach (var item in addedSes)
+                        {
+                            var a = item.Split('|');
+                            total += Int32.Parse(a[1]);
+                            int zzz = Int32.Parse(a[0]);
+                            totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
+                        }
+                        Session["CartItem"] = ses;
+                        int itemCountAll = ses.Split('&').Count();
+                        return Json(new { totalz = total, totalpricez = totalprice, itemcount = itemCountAll, isEmpty = 0 }, JsonRequestBehavior.AllowGet);
                     }
                 }
-                List<string[]> ds = new List<string[]>();
-                List<int> dsPkg = new List<int>();
-                string[] addedSes = Session["CartItem"].ToString().Split('&');
-                string[] sesSplited = ses.Split('&');
-                if (addedSes.Count() > sesSplited.Count())
+                else
                 {
-                    for (int i = sesSplited.Count(); i < addedSes.Count(); i++)
-                    {
-                        ses += "&" + addedSes[i];
-                    }
-                    return Json(new { totalz = 0, totalpricez = 0, isNew = 1 }, JsonRequestBehavior.AllowGet);
+                    return Json(new { isEmpty = 1 }, JsonRequestBehavior.AllowGet);
                 }
-                int total = 0;
-                int totalprice = 0;
-                foreach (var item in sesSplited)
-                {
-                    var a = item.Split('|');
-                    ds.Add(a);
-                    dsPkg.Add(Int32.Parse(a[2]));
-                    total += Int32.Parse(a[1]);
-                    int zzz = Int32.Parse(a[0]);
-                    totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
-                }
-                ViewBag.total = total;
-                ViewBag.totalprice = totalprice;
-                Session["CartItem"] = ses;
-                //Session["total"] = total;
-                //Session["totalprice"] = totalprice;
-                return Json(new { totalz = total, totalpricez = totalprice, isNew = 0 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { totalz = 0, totalpricez = 0, isNew = 0 }, JsonRequestBehavior.AllowGet);
+                return Json(new { isEmpty = 2 }, JsonRequestBehavior.AllowGet);
             }
         }
 

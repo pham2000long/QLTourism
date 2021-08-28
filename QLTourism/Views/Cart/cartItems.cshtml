@@ -1,0 +1,45 @@
+﻿@if (Session["CartItem"] != null)
+{
+    int i=0;
+    foreach (var item in ViewBag.pkg)
+    {
+        int a = 0, b = 0, c = 0;
+        foreach (string[] itemz in ViewBag.dsSession)
+        {
+            if (Int32.Parse(itemz[2]) == item.id)
+            {
+                a = Int32.Parse(itemz[0]);
+                b = Int32.Parse(itemz[1]);
+                c = Int32.Parse(itemz[2]);
+            }
+        }
+        <tr>
+            <td>
+                <input type="hidden" id="custId" name="pkgId@(i)" value="@c" class="idgoi">
+                <div class="thumb_cart">
+                    @if (item.thumbail != null)
+                    {
+                        string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
+                        <img src="@Url.Content(ImagePath)" alt="Image" style="width:60px;height:60px;object-fit:cover;">
+                    }
+                </div>
+                <span class="item_cart">@item.pkgName</span>
+            </td>
+            <td style="width:25%; !important">
+                <select name="combo" id="loaicombo@(i)" class="form-control loaicombo">
+                    @foreach (var itemCombo in item.Prices)
+                    {
+                        <option value="@itemCombo.id" @(itemCombo.id == a ? "selected" : "" )>@itemCombo.title - @String.Format("{0:n0}", itemCombo.price1)</option>
+                    }
+                </select>
+            </td>
+            <td style="width:15%; !important">
+                <input type="number" min="1" step="1" name="numberBuy" id="sogoi@(i)" class="form-control sogoi" value="@b" placeholder="">
+            </td>
+            <td class="options" style="width:5%; text-align:center;">
+                <a href="/cart/Delete/@item.id"><i class="icon-trash"></i></a>
+            </td>
+        </tr>
+        i++;
+    }
+}
