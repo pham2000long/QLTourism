@@ -12,14 +12,9 @@ namespace QLTourism.Models
 
         public int? Price { get; set; }
 
-        [StringLength(255)]
-        public string customerNote { get; set; }
-
         public int? bookingId { get; set; }
 
         public int? packageId { get; set; }
-
-        public int? comboCount { get; set; }
 
         public virtual Booking Booking { get; set; }
 

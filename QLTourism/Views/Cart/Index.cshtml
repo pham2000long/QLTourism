@@ -12,7 +12,7 @@
                     <div class="progress">
                         <div class="progress-bar"></div>
                     </div>
-                    <a href="#0" class="bs-wizard-dot"></a>
+                    <a href="/Cart" class="bs-wizard-dot"></a>
                 </div>
 
                 <div class="bs-wizard-step disabled">
@@ -20,7 +20,7 @@
                     <div class="progress">
                         <div class="progress-bar"></div>
                     </div>
-                    <a href="#0" class="bs-wizard-dot"></a>
+                    <a href="#" class="bs-wizard-dot"></a>
                 </div>
 
                 <div class="bs-wizard-step disabled">
@@ -28,7 +28,7 @@
                     <div class="progress">
                         <div class="progress-bar"></div>
                     </div>
-                    <a href="#0" class="bs-wizard-dot"></a>
+                    <a href="#" class="bs-wizard-dot"></a>
                 </div>
             </div>
             <!-- End bs-wizard -->
@@ -48,13 +48,13 @@
                                 <th>
                                     Tour
                                 </th>
-                                <th>
+                                <th style="width:25%; !important">
                                     Loại combo
                                 </th>
-                                <th>
+                                <th style="width:15%; !important">
                                     Số gói
                                 </th>
-                                <th>
+                                <th style="width:5%;">
                                     Huỷ
                                 </th>
 
@@ -68,7 +68,7 @@
                         <div class="float-left">
                         </div>
                         <div class="float-right fix_mobile">
-                            <button type="button" class="btn_1 outline" id="updateCartz">Cập nhật giỏ hàng</button>
+                            <button type="button" class="btn_1 outline" id="updateCart">Cập nhật giỏ hàng</button>
                         </div>
                         @if (Session["Message"] != null)
                         {
@@ -108,52 +108,21 @@
 <!-- /bg_color_1 -->
 <script>
     $(document).ready(function () {
-        @*$('#updateCart').click(function () {
-            var num = "";
-            num = num @{
-                if (ViewBag.dsSession != null)
-                {
-                    int iz = 0;
-                    foreach(var item in ViewBag.dsSession)
-                    {
-                       @Html.Raw("+$('#loaicombo" + iz.ToString() + "').find(':selected').val() + '|' + $('#sogoi" + iz.ToString() + "').val() + '|' + '" + item[2] + "'+'&'"); iz++;
-                    } @Html.Raw(";")
-                }
-                else
-                {
-                    @Html.Raw(";")
-                }
-            }
-            num = num.substring(0, num.length - 1);
-            var data = {
-                "ses": num
-            };
-            $.ajax({
-                url: "/Cart/updateCart",
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: "json",
-                contentType: "application/json",
-                success: function (response) {
-                    if (response.isNew == 1) {
-                        alert('Giỏ hàng có thêm sản phẩm mới, cập nhập thành công!')
-                        window.location.href = "@Request.RawUrl";
-                    }
-                    let number = response.totalpricez;
-                    $("#sumPrice").html(number.toLocaleString() + " VNĐ");
-                    $("#sumCombo").html(response.totalz);
-                },
-                error: function () {
-
-                }
-            });
-        });*@
         $('#updateCart').click(function () {
             var num = "";
-            let a = $('.loaicombo').find(':selected').val();
-            let b = $('.sogoi').val();
-            let c = $('.idgoi').val();
-            if (a != null) {
+            let a = [];
+            let b = [];
+            let c = [];
+            $(".loaicombo :selected").each(function () {
+                a.push($(this).val());
+            });
+            $(".sogoi").each(function () {
+                b.push($(this).val());
+            });
+            $(".idgoi").each(function () {
+                c.push($(this).val());
+            });
+            if (a.length>0) {
                 for (let i = 0; i < a.length; i++) {
                     num += a[i] + '|' + b[i] + '|' + c[i] + '&';
                 }
@@ -179,7 +148,7 @@
                         let number = response.totalpricez;
                         $("#sumPrice").html(number.toLocaleString() + " VNĐ");
                         $("#sumCombo").html(response.totalz);
-                        $("#cartCount").html(itemcount);
+                        $("#cartCount").html(response.itemcount);
                     }
                 },
                 error: function () {
@@ -187,27 +156,35 @@
                 }
             });
         });
-        $('#updateCartz').click(function () {
-            var data = {
-                "returnUrl": '@Request.RawUrl'
-            };
-            $.ajax({
-                url: "/Cart/updateCart",
-                type: "POST",
-                data: JSON.stringify(data),
-                dataType: "json",
-                contentType: "application/json",
-                success: function (response) {
-                    if (response.isNew == 1) {
-                        alert('Giỏ hàng có thêm sản phẩm mới, cập nhập thành công!')
-                        window.location.href = "@Request.RawUrl";
-                    }
-                },
-                error: function () {
-
-                }
-            });
-        });
     });
+    function DeleteItem(id) {
+        var data = {
+            "id": id
+        };
+        $.ajax({
+            url: "/Cart/Delete",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (response) {
+                if (response.Success == 1) {
+                    $.ajax({
+                        url: '/Cart/cartItems',
+                        success: function (partialView) {
+                            $('#listCartItem').html(partialView);
+                        }
+                    });
+                    let number = response.totalprice;
+                    $("#sumPrice").html(number.toLocaleString() + " VNĐ");
+                    $("#sumCombo").html(response.total);
+                    $("#cartCount").html(response.count);
+                }
+            },
+            error: function () {
+                alert('Đã xảy ra lỗi');
+            }
+        });
+    }
 </script>
 
