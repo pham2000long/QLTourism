@@ -1,12 +1,10 @@
-﻿namespace QLTourism.Models
+namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.Web.Script.Serialization;
 
     public partial class Booking
     {
@@ -18,35 +16,25 @@
 
         public int id { get; set; }
 
-        [Required(ErrorMessage = "Ngày đặt tour không được để trống!")]
-        [DisplayName("Ngày đặt tour")]
         public DateTime? bookingDate { get; set; }
 
-        [Required(ErrorMessage = "Mã đặt tour không được để trống!")]
         [StringLength(50)]
-        [DisplayName("Mã đặt tour")]
         public string bookingNo { get; set; }
 
-        [DisplayName("Số người")]
-        public int? travelerCount { get; set; }
-
-        [DisplayName("Mã khách hàng")]
         public int? customerId { get; set; }
 
-        [StringLength(1)]
-        [DisplayName("Mã loại tour")]
-        public string tripTypeId { get; set; }
+        [StringLength(255)]
+        public string country { get; set; }
 
-        [DisplayName("Mã tour")]
-        public int? packageId { get; set; }
+        [StringLength(255)]
+        public string city { get; set; }
+
+        [StringLength(255)]
+        public string address { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookingDetail> BookingDetails { get; set; }
 
         public virtual Customer Customer { get; set; }
-
-        public virtual Package Package { get; set; }
-
-        public virtual TripType TripType { get; set; }
     }
 }

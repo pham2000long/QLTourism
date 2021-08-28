@@ -8,7 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-            : base("name=TourismLong")
+            : base("name=TourismTu")
         {
             this.Configuration.ProxyCreationEnabled = false;
         }
@@ -26,7 +26,7 @@ namespace QLTourism.Models
         public virtual DbSet<Reward> Rewards { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
-        public virtual DbSet<TripType> TripTypes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

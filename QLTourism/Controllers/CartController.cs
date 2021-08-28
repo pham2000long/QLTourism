@@ -119,16 +119,34 @@ namespace QLTourism.Controllers
         }
 
         [HttpPost]
-        public ActionResult updateCart(string ses)
+        public ActionResult updateCart(string ses, string returnUrl)
         {
             try
             {
+                if (!String.IsNullOrEmpty(returnUrl))
+                {
+                    if(Session["CartItem"]!=null)
+                        return Json(new { isNew = 1 }, JsonRequestBehavior.AllowGet);
+                    else
+                    {
+                        return Json(new { isNew = 0 }, JsonRequestBehavior.AllowGet);
+                    }
+                }
                 List<string[]> ds = new List<string[]>();
                 List<int> dsPkg = new List<int>();
-                string z = ses;
+                string[] addedSes = Session["CartItem"].ToString().Split('&');
+                string[] sesSplited = ses.Split('&');
+                if (addedSes.Count() > sesSplited.Count())
+                {
+                    for (int i = sesSplited.Count(); i < addedSes.Count(); i++)
+                    {
+                        ses += "&" + addedSes[i];
+                    }
+                    return Json(new { totalz = 0, totalpricez = 0, isNew = 1 }, JsonRequestBehavior.AllowGet);
+                }
                 int total = 0;
                 int totalprice = 0;
-                foreach (var item in z.Split('&'))
+                foreach (var item in sesSplited)
                 {
                     var a = item.Split('|');
                     ds.Add(a);
@@ -137,27 +155,25 @@ namespace QLTourism.Controllers
                     int zzz = Int32.Parse(a[0]);
                     totalprice += Int32.Parse(a[1]) * Int32.Parse(db.Prices.AsNoTracking().Where(p => p.id == zzz).FirstOrDefault().price1.ToString());
                 }
-                var pkg = db.Packages.Where(p => dsPkg.Contains(p.id)).Include(p => p.Prices);
                 ViewBag.total = total;
                 ViewBag.totalprice = totalprice;
                 Session["CartItem"] = ses;
                 //Session["total"] = total;
                 //Session["totalprice"] = totalprice;
-                return Json(new { totalz = total, totalpricez = totalprice }, JsonRequestBehavior.AllowGet);
+                return Json(new { totalz = total, totalpricez = totalprice, isNew = 0 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { totalz = 0, totalpricez = 0 }, JsonRequestBehavior.AllowGet);
+                return Json(new { totalz = 0, totalpricez = 0, isNew = 0 }, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public ActionResult Checkout()
+        public ActionResult Checkout(string returnUrl)
         {
             if (Session["ClientidUser"] == null)
             {
                 Session["Message"] = "Bạn cần đăng nhập để tiếp tục thanh toán!";
-                Session["isCart"] = 1;
-                return RedirectToAction("LoginPage", "ClientLogin");
+                return RedirectToAction("LoginPage", "ClientLogin", new { returnUrl = returnUrl });
             }
             Customer customer = db.Customers.Find(Session["ClientidUser"]);
             if (Session["CartItem"] != null)
@@ -193,27 +209,12 @@ namespace QLTourism.Controllers
             }
             else
             {
-                ViewBag.total = 0;
-                ViewBag.totalprice = 0;
+                Session["Message"] = "Giỏ hàng của bạn hiện trống nên chưa thể tiến hành đặt hàng!";
+                return Redirect(returnUrl);
             }
             return View(customer);
         }
 
-        
-        [HttpPost]
-        public ActionResult UpdateCus(Customer CusObj)
-        {
-            Customer customer = db.Customers.Find(Session["ClientidUser"]);
-            customer.name = CusObj.name;
-            customer.email = CusObj.email;
-            customer.phone = CusObj.phone;
-            customer.country = CusObj.country;
-            customer.city = CusObj.city;
-            customer.address = CusObj.address;
-            db.Entry(customer).State = EntityState.Modified;
-            db.SaveChanges();
-            return Json(JsonRequestBehavior.AllowGet);
-        }
         [HttpPost]
         public ActionResult Payment([Bind(Include = "id,travelerCount,customerId,packageId")] Booking booking)
         {
@@ -226,8 +227,6 @@ namespace QLTourism.Controllers
             }
 
             ViewBag.customerId = Session["ClientidUser"];
-            ViewBag.packageId = new SelectList(db.Packages, "id", "pkgName", booking.packageId);
-            ViewBag.tripTypeId = new SelectList(db.TripTypes, "id", "ttName", booking.tripTypeId);
             return View(booking);
         }
 

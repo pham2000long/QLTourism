@@ -75,7 +75,7 @@
                             <!-- item-->
                             <a class="dropdown-item" href="@Url.Action("Profile", "ClientLogin", new { id = @Session["ClientidUser"]})"><i class="dripicons-user d-inlne-block text-muted mr-2"></i> Profile</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="@Url.Action("Logout","ClientLogin")"><i class="dripicons-exit d-inlne-block text-muted mr-2"></i> Logout</a>
+                            <a class="dropdown-item" href="@Url.Action("Logout","ClientLogin", new { returnUrl = Request.RawUrl })"><i class="dripicons-exit d-inlne-block text-muted mr-2"></i> Logout</a>
                         </div>
                     </div>
                 }
@@ -106,7 +106,6 @@
                             <span><a href="@Url.Action("LoginPage","ClientLogin")">Đăng nhập</a></span>
                         </li>
                     }
-
                 </ul>
             </nav>
         </header>

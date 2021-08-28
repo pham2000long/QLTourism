@@ -22,11 +22,14 @@ namespace QLTourism.Views.Home
             return View();
         }
 
-        public ActionResult LoginPage(string username, string password)
+        public ActionResult LoginPage(string username, string password, string returnUrl)
         {
+            if (!String.IsNullOrEmpty(returnUrl))
+                ViewBag.oldUrl = returnUrl;
             if (Session["ClientidUser"] != null)
             {
-                
+                if(!String.IsNullOrEmpty(returnUrl))
+                    return Redirect(returnUrl);
                 return RedirectToAction("Index", "Home");
             }
             else if(!String.IsNullOrEmpty(username)&& !String.IsNullOrEmpty(password))
@@ -38,11 +41,21 @@ namespace QLTourism.Views.Home
                     Session["ClientUsername"] = tk.username;
                     Session["ClientName"] = tk.name;
                     Session["ClientAvatar"] = tk.avatar;
+                    if (!String.IsNullOrEmpty(returnUrl))
+                        return Redirect(returnUrl);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     ViewBag.Error = "Sai tên tài khoản hoặc mật khẩu!";
+                }
+            }
+            else if (username != null && password != null)
+            {
+                if (username.Equals("") || password.Equals(""))
+                {
+                    ViewBag.Error = "Sai tên tài khoản hoặc mật khẩu!";
+                    return View();
                 }
             }
             return View();
@@ -120,12 +133,14 @@ namespace QLTourism.Views.Home
             }
         }
 
-        public ActionResult Logout()
+        public ActionResult Logout(string returnUrl)
         {
             Session["ClientidUser"] = null;
             Session["ClientUsername"] = null;
             Session["ClientName"] = null;
             Session["ClientAvatar"] = null;
+            if (!String.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
             return RedirectToAction("Index", "Home");
         }
         [ChildActionOnly]

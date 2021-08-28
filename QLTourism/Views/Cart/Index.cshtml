@@ -3,7 +3,6 @@
     int i = 0;
 }
 <script src="~/Assets/js/jquery-2.2.4.min.js"></script>
-
 <div class="hero_in cart_section">
     <div class="wrapper">
         <div class="container">
@@ -83,7 +82,6 @@
                                                     string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + item.thumbail;
                                                     <img src="@Url.Content(ImagePath)" alt="Image" style="width:60px;height:60px;object-fit:cover;">
                                                 }
-
                                             </div>
                                             <span class="item_cart">@item.pkgName</span>
                                         </td>
@@ -91,7 +89,7 @@
                                             <select name="combo" id="loaicombo@(i)" class="form-control">
                                                 @foreach (var itemCombo in item.Prices)
                                                 {
-                                                <option value="@itemCombo.id" @(itemCombo.id == a ? "selected" : "" )>@itemCombo.title - @String.Format("{0:n0}", itemCombo.price1)</option>
+                                                    <option value="@itemCombo.id" @(itemCombo.id == a ? "selected" : "" )>@itemCombo.title - @String.Format("{0:n0}", itemCombo.price1)</option>
                                                 }
                                             </select>
                                         </td>
@@ -112,14 +110,19 @@
                         <div class="float-left">
                         </div>
                         <div class="float-right fix_mobile">
-                            <button type="button" class="btn_1 outline" id="@if (Session["CartItem"] != null) {@Html.Raw("updateCart")}">Cập nhật giỏ hàng</button>
+                            <button type="button" class="btn_1 outline" id="@if (Session["CartItem"] != null) {@Html.Raw("updateCart")} else {@Html.Raw("updateCartz")}">Cập nhật giỏ hàng</button>
                         </div>
-                        @*@if (Session["ClientidUser"] != null)
+                        @if (Session["Message"] != null)
                         {
-                            <div class="float-right fix_mobile">
-                            <button type="button" class="btn_1 outline" id="@if (Session["CartItem"] != null) {@Html.Raw("updateCart")}">Cập nhật giỏ hàng</button>
-                            </div>
-                        }*@
+                            <div class="alert alert-danger" role="alert">@Session["Message"]</div>
+                            Session["Message"] = null;
+                        }
+                        @*@if (Session["ClientidUser"] != null)
+                            {
+                                <div class="float-right fix_mobile">
+                                <button type="button" class="btn_1 outline" id="@if (Session["CartItem"] != null) {@Html.Raw("updateCart")}">Cập nhật giỏ hàng</button>
+                                </div>
+                            }*@
                     </div>
                     <!-- /cart-options -->
                 </div>
@@ -135,7 +138,7 @@
 
                         <li>Tổng gói: <span id="sumCombo">@ViewBag.total</span></li>
                     </ul>
-                    <a href="@Url.Action("Checkout","Cart")" class="btn_1 full-width purchase">Kiểm tra</a>
+                    <a href="@Url.Action("Checkout","Cart", new { returnUrl = Request.RawUrl })" class="btn_1 full-width purchase">Đặt hàng</a>
                     <div class="text-center"><small>Tại bước này thì bạn chưa mất tiền!</small></div>
                 </div>
             </aside>
@@ -160,7 +163,10 @@
                        @Html.Raw("+$('#loaicombo" + iz.ToString() + "').find(':selected').val() + '|' + $('#sogoi" + iz.ToString() + "').val() + '|' + '" + item[2] + "'+'&'"); iz++;
                     } @Html.Raw(";")
                 }
-
+                else
+                {
+                    @Html.Raw(";")
+                }
             }
             num = num.substring(0, num.length - 1);
             var data = {
@@ -173,9 +179,34 @@
                 dataType: "json",
                 contentType: "application/json",
                 success: function (response) {
+                    if (response.isNew == 1) {
+                        alert('Giỏ hàng có thêm sản phẩm mới, cập nhập thành công!')
+                        window.location.href = "@Request.RawUrl";
+                    }
                     let number = response.totalpricez;
                     $("#sumPrice").html(number.toLocaleString() + " VNĐ");
                     $("#sumCombo").html(response.totalz);
+                },
+                error: function () {
+
+                }
+            });
+        });
+        $('#updateCartz').click(function () {
+            var data = {
+                "returnUrl": '@Request.RawUrl'
+            };
+            $.ajax({
+                url: "/Cart/updateCart",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.isNew == 1) {
+                        alert('Giỏ hàng có thêm sản phẩm mới, cập nhập thành công!')
+                        window.location.href = "@Request.RawUrl";
+                    }
                 },
                 error: function () {
 

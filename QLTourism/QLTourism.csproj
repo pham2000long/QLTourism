@@ -137,7 +137,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\BookingController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
@@ -2615,11 +2614,6 @@
     <Content Include="Areas\Admin\Views\Customer\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Booking\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Booking\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Booking\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Booking\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Booking\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

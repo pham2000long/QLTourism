@@ -1,3 +1,4 @@
+
 namespace QLTourism.Models
 {
     using System;
