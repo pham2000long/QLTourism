@@ -114,6 +114,12 @@
                         <div class="float-right fix_mobile">
                             <button type="button" class="btn_1 outline" id="@if (Session["CartItem"] != null) {@Html.Raw("updateCart")}">Cập nhật giỏ hàng</button>
                         </div>
+                        @*@if (Session["ClientidUser"] != null)
+                        {
+                            <div class="float-right fix_mobile">
+                            <button type="button" class="btn_1 outline" id="@if (Session["CartItem"] != null) {@Html.Raw("updateCart")}">Cập nhật giỏ hàng</button>
+                            </div>
+                        }*@
                     </div>
                     <!-- /cart-options -->
                 </div>
@@ -126,9 +132,10 @@
                         Tổng tiền: <span class="float-right" id="sumPrice">@String.Format("{0:n0}", @ViewBag.totalprice) VNĐ</span>
                     </div>
                     <ul class="cart_details">
+
                         <li>Tổng gói: <span id="sumCombo">@ViewBag.total</span></li>
                     </ul>
-                    <a href="cart-2.html" class="btn_1 full-width purchase">Kiểm tra</a>
+                    <a href="@Url.Action("Checkout","Cart")" class="btn_1 full-width purchase">Kiểm tra</a>
                     <div class="text-center"><small>Tại bước này thì bạn chưa mất tiền!</small></div>
                 </div>
             </aside>
@@ -177,3 +184,4 @@
         });
     });
 </script>
+

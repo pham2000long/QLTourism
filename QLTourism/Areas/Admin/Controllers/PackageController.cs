@@ -113,7 +113,7 @@ namespace QLTourism.Areas.Admin.Controllers
         {
             this.dropDown = db.Categories.AsNoTracking().ToList();
             var dropDownCate = categoryRecusive(0);
-            ViewBag.categoryId = dropDownCate.ToList();
+            ViewBag.categoryId = dropDownCate;
             return View(new Package());
         }
 

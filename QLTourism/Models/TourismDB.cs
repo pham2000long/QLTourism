@@ -8,7 +8,7 @@ namespace QLTourism.Models
     public partial class TourismDB : DbContext
     {
         public TourismDB()
-            : base("name=TourismTu")
+            : base("name=TourismLong")
         {
             this.Configuration.ProxyCreationEnabled = false;
         }

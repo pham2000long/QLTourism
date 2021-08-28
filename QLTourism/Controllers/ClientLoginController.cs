@@ -26,6 +26,7 @@ namespace QLTourism.Views.Home
         {
             if (Session["ClientidUser"] != null)
             {
+                
                 return RedirectToAction("Index", "Home");
             }
             else if(!String.IsNullOrEmpty(username)&& !String.IsNullOrEmpty(password))
@@ -118,10 +119,20 @@ namespace QLTourism.Views.Home
                 return View(customer);
             }
         }
+
+        public ActionResult Logout()
+        {
+            Session["ClientidUser"] = null;
+            Session["ClientUsername"] = null;
+            Session["ClientName"] = null;
+            Session["ClientAvatar"] = null;
+            return RedirectToAction("Index", "Home");
+        }
         [ChildActionOnly]
         public ActionResult login()
         {
             return PartialView();
         }
+
     }
 }
