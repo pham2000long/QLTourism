@@ -1,8 +1,9 @@
-
+﻿
 namespace QLTourism.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -19,10 +20,12 @@ namespace QLTourism.Models
 
         public int id { get; set; }
 
-        [Required]
+        [DisplayName("Tên danh mục")]
+        [Required(ErrorMessage = "Tên danh mục không được để trống!")]
         [StringLength(255)]
         public string name { get; set; }
 
+        [DisplayName("Tên danh mục cha")]
         public int parentId { get; set; }
 
         [ScriptIgnore]
