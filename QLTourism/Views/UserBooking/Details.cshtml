@@ -1,4 +1,7 @@
 ﻿@model QLTourism.Models.Booking
+@{ 
+    ViewBag.Title = "Đơn hàng #" + Model.bookingNo;
+}
 
 <div class="hero_in cart_section">
     <div class="wrapper">
@@ -75,7 +78,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Ghi chú</label>
-                                    <input type="text" id="customerNote" name="customerNote" class="form-control" value="@Html.DisplayFor(model => model.address)">
+                                    <input type="text" id="customerNote" name="customerNote" class="form-control" value="@Html.DisplayFor(model => model.customerNote)">
                                 </div>
                             </div>
                         </div>

@@ -3,7 +3,7 @@
 <head>
     <title>@Page.Title</title>
     <link rel="shortcut icon" href="~/Areas/Admin/Public/assets/images/favicon.ico">
-
+    <script src="~/Areas/Admin/Public/assets/libs/jquery/jquery.min.js"></script>
     <!-- Bootstrap Css -->
     <link href="~/Areas/Admin/Public/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -29,10 +29,10 @@
                     <div class="navbar-brand-box">
                         <a href="@Url.Action("Index", "Dashboard")" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="~/Areas/Admin/Public/assets/images/logo-sm.png" alt="" height="22">
+                                <img src="~/Areas/Admin/Public/assets/images/logo.png" alt="" height="65">
                             </span>
                             <span class="logo-lg">
-                                <img src="~/Areas/Admin/Public/assets/images/logo-light.png" alt="" height="17">
+                                <img src="~/Areas/Admin/Public/assets/images/logo_sticky.png" alt="" height="45">
                             </span>
                         </a>
                     </div>
@@ -46,7 +46,7 @@
                 <!-- Search input -->
                 <div class="search-wrap" id="search-wrap">
                     <div class="search-bar">
-                        <input class="search-input form-control" placeholder="Search" />
+                        <input class="search-input form-control" placeholder="Tìm kiếm" />
                         <a href="#" class="close-search toggle-search" data-target="#search-wrap">
                             <i class="mdi mdi-close-circle"></i>
                         </a>
@@ -71,7 +71,7 @@
                             <form class="p-3">
                                 <div class="form-group m-0">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                        <input type="text" class="form-control" placeholder="Tìm kiếm ..." aria-label="Recipient's username">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
                                         </div>
@@ -110,9 +110,9 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <!-- item-->
-                            <a class="dropdown-item" href="@Url.Action("Edit", "User", new { id = @Session["idUser"]})"><i class="dripicons-user d-inlne-block text-muted mr-2"></i> Profile</a>
+                            <a class="dropdown-item" href="@Url.Action("Edit", "User", new { id = @Session["idUser"]})"><i class="dripicons-user d-inlne-block text-muted mr-2"></i> Thông tin tài khoản</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="@Url.Action("Logout", "Login")"><i class="dripicons-exit d-inlne-block text-muted mr-2"></i> Logout</a>
+                            <a class="dropdown-item" href="@Url.Action("Logout", "Login")"><i class="dripicons-exit d-inlne-block text-muted mr-2"></i> Đăng xuất</a>
                         </div>
                     </div>
                 </div>
@@ -127,25 +127,25 @@
                     <li>
                         <a href="@Url.Action("Index", "Dashboard")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>
-                            <span>Dashboard</span>
+                            <span>Trang chủ</span>
                         </a>
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "Category")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>
-                            <span>Category</span>
+                            <span>Danh mục</span>
                         </a>
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "Package")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>
-                            <span>Package</span>
+                            <span>Tour</span>
                         </a>
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "Customer")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>
-                            <span>Customer</span>
+                            <span>Khách hàng</span>
                         </a>
                     </li>
                     @if (Session["roleId"].Equals(1))
@@ -153,33 +153,32 @@
                         <li>
                             <a href="@Url.Action("Index", "Role")" class="waves-effect">
                                 <i class="mdi mdi-speedometer"></i>
-                                <span>Role</span>
+                                <span>Vai trò</span>
                             </a>
                         </li>
                         <li>
                             <a href="@Url.Action("Index", "User")" class="waves-effect">
                                 <i class="mdi mdi-speedometer"></i>
-                                <span>User</span>
+                                <span>Tài khoản</span>
                             </a>
                         </li>
                     }
-
                     <li>
                         <a href="@Url.Action("Index", "News")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>
-                            <span>News</span>
+                            <span>Tin tức</span>
                         </a>
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "Slider")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>
-                            <span>Slider</span>
+                            <span>Slide trang chủ</span>
                         </a>
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "Booking")" class="waves-effect">
                             <i class="mdi mdi-speedometer"></i>
-                            <span>Booking</span>
+                            <span>Đặt hàng</span>
                         </a>
                     </li>
                 </ul>
@@ -196,12 +195,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        2018 -
-                        <script>document.write(new Date().getFullYear())</script> © Amezia.
+                        2021 -
+                        <script>document.write(new Date().getFullYear())</script> © Okayu.
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-right d-none d-sm-block">
-                            Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                            Uaena in <i class="mdi mdi-heart text-danger"></i> Viet Nam
                         </div>
                     </div>
                 </div>
@@ -229,7 +228,7 @@
 
     <!-- Gmaps file -->
     <script src="~/Areas/Admin/Public/assets/libs/gmaps/gmaps.min.js"></script>
-    <script src="assets/libs/dropzone/min/dropzone.min.js"></script>
+    <script src="~/Areas/Admin/assets/libs/dropzone/min/dropzone.min.js"></script>
     <script src="~/Areas/Admin/Public/assets/libs/dropify/js/dropify.min.js"></script>
 
     <!-- Magnific Popup-->

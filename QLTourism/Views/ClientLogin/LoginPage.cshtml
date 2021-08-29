@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Okayu - Công ty du lịch hàng đầu Việt Nam</title>
+    <title>Đăng nhập OKAYU</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="~/Assets/img/favicon.ico" type="image/x-icon">
@@ -29,7 +29,7 @@
     <div class="alert alert-danger float-lg-right" role="alert">@Session["Message"]</div>
     Session["Message"] = null;
 }
-<body id="login_bg" style="background: url(../Assets/img/sectionCallBG.jpg) center center no-repeat !important; background-size:cover;">
+<body id="login_bg" style="background: url(@Url.Content("/Assets/img/sectionCallBG.jpg")) center center no-repeat !important; background-size:cover;">
 
     <nav id="menu" class="fake_menu"></nav>
 

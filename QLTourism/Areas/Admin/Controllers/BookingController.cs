@@ -59,23 +59,15 @@ namespace QLTourism.Areas.Admin.Controllers
         // GET: Admin/Booking/Details/5
         public ActionResult Details(int? id)
         {
-            List<Package> packages = new List<Package>();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Booking booking = db.Bookings.Find(id);
             
-            var bookingDetails = db.BookingDetails.Where(p => p.bookingId == id);
+            var bookingDetails = db.BookingDetails.Where(p => p.bookingId == id).Include(p=>p.Package);
             ViewBag.BookingDetails = bookingDetails;
             ViewBag.CustomerName = db.Customers.Where(p => p.id == booking.customerId).Select(p => p.name).FirstOrDefault();
-            foreach (var item in bookingDetails)
-            {
-                Package package = db.Packages.Where(p => p.id == item.packageId).FirstOrDefault();
-                packages.Add(package);
-            }
-
-            ViewBag.Packages = packages;
             if (booking == null)
             {
                 return HttpNotFound();

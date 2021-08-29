@@ -222,6 +222,8 @@
     <Content Include="Areas\Admin\Public\assets\images\logo-light.png" />
     <Content Include="Areas\Admin\Public\assets\images\logo-sm-dark.png" />
     <Content Include="Areas\Admin\Public\assets\images\logo-sm.png" />
+    <Content Include="Areas\Admin\Public\assets\images\logo.png" />
+    <Content Include="Areas\Admin\Public\assets\images\logo_sticky.png" />
     <Content Include="Areas\Admin\Public\assets\images\pattern.png" />
     <Content Include="Areas\Admin\Public\assets\images\project-logo\project1.jpg" />
     <Content Include="Areas\Admin\Public\assets\images\project-logo\project2.jpg" />
@@ -2005,6 +2007,7 @@
     <Content Include="Assets\img\3_carousel.jpg" />
     <Content Include="Assets\img\4_carousel.jpg" />
     <Content Include="Assets\img\5_carousel.jpg" />
+    <Content Include="Assets\img\AboutBG.jpg" />
     <Content Include="Assets\img\about_1.jpg" />
     <Content Include="Assets\img\apple-touch-icon-114x114-precomposed.png" />
     <Content Include="Assets\img\apple-touch-icon-144x144-precomposed.png" />
@@ -2098,11 +2101,13 @@
     <Content Include="Assets\img\icon_heart.svg" />
     <Content Include="Assets\img\icon_login.svg" />
     <Content Include="Assets\img\images\avatar.jpg" />
+    <Content Include="Assets\img\ListTourBG.png" />
     <Content Include="Assets\img\logo.png" />
     <Content Include="Assets\img\logo_2x.png" />
     <Content Include="Assets\img\logo_sticky.png" />
     <Content Include="Assets\img\logo_sticky_2x.png" />
     <Content Include="Assets\img\map-marker.png" />
+    <Content Include="Assets\img\NewsBG.jpg" />
     <Content Include="Assets\img\news_home_1.jpg" />
     <Content Include="Assets\img\news_home_2.jpg" />
     <Content Include="Assets\img\news_home_3.jpg" />

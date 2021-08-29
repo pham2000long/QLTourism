@@ -57,13 +57,15 @@
             </th>
         </tr>
 
-        @foreach (var item in ViewBag.Packages)
+        @foreach (var item in ViewBag.BookingDetails)
         {
             <tr>
                 <td>
-                    @item.pkgName
+                    @item.Package.pkgName
                 </td>
-                <td></td>
+                <td>
+                    @item.Price
+                </td>
             </tr>
         }
         <tr>

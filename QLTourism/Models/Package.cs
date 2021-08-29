@@ -63,7 +63,7 @@
         public int pkgBasePrice { get; set; }
 
         [StringLength(255)]
-        [DisplayName("Tình trạng")]
+        [DisplayName("Điều kiện")]
         public string pkgCondition { get; set; }
 
         [DisplayName("Vị trí trống")]

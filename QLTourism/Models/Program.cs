@@ -9,12 +9,11 @@
 
     public partial class Program
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [StringLength(255)]
-        [DisplayName("Title")]
-        [Required(ErrorMessage = "Title không được để trống!")]
+        [DisplayName("Tiêu đề")]
+        [Required(ErrorMessage = "Tiêu đề không được để trống!")]
         public string title { get; set; }
 
         [StringLength(255)]

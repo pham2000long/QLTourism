@@ -21,6 +21,14 @@ namespace QLTourism.Controllers
 
         public ActionResult ListTour(string searchString, int? madm = 0)
         {
+            if(madm == 0)
+            {
+                ViewBag.TenDanhMuc = "Tất cả các tour";
+            }
+            else
+            {
+                ViewBag.TenDanhMuc = db.Categories.Where(p => p.id == madm).FirstOrDefault().name;
+            }
             this.dropDown = db.Categories.AsNoTracking().ToList();
             var dropDownCate = categoryRecusive(0);
             List<Category> dropDownOrder = new List<Category>();
@@ -92,7 +100,24 @@ namespace QLTourism.Controllers
 
             }
             ViewBag.DanhMuc = db.Categories.Where(p => p.id == madm).FirstOrDefault();
-            return View(tours.OrderBy(p => p.id).ToList());
+            var result = tours.OrderByDescending(p => p.id).ToList();
+            if (tours.Count() > 6)
+            {
+                List<Package> dstour = new List<Package>();
+                int countIndex = 0;
+                foreach(var item in result)
+                {
+                    dstour.Add(item);
+                    countIndex++;
+                    if (countIndex >= 6)
+                        break;
+                }
+                return View(dstour);
+            }
+            else
+            {
+                return View(result);
+            }
         }
 
         public ActionResult Details(int? id)
@@ -146,7 +171,7 @@ namespace QLTourism.Controllers
                     }
                 }
             }
-            var tours = db.Packages.Include(p => p.Category);
+            var tours = db.Packages.OrderByDescending(p => p.id).Include(p => p.Category);
             if (!String.IsNullOrEmpty(searchString))
             {
                 tours = tours.Where(p => p.pkgName.Contains(searchString));
@@ -197,6 +222,18 @@ namespace QLTourism.Controllers
             int isFull = 0;
             if (dsThem.Count() <= 0)
                 isFull = 1;
+            for(int i=0; i< dsThem.Count(); i++)
+            {
+                string[] ifo = dsThem[i].pkgDesc.Split('>', '<');
+                if(ifo.Count() < 3)
+                {
+                    dsThem[i].pkgDesc = "...";
+                }
+                else if (ifo[2].Length > 150)
+                    dsThem[i].pkgDesc = ifo[2].Substring(0, 155);
+                else
+                    dsThem[i].pkgDesc = ifo[2];
+            }
 
             return Json(new { pkg = dsThem, fullStatus = isFull }, JsonRequestBehavior.AllowGet);
         }

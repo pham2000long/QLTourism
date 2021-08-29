@@ -1,6 +1,6 @@
 ﻿@model QLTourism.Models.News
 @{
-    ViewBag.Title = "ArticleDetail";
+    ViewBag.Title = Model.title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string ImagePath = "~/Areas/Admin/wwwroot/thumbail/" + Model.thumbail;
 }

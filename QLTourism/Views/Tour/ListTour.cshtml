@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<QLTourism.Models.Package>
 
 @{
-    ViewBag.Title = "ListTour";
+    ViewBag.Title = "Du lịch " + ViewBag.TenDanhMuc;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <input type="number" id="tourCount" style="display: none;" value="@Model.Count()"/>
 
-<section class="hero_in tours">
+<section class="hero_in tours" style="background: url(@Url.Content("~/Assets/img/ListTourBG.png")) center center no-repeat !important; ; background-size:cover !important;">
     <div class="wrapper">
         <div class="container">
-            <h1 class="fadeInUp"><span></span>Paris tours grid</h1>
+            <h1 class="fadeInUp"><span></span>@ViewBag.TenDanhMuc</h1>
         </div>
     </div>
 </section>
@@ -82,7 +82,19 @@
                             <h3><a href="/Tour/Details/@item.id">@item.pkgName</a></h3>
                             @if (item.pkgDesc != null)
                             {
-                                <p>@item.pkgDesc.Split('>', '<')[2]</p>
+                                string[] ifo = item.pkgDesc.Split('>', '<');
+                                if (ifo.Count() < 3)
+                                {
+                                    <p> ...</p>
+                                }
+                                else if (ifo[2].Length > 150)
+                                {
+                                    <p>@ifo[2].Substring(0, 155) ...</p>
+                                }
+                                else
+                                {
+                                    <p>@ifo[2] ...</p>
+                                }
                             }
                             else
                             {
@@ -120,24 +132,24 @@
     <div class="container margin_60_35">
         <div class="row">
             <div class="col-md-4">
-                <a href="#0" class="boxed_list">
+                <a href="/about/index" class="boxed_list">
                     <i class="pe-7s-help2"></i>
-                    <h4>Need Help? Contact us</h4>
-                    <p>Cum appareat maiestatis interpretaris et, et sit.</p>
+                    <h4>Cần giúp đỡ?</h4>
+                    <p>Bấm vào đây để liên hệ với chúng tôi</p>
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="#0" class="boxed_list">
+                <a href="/cart/index" class="boxed_list">
                     <i class="pe-7s-wallet"></i>
-                    <h4>Payments</h4>
-                    <p>Qui ea nemore eruditi, magna prima possit eu mei.</p>
+                    <h4>Phương thức thanh toán</h4>
+                    <p>Chúng tôi có đa dạng hình thức thanh toán</p>
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="#0" class="boxed_list">
+                <a href="#footer" class="boxed_list">
                     <i class="pe-7s-note2"></i>
-                    <h4>Cancel Policy</h4>
-                    <p>Hinc vituperata sed ut, pro laudem nonumes ex.</p>
+                    <h4>Thông tin</h4>
+                    <p>Chúng tôi có đầy đủ thông tin cho bạn tham khảo</p>
                 </a>
             </div>
         </div>

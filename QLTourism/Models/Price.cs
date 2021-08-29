@@ -12,7 +12,7 @@
         public int id { get; set; }
 
         [StringLength(255)]
-        [DisplayName("Title")]
+        [DisplayName("Tên combo")]
         [Required(ErrorMessage = "Title không được để trống!")]
         public string title { get; set; }
 

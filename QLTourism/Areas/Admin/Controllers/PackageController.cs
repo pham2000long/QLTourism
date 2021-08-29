@@ -113,7 +113,29 @@ namespace QLTourism.Areas.Admin.Controllers
         {
             this.dropDown = db.Categories.AsNoTracking().ToList();
             var dropDownCate = categoryRecusive(0);
-            ViewBag.categoryId = dropDownCate;
+            List<Category> dropDownOrder = new List<Category>();
+            foreach (var item in dropDownCate.ToList())
+            {
+                if (!item.name.Contains("--"))
+                {
+                    dropDownOrder.Add(item);
+                    foreach (var itemz in dropDownCate.ToList())
+                    {
+                        if (itemz.parentId == item.id)
+                        {
+                            dropDownOrder.Add(itemz);
+                            foreach (var itemzz in dropDownCate.ToList())
+                            {
+                                if (itemzz.parentId == itemz.id)
+                                {
+                                    dropDownOrder.Add(itemzz);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.categoryId = dropDownOrder;
             return View(new Package());
         }
 
@@ -161,7 +183,31 @@ namespace QLTourism.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.categoryId = new SelectList(db.Categories, "id", "name", package.categoryId);
+            this.dropDown = db.Categories.AsNoTracking().ToList();
+            var dropDownCate = categoryRecusive(0);
+            List<Category> dropDownOrder = new List<Category>();
+            foreach (var item in dropDownCate.ToList())
+            {
+                if (!item.name.Contains("--"))
+                {
+                    dropDownOrder.Add(item);
+                    foreach (var itemz in dropDownCate.ToList())
+                    {
+                        if (itemz.parentId == item.id)
+                        {
+                            dropDownOrder.Add(itemz);
+                            foreach (var itemzz in dropDownCate.ToList())
+                            {
+                                if (itemzz.parentId == itemz.id)
+                                {
+                                    dropDownOrder.Add(itemzz);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.categoryId = dropDownOrder;
             return View(package);
         }
 

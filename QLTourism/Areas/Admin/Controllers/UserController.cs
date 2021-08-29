@@ -34,7 +34,7 @@ namespace QLTourism.Areas.Admin.Controllers
                     searchString = currentFilter;
                 }
                 ViewBag.currentFilter = searchString;
-                var users = db.Users.Select(p => p);
+                var users = db.Users.Select(p => p).Include(p => p.Role);
                 // Lọc nhân viên
                 if (!String.IsNullOrEmpty(searchString))
                 {
@@ -73,7 +73,8 @@ namespace QLTourism.Areas.Admin.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                User user = db.Users.Find(id);
+                int a = Int32.Parse(id.ToString());
+                User user = db.Users.Where(p=>p.id == a).Include(p => p.Role).FirstOrDefault();
                 if (user == null)
                 {
                     return HttpNotFound();
@@ -177,6 +178,7 @@ namespace QLTourism.Areas.Admin.Controllers
                     db.Entry(modifyUser).State = EntityState.Modified;
                     db.SaveChanges();
                     Session["avatar"] = db.Users.Find(user.id).avatar;
+                    Session["username"] = db.Users.Find(user.id).username;
                 }
                 return RedirectToAction("Index", "Dashboard");
             }
